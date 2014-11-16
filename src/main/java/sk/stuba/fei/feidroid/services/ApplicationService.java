@@ -21,34 +21,35 @@ import sk.stuba.fei.feidroid.entities.Application;
 @Path("/application")
 public class ApplicationService {
 	private static final String PERSISTENCE_UNIT_NAME = "applications";
-	
+
 	@GET
 	@Produces("application/json")
 	public Response listAllApps() throws JSONException {
-		
+
 		JSONArray jsonArray = new JSONArray();
-		JSONObject jsonObject;  
-		
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-    EntityManager em = factory.createEntityManager();
-    
-    Query q = em.createQuery("select a from Application a");
-    List<Application> appList =  q.getResultList();
-    
-    for (Application app : appList) {
-      	jsonObject = new JSONObject();
-      	jsonObject.put("id", app.getId());
-      	jsonObject.put("name", app.getName());
-      	jsonObject.put("description", app.getDescription());
-      	jsonObject.put("version", app.getVersion());
-      	
-      	jsonArray.put(jsonObject);
-    }
+		JSONObject jsonObject;
 
-    String result = jsonArray.toString();
+		EntityManagerFactory factory = Persistence
+		    .createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		EntityManager em = factory.createEntityManager();
 
-    em.close();
-		
+		Query q = em.createQuery("select a from Application a");
+		List<Application> appList = q.getResultList();
+
+		for (Application app : appList) {
+			jsonObject = new JSONObject();
+			jsonObject.put("id", app.getId());
+			jsonObject.put("name", app.getName());
+			jsonObject.put("description", app.getDescription());
+			jsonObject.put("version", app.getVersion());
+
+			jsonArray.put(jsonObject);
+		}
+
+		String result = jsonArray.toString();
+
+		em.close();
+
 		return Response.status(200).entity(result).build();
 	}
 }
