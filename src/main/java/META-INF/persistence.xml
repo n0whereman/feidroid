@@ -5,6 +5,7 @@
   <persistence-unit name="feidroid" transaction-type="RESOURCE_LOCAL">
    <class>sk.stuba.fei.feidroid.entities.Application</class>
     <class>sk.stuba.fei.feidroid.entities.ApplicationCategory</class>
+    <class>sk.stuba.fei.feidroid.entities.Permission</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
       <property name="javax.persistence.jdbc.url"

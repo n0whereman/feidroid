@@ -10,28 +10,23 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "APP_CATEGORY")
-public class ApplicationCategory {
+@Table(name = "PERMISSION")
+public class Permission {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	private String title;
 	private String description;
+	private String title;
 
-	@ManyToMany(mappedBy = "categories")
+	@ManyToMany(mappedBy = "permissions")
 	private List<Application> applications;
 
 	public Long getId() {
 		return id;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getDescription() {
@@ -42,9 +37,17 @@ public class ApplicationCategory {
 		this.description = description;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	@Override
 	public String toString() {
-		return "ApplicationCategory [id=" + id + ", title=" + title
-		    + ", description=" + description + "]";
+		return "Permission [id=" + id + ", title=" + title + ", description="
+		    + description + "]";
 	}
 }

@@ -9,11 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlAttribute;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Application.findAll", query = "SELECT a FROM Application a"),
+    @NamedQuery(name = "Application.findById", query = "SELECT a FROM Application a WHERE a.id = :idParam") })
 public class Application {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +30,11 @@ public class Application {
 	@JoinTable(name = "APPLICATION_APP_CATEGORY", joinColumns = { @JoinColumn(name = "APP_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "APP_CAT_ID", referencedColumnName = "ID") })
 	private Collection<ApplicationCategory> categories;
 
+	@ManyToMany
+	@JoinTable(name = "APPLICATION_PERMISSIONS", joinColumns = { @JoinColumn(name = "APP_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "PERMISSION_ID", referencedColumnName = "ID") })
+	private Collection<Permission> permissions;
+
+	@XmlAttribute
 	public Long getId() {
 		return id;
 	}
@@ -67,25 +75,21 @@ public class Application {
 		categories.add(category);
 	}
 
+	public Collection<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(Collection<Permission> permissions) {
+		this.permissions = permissions;
+	}
+
+	public void addPermission(Permission permission) {
+		permissions.add(permission);
+	}
+
 	@Override
 	public String toString() {
 		return "Application [id=" + id + ", name=" + name + ", description="
 		    + description + ", version=" + version + "]";
-	}
-
-	public JSONObject toJSON() {
-		JSONObject jsonObject = new JSONObject();
-		JSONArray jsonArray = new JSONArray();
-		jsonObject.put("id", getId());
-		jsonObject.put("name", getName());
-		jsonObject.put("description", getDescription());
-		jsonObject.put("version", getVersion());
-
-		for (ApplicationCategory appCategory : categories) {
-			jsonArray.put(appCategory.toJSON());
-		}
-		jsonObject.put("categories", jsonArray);
-
-		return jsonObject;
 	}
 }
