@@ -11,12 +11,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.xml.bind.annotation.XmlAttribute;
 
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Application.findAll", query = "SELECT a FROM Application a"),
-    @NamedQuery(name = "Application.findById", query = "SELECT a FROM Application a WHERE a.id = :idParam") })
+    @NamedQuery(name = "Application.findById", query = "SELECT a FROM Application a WHERE a.id = :idParam"),
+    @NamedQuery(name = "Application.findByIds", query = "SELECT a FROM Application a WHERE a.id IN :idListParam") })
 public class Application {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +34,12 @@ public class Application {
 	@JoinTable(name = "APPLICATION_PERMISSIONS", joinColumns = { @JoinColumn(name = "APP_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "PERMISSION_ID", referencedColumnName = "ID") })
 	private Collection<Permission> permissions;
 
-	@XmlAttribute
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {

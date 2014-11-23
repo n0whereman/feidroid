@@ -7,10 +7,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "PERMISSION")
+@NamedQueries({
+    @NamedQuery(name = "Permission.findAll", query = "SELECT a FROM Permission a"),
+    @NamedQuery(name = "Permission.findById", query = "SELECT a FROM Permission a WHERE a.id = :idParam"),
+    @NamedQuery(name = "Permission.findByIds", query = "SELECT a FROM Permission a WHERE a.id IN :idListParam") })
 public class Permission {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

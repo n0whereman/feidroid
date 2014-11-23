@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONArray;
 
-public class BasicService {
+abstract public class BasicService {
 	private static final String PERSISTENCE_UNIT_NAME = "feidroid";
 
 	public Object findById(Long id) {
@@ -41,13 +41,40 @@ public class BasicService {
 		return result;
 	}
 
-	public Class<?> getEntityClass() {
-		return null;
+	public List<?> findByIds(List<Integer> ids) {
+		EntityManager em = getEntityManager();
+		List<?> result = em
+		    .createNamedQuery(getEntityName() + ".findByIds", getEntityClass())
+		    .setParameter("idListParam", ids).getResultList();
+
+		em.close();
+
+		return result;
 	}
 
-	protected String getEntityName() {
-		return null;
+	public Object persistEntity(Object obj) {
+		EntityManager em = getEntityManager();
+		em.getTransaction().begin();
+		em.persist(obj);
+		em.getTransaction().commit();
+		em.close();
+
+		return obj;
 	}
+
+	public Object updateEntity(Object obj) {
+		EntityManager em = getEntityManager();
+		em.getTransaction().begin();
+		em.merge(obj);
+		em.getTransaction().commit();
+		em.close();
+
+		return obj;
+	}
+
+	abstract public Class<?> getEntityClass();
+
+	abstract public String getEntityName();
 
 	public EntityManager getEntityManager() {
 		EntityManagerFactory factory = Persistence
@@ -55,11 +82,9 @@ public class BasicService {
 		return factory.createEntityManager();
 	}
 
-	protected Object convertToResource(Object object) {
-		return null;
-	}
+	abstract public Object convertToResource(Object object);
 
-	protected List<?> convertListToResource(List<?> objList) {
+	public List<?> convertListToResource(Collection<?> objList) {
 		List<Object> result = new ArrayList<Object>();
 		for (Object obj : objList) {
 			result.add(convertToResource(obj));
@@ -67,6 +92,8 @@ public class BasicService {
 
 		return result;
 	}
+
+	abstract protected Object convertToEntity(Object resource);
 
 	protected JSONArray collectionToJsonArray(Collection<?> list) {
 		return new JSONArray(list);
@@ -91,5 +118,9 @@ public class BasicService {
 		Object result = findById(id);
 
 		return convertToResource(result);
+	}
+
+	public Response errorResponse() {
+		return Response.status(400).build();
 	}
 }
