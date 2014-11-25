@@ -16,13 +16,18 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONArray;
 
-abstract public class BasicService {
+abstract public class BasicService<Entity, Resource> {
 	private static final String PERSISTENCE_UNIT_NAME = "feidroid";
+	private final Class<Entity> entityClass;
 
-	public Object findById(Long id) {
+	public BasicService(Class<Entity> entity) {
+		entityClass = entity;
+	}
+
+	public Entity findById(Long id) {
 		EntityManager em = getEntityManager();
 
-		Object result = em
+		Entity result = em
 		    .createNamedQuery(getEntityName() + ".findById", getEntityClass())
 		    .setParameter("idParam", id).getSingleResult();
 
@@ -31,9 +36,9 @@ abstract public class BasicService {
 		return result;
 	}
 
-	public List<?> findAll() {
+	public List<Entity> findAll() {
 		EntityManager em = getEntityManager();
-		List<?> result = em.createNamedQuery(getEntityName() + ".findAll",
+		List<Entity> result = em.createNamedQuery(getEntityName() + ".findAll",
 		    getEntityClass()).getResultList();
 
 		em.close();
@@ -41,9 +46,9 @@ abstract public class BasicService {
 		return result;
 	}
 
-	public List<?> findByIds(List<Integer> ids) {
+	public List<Entity> findByIds(List<Integer> ids) {
 		EntityManager em = getEntityManager();
-		List<?> result = em
+		List<Entity> result = em
 		    .createNamedQuery(getEntityName() + ".findByIds", getEntityClass())
 		    .setParameter("idListParam", ids).getResultList();
 
@@ -52,7 +57,7 @@ abstract public class BasicService {
 		return result;
 	}
 
-	public Object persistEntity(Object obj) {
+	public Entity persistEntity(Entity obj) {
 		EntityManager em = getEntityManager();
 		em.getTransaction().begin();
 		em.persist(obj);
@@ -62,7 +67,7 @@ abstract public class BasicService {
 		return obj;
 	}
 
-	public Object updateEntity(Object obj) {
+	public Entity updateEntity(Entity obj) {
 		EntityManager em = getEntityManager();
 		em.getTransaction().begin();
 		em.merge(obj);
@@ -72,9 +77,13 @@ abstract public class BasicService {
 		return obj;
 	}
 
-	abstract public Class<?> getEntityClass();
+	public Class<Entity> getEntityClass() {
+		return entityClass;
+	};
 
-	abstract public String getEntityName();
+	public String getEntityName() {
+		return entityClass.getSimpleName();
+	}
 
 	public EntityManager getEntityManager() {
 		EntityManagerFactory factory = Persistence
@@ -82,18 +91,18 @@ abstract public class BasicService {
 		return factory.createEntityManager();
 	}
 
-	abstract public Object convertToResource(Object object);
+	abstract public Resource convertEntityToResource(Entity object);
 
-	public List<?> convertListToResource(Collection<?> objList) {
-		List<Object> result = new ArrayList<Object>();
-		for (Object obj : objList) {
-			result.add(convertToResource(obj));
+	public List<Resource> convertListToResource(Collection<Entity> objList) {
+		List<Resource> result = new ArrayList<Resource>();
+		for (Entity obj : objList) {
+			result.add(convertEntityToResource(obj));
 		}
 
 		return result;
 	}
 
-	abstract protected Object convertToEntity(Object resource);
+	abstract protected Entity convertResourceToEntity(Resource resource);
 
 	protected JSONArray collectionToJsonArray(Collection<?> list) {
 		return new JSONArray(list);
@@ -104,7 +113,7 @@ abstract public class BasicService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAllResource() {
-		List<?> result = findAll();
+		List<Entity> result = findAll();
 
 		return Response.ok(
 		    collectionToJsonArray(convertListToResource(result)).toString())
@@ -114,10 +123,10 @@ abstract public class BasicService {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Object findByIdResource(@PathParam("id") Long id) {
-		Object result = findById(id);
+	public Resource findByIdResource(@PathParam("id") Long id) {
+		Entity result = findById(id);
 
-		return convertToResource(result);
+		return convertEntityToResource(result);
 	}
 
 	public Response errorResponse() {

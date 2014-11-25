@@ -6,33 +6,26 @@ import sk.stuba.fei.feidroid.entities.ApplicationCategory;
 import sk.stuba.fei.feidroid.resources.ApplicationCategoryResource;
 
 @Path("/category")
-public class ApplicationCategoryService extends BasicService {
-	private static final Class<?> ENTITY_CLASS = ApplicationCategory.class;
-	private static final String ENTITY_NAME = "ApplicationCategory";
-
-	@Override
-	public Class<?> getEntityClass() {
-		return ENTITY_CLASS;
+public class ApplicationCategoryService extends
+    BasicService<ApplicationCategory, ApplicationCategoryResource> {
+	public ApplicationCategoryService() {
+		super(ApplicationCategory.class);
 	}
 
 	@Override
-	public String getEntityName() {
-		return ENTITY_NAME;
-	}
-
-	@Override
-	public Object convertToResource(Object object) {
+	public ApplicationCategoryResource convertEntityToResource(
+	    ApplicationCategory entity) {
 		ApplicationCategoryResource res = new ApplicationCategoryResource();
-		ApplicationCategory cat = (ApplicationCategory) object;
-		res.setId(cat.getId());
-		res.setDescription(cat.getDescription());
-		res.setTitle(cat.getTitle());
+		res.setId(entity.getId());
+		res.setDescription(entity.getDescription());
+		res.setTitle(entity.getTitle());
 
 		return res;
 	}
 
 	@Override
-	protected Object convertToEntity(Object resource) {
+	protected ApplicationCategory convertResourceToEntity(
+	    ApplicationCategoryResource resource) {
 		return null;
 	}
 }

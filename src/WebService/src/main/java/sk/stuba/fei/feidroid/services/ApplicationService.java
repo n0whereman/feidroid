@@ -20,47 +20,32 @@ import sk.stuba.fei.feidroid.resources.ApplicationResource;
 import sk.stuba.fei.feidroid.resources.PermissionResource;
 
 @Path("/application")
-public class ApplicationService extends BasicService {
-	private static final String ENTITY_NAME = "Application";
+public class ApplicationService extends
+    BasicService<Application, ApplicationResource> {
+
 	private ApplicationCategoryService appCategoryService;
 	private PermissionService permissionService;
 
 	public ApplicationService() {
-		super();
+		super(Application.class);
 		appCategoryService = new ApplicationCategoryService();
 		permissionService = new PermissionService();
 	}
 
 	@Override
-	public String getEntityName() {
-		return ENTITY_NAME;
-	}
-
-	@Override
-	public Class<?> getEntityClass() {
-		return Application.class;
-	}
-
-	@Override
-	public Object convertToResource(Object object) {
+	public ApplicationResource convertEntityToResource(Application entity) {
 		ApplicationResource resource = new ApplicationResource();
-		Application app = (Application) object;
 
-		resource.setName(app.getName());
-		resource.setId(app.getId());
-		resource.setDescription(app.getDescription());
-		resource.setVersion(app.getVersion());
+		resource.setName(entity.getName());
+		resource.setId(entity.getId());
+		resource.setDescription(entity.getDescription());
+		resource.setVersion(entity.getVersion());
 
 		return resource;
 	}
 
 	@Override
-	protected Object convertToEntity(Object resource) {
-		return null;
-	}
-
-	private Application convertApplicationResourceToEntity(
-	    ApplicationResource resource) {
+	protected Application convertResourceToEntity(ApplicationResource resource) {
 		Application app = new Application();
 		app.setId(resource.getId());
 		app.setName(resource.getName());
@@ -75,8 +60,8 @@ public class ApplicationService extends BasicService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findCategoriesResource(@PathParam("id") Long id) {
 
-		Application result = (Application) findById(id);
-		Collection<ApplicationCategoryResource> col = (Collection<ApplicationCategoryResource>) appCategoryService
+		Application result = findById(id);
+		Collection<ApplicationCategoryResource> col = appCategoryService
 		    .convertListToResource(result.getCategories());
 
 		return Response.ok(collectionToJsonArray(col).toString()).build();
@@ -89,7 +74,7 @@ public class ApplicationService extends BasicService {
 	public Response setApplicationCategoriesResource(@PathParam("id") Long id,
 	    List<Integer> categoryIds) {
 		Application app = (Application) findById(id);
-		List<ApplicationCategory> catList = (List<ApplicationCategory>) appCategoryService
+		List<ApplicationCategory> catList = appCategoryService
 		    .findByIds(categoryIds);
 
 		app.setCategories(catList);
@@ -104,7 +89,7 @@ public class ApplicationService extends BasicService {
 	public Response findPermissionsResource(@PathParam("id") Long id) {
 
 		Application result = (Application) findById(id);
-		Collection<PermissionResource> col = (Collection<PermissionResource>) permissionService
+		Collection<PermissionResource> col = permissionService
 		    .convertListToResource(result.getPermissions());
 
 		return Response.ok(collectionToJsonArray(col).toString()).build();
@@ -130,9 +115,9 @@ public class ApplicationService extends BasicService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createNewApplicationResource(ApplicationResource resource) {
-		Application app = convertApplicationResourceToEntity(resource);
+		Application app = convertResourceToEntity(resource);
 		persistEntity(app);
 
-		return Response.status(201).entity(convertToResource(app)).build();
+		return Response.status(201).entity(convertEntityToResource(app)).build();
 	}
 }
