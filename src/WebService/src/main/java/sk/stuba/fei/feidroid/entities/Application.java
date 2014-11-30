@@ -16,7 +16,8 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = "Application.findAll", query = "SELECT a FROM Application a"),
     @NamedQuery(name = "Application.findById", query = "SELECT a FROM Application a WHERE a.id = :idParam"),
-    @NamedQuery(name = "Application.findByIds", query = "SELECT a FROM Application a WHERE a.id IN :idListParam") })
+    @NamedQuery(name = "Application.findByIds", query = "SELECT a FROM Application a WHERE a.id IN :idListParam"),
+    @NamedQuery(name = "Application.findMatch", query = "SELECT a FROM Application a WHERE a.name = :nameParam AND a.version = :versionParam") })
 public class Application {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

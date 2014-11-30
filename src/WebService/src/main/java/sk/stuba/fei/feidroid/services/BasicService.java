@@ -26,19 +26,24 @@ abstract public class BasicService<Entity, Resource> {
 
 	public Entity findById(Long id) {
 		EntityManager em = getEntityManager();
+		Entity result = null;
 
-		Entity result = em
-		    .createNamedQuery(getEntityName() + ".findById", getEntityClass())
-		    .setParameter("idParam", id).getSingleResult();
+		List<Entity> results = em
+		    .createNamedQuery(getNamedQuery("findById"), getEntityClass())
+		    .setParameter("idParam", id).getResultList();
 
 		em.close();
+
+		if (!results.isEmpty()) {
+			result = results.get(0);
+		}
 
 		return result;
 	}
 
 	public List<Entity> findAll() {
 		EntityManager em = getEntityManager();
-		List<Entity> result = em.createNamedQuery(getEntityName() + ".findAll",
+		List<Entity> result = em.createNamedQuery(getNamedQuery("findAll"),
 		    getEntityClass()).getResultList();
 
 		em.close();
@@ -49,7 +54,7 @@ abstract public class BasicService<Entity, Resource> {
 	public List<Entity> findByIds(List<Integer> ids) {
 		EntityManager em = getEntityManager();
 		List<Entity> result = em
-		    .createNamedQuery(getEntityName() + ".findByIds", getEntityClass())
+		    .createNamedQuery(getNamedQuery("findByIds"), getEntityClass())
 		    .setParameter("idListParam", ids).getResultList();
 
 		em.close();
@@ -83,6 +88,10 @@ abstract public class BasicService<Entity, Resource> {
 
 	public String getEntityName() {
 		return entityClass.getSimpleName();
+	}
+
+	protected String getNamedQuery(String queryName) {
+		return getEntityName() + "." + queryName;
 	}
 
 	public EntityManager getEntityManager() {

@@ -3,6 +3,7 @@ package sk.stuba.fei.feidroid.services;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -36,10 +37,12 @@ public class ApplicationService extends
 	public ApplicationResource convertEntityToResource(Application entity) {
 		ApplicationResource resource = new ApplicationResource();
 
-		resource.setName(entity.getName());
-		resource.setId(entity.getId());
-		resource.setDescription(entity.getDescription());
-		resource.setVersion(entity.getVersion());
+		if (entity != null) {
+			resource.setName(entity.getName());
+			resource.setId(entity.getId());
+			resource.setDescription(entity.getDescription());
+			resource.setVersion(entity.getVersion());
+		}
 
 		return resource;
 	}
@@ -53,6 +56,37 @@ public class ApplicationService extends
 		app.setVersion(resource.getVersion());
 
 		return app;
+	}
+
+	private Application createNewApplication(Application app) {
+		Application newApp = null;
+		if (!(app.getName() == null || app.getName().isEmpty())
+		    && !(app.getVersion() == null || app.getVersion().isEmpty())) {
+			newApp = findMatchingApplication(app);
+			if (newApp == null) {
+				newApp = persistEntity(app);
+			}
+		}
+
+		return newApp;
+	}
+
+	public Application findMatchingApplication(Application app) {
+		EntityManager em = getEntityManager();
+		Application result = null;
+
+		List<Application> results = em
+		    .createNamedQuery(getNamedQuery("findMatch"), getEntityClass())
+		    .setParameter("nameParam", app.getName())
+		    .setParameter("versionParam", app.getVersion()).getResultList();
+
+		em.close();
+
+		if (!results.isEmpty()) {
+			result = results.get(0);
+		}
+
+		return result;
 	}
 
 	@GET
@@ -116,8 +150,12 @@ public class ApplicationService extends
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createNewApplicationResource(ApplicationResource resource) {
 		Application app = convertResourceToEntity(resource);
-		persistEntity(app);
+		app = createNewApplication(app);
 
-		return Response.status(201).entity(convertEntityToResource(app)).build();
+		if (app == null) {
+			return errorResponse();
+		} else {
+			return Response.status(201).entity(convertEntityToResource(app)).build();
+		}
 	}
 }
