@@ -2,8 +2,11 @@ package sk.stuba.fei.feidroid.feidroidapp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import android.app.Activity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,12 +73,28 @@ public class AppDetails extends Activity {
 
 		securityRisk.setText(sec_level);
 		
-		String[] permissions_values = new String[] { "INTERNET", "WRITE_EXTERNAL_STORAGE", "ACCES_FINE_LOCATION", "READ_PHONE_STATE" };    
-		ArrayList<String> planetList = new ArrayList<String>();  
-		planetList.addAll( Arrays.asList(permissions_values) );  
+		listAdapter = new ArrayAdapter<String>(this, R.layout.listview_item, new ArrayList<String>());  
+		
+		boolean getSysPackages = true;
+		PackageManager pm = getPackageManager();
+		List<PackageInfo> packages = pm.getInstalledPackages(PackageManager.GET_PERMISSIONS | PackageManager.GET_PROVIDERS);
+	    for(PackageInfo p : packages) {
+	        if ((!getSysPackages) && (p.versionName == null)) {
+	            continue ;
+	        }
+	        
+	        if( p.applicationInfo.loadLabel(pm).toString().equalsIgnoreCase(b.getString("app_name")))
+	        {
+		        String[] requestedPermissions = p.requestedPermissions;
+		        if(requestedPermissions != null) 
+		        {
+		        	listAdapter.addAll(requestedPermissions);
+		        }
+	        }
+	    }
+		 
 		
 		// Create ArrayAdapter using the planet list.  
-		listAdapter = new ArrayAdapter<String>(this, R.layout.listview_item, planetList);
 		permissions.setAdapter(listAdapter);
 	}
 

@@ -1,10 +1,26 @@
 package sk.stuba.fei.feidroid.feidroidapp;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.regex.PatternSyntaxException;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,8 +31,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends Activity 
+{
 	ListView apps;
 	ArrayAdapter<String> listAdapter ;  
 	
@@ -25,24 +41,28 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);        
         setContentView(R.layout.activity_main);
         
-        apps = (ListView)findViewById(R.id.listView1);
+        String url = "http://danny-n.webpark.cz/files/test.json";
+        //connect(url);
+        new RetrieveFeedTask().execute(url);
         
-        String[] planets = new String[] { "Facebook", "Twitter", "VLC", "OrBot",  
-                "Throne Rush", "Calculator C++", "FileManager", "Messenger"};    
-		ArrayList<String> planetList = new ArrayList<String>();  
-		planetList.addAll( Arrays.asList(planets) );  
-		
+        
+        apps = (ListView)findViewById(R.id.listView1);   
+        
 		// Create ArrayAdapter using the planet list.  
-		listAdapter = new ArrayAdapter<String>(this, R.layout.listview_item, planetList);  
+		listAdapter = new ArrayAdapter<String>(this, R.layout.listview_item, new ArrayList<String>());  		
 		
-		// Add more planets. If you passed a String[] instead of a List<String>   
-		// into the ArrayAdapter constructor, you must not add more items.   
-		// Otherwise an exception will occur.  
-		//listAdapter.add( "Ceres" );  
-		//listAdapter.add( "Pluto" );  
-		//listAdapter.add( "Haumea" );  
-		//listAdapter.add( "Makemake" );  
-		//listAdapter.add( "Eris" );  
+		boolean getSysPackages = true;
+		PackageManager pm = getPackageManager();
+		//List<PackageInfo> packages = pm.getInstalledPackages(0);
+		List<PackageInfo> packages = pm.getInstalledPackages(PackageManager.GET_PERMISSIONS | PackageManager.GET_PROVIDERS);
+	    for(PackageInfo p : packages) 
+	    {
+	        if ((!getSysPackages) && (p.versionName == null)) {
+	            continue ;
+	        }
+	        String appname = p.applicationInfo.loadLabel(pm).toString();
+	        listAdapter.add(appname);
+	    }
 		
 		// Set the ArrayAdapter as the ListView's adapter.  
 		apps.setAdapter( listAdapter );    
@@ -83,4 +103,142 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public static void connect(String url)
+    {
+        HttpClient httpclient = new DefaultHttpClient();
+
+        // Prepare a request object
+        HttpGet httpget = new HttpGet(url); 
+
+        // Execute the request
+        HttpResponse response;
+        try {
+            response = httpclient.execute(httpget);
+            // Examine the response status
+            int code = response.getStatusLine().getStatusCode();
+
+            // Get hold of the response entity
+            HttpEntity entity = response.getEntity();
+            // If the response does not enclose an entity, there is no need
+            // to worry about connection release
+            
+            if (entity != null) 
+            {
+                // A Simple JSON Response Read
+                InputStream instream = entity.getContent();
+                String result= convertStreamToString(instream);
+                // now you have the string representation of the HTML request
+                instream.close();
+            }
+
+
+        } 
+        catch (Exception e) 
+        {
+        	String m = e.getMessage();
+        }
+    }
+
+        private static String convertStreamToString(InputStream is) {
+        /*
+         * To convert the InputStream to String we use the BufferedReader.readLine()
+         * method. We iterate until the BufferedReader return null which means
+         * there's no more data to read. Each line will appended to a StringBuilder
+         * and returned as String.
+         */
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
+    }
+}
+
+class RetrieveFeedTask extends AsyncTask<String, Void, String> {
+
+    private Exception exception;
+
+    protected String doInBackground(String... urls) 
+    {
+    	HttpClient httpclient = new DefaultHttpClient();
+
+        // Prepare a request object
+    	String url = "http://danny-n.webpark.cz/files/test.json";
+        HttpGet httpget = new HttpGet(url); 
+
+        // Execute the request
+        HttpResponse response;
+        try {
+            response = httpclient.execute(httpget);
+            // Examine the response status
+            int code = response.getStatusLine().getStatusCode();
+
+            // Get hold of the response entity
+            HttpEntity entity = response.getEntity();
+            // If the response does not enclose an entity, there is no need
+            // to worry about connection release
+            
+            if (entity != null) 
+            {
+                // A Simple JSON Response Read
+                InputStream instream = entity.getContent();
+                String result= convertStreamToString(instream);
+                // now you have the string representation of the HTML request
+                instream.close();
+                
+                return result;
+            }
+
+        } 
+        catch (Exception e) 
+        {
+        	String m = e.getMessage();
+        	
+        	return m;
+        }
+		return "SOMETHING";
+    	
+    }
+
+    private static String convertStreamToString(InputStream is) {
+        /*
+         * To convert the InputStream to String we use the BufferedReader.readLine()
+         * method. We iterate until the BufferedReader return null which means
+         * there's no more data to read. Each line will appended to a StringBuilder
+         * and returned as String.
+         */
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
+    }
+
 }
