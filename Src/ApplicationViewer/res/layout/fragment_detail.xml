@@ -1,0 +1,331 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="pete.android.study.ui.fragments.DetailFragment">
+    
+    <LinearLayout 
+        android:padding="@dimen/padding_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    
+    	<!-- Icon & App Name -->
+    
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:gravity="center_vertical"
+	        android:layout_marginBottom="@dimen/padding_16">
+	
+	        <ImageView 
+	            android:layout_width="80dp"
+	            android:layout_height="80dp"
+	            android:contentDescription="@string/desc"
+	            android:id="@+id/app_icon"/>
+	        
+	        <TextView 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:textSize="24sp"
+	            android:id="@+id/app_name"/>
+	        
+	    </LinearLayout>
+	    
+	    <!-- Package Name -->
+	    
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+	    
+	        <TextView 
+	        	android:textStyle="bold"
+	        	android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:text="@string/label_package_name"
+	        	android:layout_marginRight="@dimen/padding_8"
+	        	style="@style/mediumBlackText"/>
+	    
+		    <TextView 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:id="@+id/package_name"
+		        style="@style/mediumBlackText"/>
+		 </LinearLayout>
+		     
+	    <!-- Class Name -->
+	    
+		 <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_class_name"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/class_name"/>   	    
+	    </LinearLayout>
+	    
+		 <!-- Process Name -->
+		 
+	     <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_process_name"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/process_name"
+			    style="@style/mediumBlackText"/>   	    
+	    </LinearLayout>
+	    
+	     <!-- Version Name -->
+		 
+	     <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_version_name"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/version_name"
+			    style="@style/mediumBlackText"/>   	    
+	    </LinearLayout>
+	    
+	     <!-- Version Code -->
+		 
+	     <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_version_code"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/version_code"
+			    style="@style/mediumBlackText"/>   	    
+	    </LinearLayout>
+	    
+		 <!-- SDK Version -->
+		 
+	     <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_sdk_version"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/sdk_version"
+			    style="@style/mediumBlackText"/>   	    
+	    </LinearLayout>
+	    
+	     <!-- Install date -->
+		 
+	     <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_install_date"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/install_date"
+			    style="@style/mediumBlackText"/>   	    
+	    </LinearLayout>
+	    
+	     <!-- Last update -->
+		 
+	     <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_last_update"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/last_update"
+			    style="@style/mediumBlackText"/>   	    
+	    </LinearLayout>
+	     
+	     <!-- Source Dir -->
+		 
+	     <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_source_directory"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/source_dir"
+			    style="@style/mediumBlackText"/>   	    
+	    </LinearLayout>
+	     
+	    <!-- Data Dir -->
+		 
+	     <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_data_directory"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/data_dir"
+			    style="@style/mediumBlackText"/>   	    
+	    </LinearLayout>
+	    
+	    <!-- Permission List -->
+	    
+	    <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_permissions"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/app_permissions"
+			    android:text="@string/label_no_permissions"
+			    style="@style/mediumBlackText"/>   	    
+	    </LinearLayout>
+	    
+	    <!-- Flag List -->
+	    
+	    <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_flags"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/app_flags"
+			    style="@style/mediumBlackText"/>   	    
+	    </LinearLayout>	    
+	    
+	    <!-- Category Spiner -->
+	    
+	    <LinearLayout
+	         android:layout_width="match_parent"
+	       	 android:layout_height="wrap_content"
+	       	 android:gravity="center_horizontal">
+	    	
+	    	<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_Category"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+	    	
+	    	<Spinner
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content" 
+			    android:id="@+id/spinner_category"
+			    android:prompt="@string/label_Category"
+			    android:entries="@array/category_array"/>
+	    </LinearLayout>
+	    
+	     <!-- Analysis Button -->
+	     
+	     <LinearLayout
+	         android:layout_width="match_parent"
+	       	 android:layout_height="wrap_content"
+	       	 android:gravity="center_horizontal">
+			
+	          <Button
+      			  android:layout_width="wrap_content"
+			      android:layout_height="wrap_content"
+			      android:text="@string/Analyze_appButton"
+			      android:id="@+id/AppAnalysis"/>
+	     </LinearLayout>
+    
+    </LinearLayout>
+          
+</ScrollView>
+    

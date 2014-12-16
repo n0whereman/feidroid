@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="entertainment_permissions">
+        <item>READ_SMS</item>
+		<item>SEND_SMS</item>
+		<item>WRITE_SMS</item>
+		<item>RECEIVE_SMS</item>
+		<item>BROADCAST_SMS</item>
+		<item>RECEIVE_MMS</item>
+		<item>CALL_PHONE</item>
+		<item>READ_CALL_LOG</item>
+		<item>WRITE_CALL_LOG</item>
+		<item>READ_LOGS</item>
+		<item>READ_CONTACTS</item>
+		<item>WRITE_CONTACTS</item>
+		<item>CHANGE_WIFI_STATE</item>
+		<item>CHANGE_CONFIGURATION</item>
+		<item>REBOOT</item>
+		<item>ACCESS_COARSE_LOCATION</item>
+		<item>ACCESS_FINE_LOCATION</item>
+		<item>GET_TASKS</item>
+		<item>REORDER_TASKS</item>
+		<item>RECORD_AUDIO</item>
+		<item>DEVICE_POWER</item>
+		<item>MODIFY_PHONE_STATE</item>
+		<item>KILL_BACKGROUND_PROCESSES</item>
+		<item>WRITE_SECURE_SETTINGS</item>
+		<item>PROCESS_OUTGOING_CALLS</item>
+		<item>BRICK</item>
+		<item>DIAGNOSTIC</item>
+		<item>INJECT_EVENTS</item>
+		<item>MASTER_CLEAR</item>
+		<item>SET_ALWAYS_FINISH</item>
+		<item>SET_ANIMOATION_SCALE</item>
+		<item>SET_PROCES_LIMIT</item>
+		<item>BIND_DEVICE_ADMIN</item>
+		<item>DISABLE_KEYGUARD</item>
+		<item>BIND_VPN_SERVICE</item>
+		<item>MOUNT_FORMAT_FILESYSTEMS</item>
+		<item>MOUNT_UNMOUNT_FILESYSTEMS</item>          
+    </string-array>
+</resources>

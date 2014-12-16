@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <string-array name="green_descriptions">
+          <!-- Green -->
+	        <item>ACCESS_NETWORK_STATE	Povoľuje aplikácii zobraziť informácie o sieťových pripojeniach, ako napríklad o tom, ktoré siete sú k dispozícii na pripojenie alebo ktoré sú pripojené.</item>
+	        <item>ACCESS_WIFI_STATE	Povolenie umožňuje aplikácií zobraziť informácie o sieťach Wi-Fi, napríklad o tom, či je sieť Wifi povolená alebo názvy pripojených zariadení na Wi-Fi.</item>
+	        <item>BATTERY_STATS	Povolenie umožňuje aplikácii prístup k aktuálnym údajoom o spotrebe pri nízkej úrovni stavu batérie. Prostredníctvom týchto infrmácií môže apikácia získať detaily o tom aké aplikácie používate.</item>
+	        <item>FLASHLIGHT	Povolenie umožňuje prístup aplikácii k baterke(svetlo fotoaparátu).</item>
+	        <item>GET_ACCOUNTS	Povolenie umožňuje aplikácii získať zoznam účtov v zariadení. Môžu se patriť akékoľvek účty vytvorené aplikáciami, ktoré ste nainštalovali.</item>
+	        <item>READ_EXTERNAL_STORAGE	Povolenie umožňuje aplikácii testovať oprávnenie pre úložisko USB, ktoré bude k dispozícii na zariadení.</item>
+	        <item>READ_SYNC_SETTINGS	Povolenie umožňuje aplikácii čítať nastavenia aplikácie, napríklad, či je zapnutá synchronizácia kontaktov.</item>
+	        <item>RECEIVE_BOOT_COMPLETED	Povolenie umožňnuje aplikácii okamžité spustenie po spustení systému. Toto môže spomaľovať spustenie zariadenia, pretože aplikácia bude neustále zapnutá. </item>
+	        <item>SET_ALARM	Povolenie umožňuje aplikácii nastaviť budík v rámci nainštalovanej aplikácie budíka. Niektoré aplikácie budíka nemusia mať túto funkciu implementovanú.</item>
+	        <item>SET_WALLPAPER	Povolenie umožňuje aplikácii nastaviť tapetu systému. </item>
+	        <item>SET_WALLPAPER_HINTS	Povolenie umožňuje aplikácii nastviť tipy na veľkosť tapety systému.</item>
+	        <item>VIBRATE	Povolenie umožňuje aplikácii ovládať vibrácie zariadenia.</item>
+	        <item>TRANSMIT_IR	Povolenie umožňuje aplikácii používať infraport (ak je na zariadení dostupný).</item>
+	        <item>WAKE_LOCK	Povolenie umožňuje aplikácii zabrániť prechodu zariadenia do režímu spánku.</item>
+	        <item>WRITE_USER_DICTIONARY	Povelenie umožňuje aplikácii písať nové slová do používateľského slovníka.</item>
+	        <item>SUBSCRIBED_FEEDS_READ	Povolenie umožňuje aplikácii získať podrobnosti o aktuálne synchronizovaných informačných kanáloch.</item>
+        </string-array>
+        
+        <string-array name="yellow_descriptions">
+        <!-- Yellow -->
+	        <item>SUBSCRIBED_FEEDS_WRITE	Povolenie umožňuje aplikácii upravovať aktuálne synchronizované kanály. Škodlivé aplikácie môžu synchronizované kanály zmeniť.</item>
+	        <item>UNINSTALL_SHORTCUT	Povolenie umožňuje aplikácii odinštalovať svojho zástupcu z Lancher-u.</item>
+	        <item>BLUETOOTH	Povolenie umožňuje aplikácii zobraziť informácie o konfigurácii bluetooth na telefóne. Taktiež jej umožňuje nadväzovať a akceptovať spojenia so spárovanými zariadeniami.</item>
+	        <item>BROADCAST_STICKY	Povolenie umožňuje aplikácii odosielať trvalé vysielania , ktoré pretrvávajú aj po skončení vysielania. Nadmerné používanie môže zariadenie spomaliť alebo spôsobiť jeho nestabilitu, pretože bude používať príliš veľa pamäte.</item>
+	        <item>EXPAND_STATUS_BAR	Povolenie umožňuje aplikácii rozbaliť alebo zabaliť stvový riadok.</item>
+	        <item>GET_PACKAGE_SIZE	Povolenie umožňuje aplikácii získať veľkosti kódu, údajov alebo vyrovnávacej pamäte.</item>
+	        <item>INTERNET	Povoľuje aplikácii vytvárať sokety siete a používať vlastné protokoly siete. Toto povolenie sa pri odosielaní údajov na internet nevyžaduje, pretože prostriedky na odosielanie údajov na internet poskytuje prehliadač a iné aplikácie.</item>
+	        <item>MANAGE_ACCOUNTS	Povolenie umožňuje aplikácii vykonávať operácie ako pridávanie a odstraňovanie kont a odstraňovanie ich hesla.</item>
+	        <item>MODIFY_AUDIO_SETTINGS	Povolenie umožňuje aplikácii upravovať globálne nastavenia zvuku, ako je hlasitosť alebo určiť, z ktoré reproduktora bude zvuk vychadzať.</item>
+	        <item>PERSISTENT_ACTIVITY	Povolenie umožňuje aplikácii uložiť niektoré svoje údaje natrvalo do pamäte. Môže to obmedziť pamäť dostupnú pre ostatné aplikácie a spomaliť tak zariadenie.</item>
+	        <item>READ_PHONE_STATE	Povolenie umožňuje aplikácii pristupovať k telefónnym funkciám zariadenia. Aplikácia s týmto povolením môže určiť telefónne číslo a identifikáciu zariadenia, či práve prebieha hovor a tiež vzdialené číslo, ku ktorému je prostredníctvom hovoru pripojené.</item>
+	        <item>READ_SYNC_STATS	Povolenie umožňuje aplikácii čítať štatistické informácie o synchronizácii v účte vrátane histórie synchronizovaných udalostí a informácií o množstve synchronizovaných údajov.</item>
+	        <item>READ_USER_DICTIONARY	Povolenie umožňuje aplikácii čítať všetky slová, názvy a výrazy, ktoré mohol používateľ uložiť do používateľského slovníka.</item>
+	        <item>SET_TIME	Povolenie umožňuje aplikácii  zmeniť čas na zariadení.</item>
+	        <item>SIGNAL_PERSISTENT_PROCESSES	Povolenie umožňuje aplikácii vyžiadať odoslanie poskytnutého signálu všetkým trvalým procesom.</item>
+	        <item>WRITE_EXTERNAL_STORAGE	Povolenie umožňuje aplikácii zapisovať do interného ukladacieho priestoru.</item>
+        </string-array>
+        
+        <string-array name="orange_descriptions">
+        <!-- Orange -->
+	        <item>ACCESS_CHECKIN_PROPERTIES	Povolenie umožňuje aplikácii prístup na zapisovanie alebo čítanie vlastností, ktoré odovzdala služba vrátenia. Bežné aplikácie toto povolenie nepoužívajú.</item>
+	        <item>ACCESS_COARSE_LOCATION	Povolenie umožňuje aplikácii získať približné miesto, kde sa vaše zariadenie nachádza. Toto miesto je odvodené zo služieb určovania miesta pomocou zdrojov určenia miesta siete, napríklad vysielačov a sietí Wi-Fi. Služby určovania miesta musia byť na zariadení zapnuté a dostupné, inak ich aplikácia nebude môcť využívať. Škodlivé aplikácie môžu tieto služby využívať na určenie vášho priližného miesta.</item>
+	        <item>ACCESS_FINE_LOCATION	Povolenie umožňuje aplikácii prístupovať k presným zdrojom informácií o polohe, ako je napríklad systém GPS na zariadení. Keď sú služby určovania polohy k dispozícii a sú zapnuté, toto povolenie umožňuje aplikácii určiť vašu polohu.</item>
+	        <item>ACCESS_LOCATION_EXTRA_COMMANDS	Povolenie umožňuje aplikácii pristupovať k ďalším príkazom poskytovateľa informácií o mieste. Aplikácii to môže povoliť zasahovať do činnosti systému GPS alebo iných zdrojov.</item>
+	        <item>ACCESS_MOCK_LOCATION	Povolenie umožňuje aplikácii vytváranie simulovaných zdrojov na testovanie alebo inštaláciu nového poskytovateľa informácií o mieste. Povolenie aplikácií povolí prepísať miesto a stav, ktoré vracajú iné zdroje polohy, ako napríklad GPS a ďalší poskytovatelia informácií o mieste.</item>
+	        <item>ADD_VOICEMAIL	Povolenie umožňuje aplikácii pridávať správy do doručenej pošty hlasovej schránky.</item>
+	        <item>AUTHENTICATE_ACCOUNTS	Povolenie umožňuje aplikácii používať overovacie funkcie správcu konta, vrátane vytvárania kont a získavania a nastavovania hesiel.</item>
+	        <item>BIND_APPWIDGET	Povolenie umožňuje aplikácii poskytnúť informácie o oprávneniach aplikácií využívať miniaplikácie. Prostredníctvom tohto povolenia môžu škodlivé aplikácie udeliť prístup iným aplikáciam k osobným údajom. Bežné aplikácie toto povolenie nepoužívajú.</item>
+	        <item>BIND_NFC_SERVICE	Povolenie umožňuje aplikácii viazať sa k službám zariadenia.</item>
+	        <item>BIND_NOTIFICATION_LISTENER_SERVICE	Povolenie umožňuje aplikácii viazať sa k službám Listener Service.</item>
+	        <item>BIND_PRINT_SERVICE	Povolenie umožňuje aplikácii viazať sa k službám Print Service.</item>
+	        <item>BIND_WALLPAPER	Povolenie umožňuje aplikácii pripojiť sa k rozhraniu najvyššej úrovne pre tapety. Bežné aplikácie toto povolenie nepoužívajú.</item>
+	        <item>BLUETOOTH_ADMIN	Povolenie umožňuje aplikácii konfigurovať zariadenie z rozhraním Bluetooth, vyhľadávať a spárovať vzdialené zariadenia.</item>
+	        <item>BLUETOOTH_PRIVILEGED	Povolenie umožňuje aplikácii spárovať zariadenie z rozhraním Bluetooth s inými zariadeniami bez zásahu užívateľa. Bežné aplikácie toto povolenie nepoužívajú.</item>
+	        <item>CAMERA	Povolenie umožňuje aplikácii fotografovať a nahrávať videá pomocou fotoaparátu. Povolenie oprávňuje aplikáciu používať fotoaparát kedykoľvek a bez užívateľovho potvrdenia.</item>
+	        <item>CAPTURE_AUDIO_OUTPUT	Povolenie umožňuje aplikácii zachytiť zvukový výstup zariadenia. Nie je určené pre aplikácie tretích strán.</item>
+	        <item>CAPTURE_SECURE_VIDEO_OUTPUT	Povolenie umožňuje aplikácii odchytiť bezpečný video výstup zariadenia. Bežné aplikácie by toto povolenie nemali používať.</item>
+	        <item>CAPTURE_VIDEO_OUTPUT	Povolenie umožňuje aplikácii video výstup zariadenia. Bežné aplikácie by toto povolenie nemali používať.</item>
+	        <item>CHANGE_CONFIGURATION	Povolenie umožňuje aplikácii zmeniť aktuálnu konfiguráciu, ako napríklad lokálne nastavenia alebo celkovú veľkosť písma.</item>
+	        <item>CHANGE_NETWORK_STATE	Povolenie umožňuje aplikácii zmeniť stav sieťového pripojenia.</item>
+	        <item>CHANGE_WIFI_MULTICAST_STATE	Povolenie umožňuje aplikácii prijímať pakety odoslané na všetky zariadenia v sieti Wi-Fi pomocou viacsmerných adries. Spotrebuje tak viac energie ako režím bez viacsmerného vysielania.</item>
+	        <item>CLEAR_APP_CACHE	Povolenie umožňuje aplikácii uvoľniť ukladací priestor telefónu odstránením súborov v adresári vyrovnávacej pamäte aplikácie. Prístup je veľmi obmedzený, väčšinou len pre systémové procesy.</item>
+	        <item>CONTROL_LOCATION_UPDATES	Povolenie umožňuje aplikácii povoliť alebo zakázať upozornenia s aktualizáciami polohy z rádia. Bežné aplikácie toto povolenia nepoužívajú.</item>
+	        <item>DISABLE_KEYGUARD	Povolenie umožňuje aplikácii zakázať uzamknutie klávesnice a akékoľvek súvisiace zabezpečenie heslom. Napríklad zakázanie uzamknutia klávesnice pri predchádzajúcom hovore a jeho opätovné povolenie po skončení hovoru.</item>
+	        <item>DUMP	Povolenie umožňuje aplikácii načítať vnútorný stav systému. Škodlivé aplikácie môžu načítať rôzne súkromné a bezpečnostné informácie, ktoré by za normálnych okolností nepotrebovali.</item>
+	        <item>FORCE_BACK	Povolenie umožňuje aplikácii vynútiť zatvorenie a vrátenie každej činnosti, ktorá je v popredí. Bežné aplikácie by toto povolenie nemali vôbec používať.</item>
+	        <item>GET_TASKS	Povolenie umožňuje aplikácii načítať informácie o aktuálnych a nedávno spustených úlohách. Aplikácia tak môže objaviť informácie o tom, ktoré aplikácie sa na zariadení používajú.</item>
+	        <item>GET_TOP_ACTIVITY_INFO	Povolenie umožňuje aplikácii načítať informácie  o aktuálne bežiacej činnosti. Bežné aplikácie by toto povolenie nemali používať.</item>
+	        <item>GLOBAL_SEARCH	Povolenie umožňuje aplikácii prístup k dátam pre globálny vyhľadávací systém.</item>
+	        <item>INSTALL_LOCATION_PROVIDER	Povolenie umožňuje aplikácii vytváranie simulovaných zdrojov na testovanie alebo inštaláciu nového poskytovateľa informácií o mieste. Povolenie aplikácií povolí prepísať miesto a stav, ktoré vracajú iné zdroje polohy, ako napríklad GPS a ďalší poskytovatelia informácií o mieste.</item>
+	        <item>INSTALL_PACKAGES	Povolenie umožňuje aplikácii inštalovať nové balíky systému Android alebo ich aktualizácie. Škodlivé aplikácie to môžu využiť na pridávanie nových aplikácii s ľubovoľnými povoleniami.</item>
+	        <item>INSTALL_SHORTCUT	Povolenie umožňuje aplikácii nainštalovať zástupcu v Lancher (Homescreen)</item>
+	        <item>INTERNAL_SYSTEM_WINDOW	Povolenie umožňuje aplikácii vytvárať okná, ktoré majú byť použité interným systémom používateľského rozhrania. Bežné aplikácie toto povolenie nepoužívajú.</item>
+	        <item>KILL_BACKGROUND_PROCESSES	Povolenie umožňuje aplikácii ukončiť procesy na pozadí ostatných aplikácií. Môže to zapríčiniť zastavenie ostatných aplikácií.</item>
+	        <item>LOCATION_HARDWARE	Povolenie umožňuje aplikácii používať lokalizačné funkcie v hardvéri.</item>
+	        <item>MANAGE_APP_TOKENS	Povolenie umožňuje aplikácii vytvárať a spravovať vlastné tokeny, obídením ich zvyčajného usporiadania na osi Z. Bežné aplikácie toto povolenie nepoužívajú.</item>
+	        <item>MANAGE_DOCUMENTS	Povolenie umožňuje aplikácii riadiť správu prístupu k dokumentom.</item>
+	        <item>MEDIA_CONTENT_CONTROL	Povolenie umožňuje aplikácii prístup k prehrávanému obsahu na zariadení a tiež ovládať prehrávanie. Bežné aplikácie toto povolenie nepoužívajú.</item>
+	        <item>MODIFY_PHONE_STATE	Povolenie umožňuje aplikácii ovládať funkcie zariadenia. Aplikácia s týmto povolením môže bez oznámenia napríklad zmeniť stav siete, zapnúť alebo vypnúť rádio, a podobne.</item>
+	        <item>MOUNT_FORMAT_FILESYSTEMS	Povolenie umožňuje aplikácii formátovať vymeniteľný ukladací priestor.</item>
+	        <item>MOUNT_UNMOUNT_FILESYSTEMS	Povolenie umožňuje aplikácii pripojiť alebo odpojiť systémy súborov k vymeniteľnému ukladaciemu priestoru.</item>
+	        <item>NFC	Povolenie umožňuje aplikácii komunikovať prostredníctvom značiek NFC(Near Fied Communication) kariet a čítacích zariadní.</item>
+	        <item>READ_CALENDAR	Povolenie umožňuje aplikácii čítať všetky udalosti kalendára uložené v zariadení, vrátane udalostí priateľov alebo spolupracovníkov. Aplikácii to umožní zdieľať alebo ukladať údaje kalendára bez ohľadu na dôvernosť a citlivosť týchto údajov.</item>
+	        <item>READ_FRAME_BUFFER	Povolenie umožňuje aplikácii čítať obsah snímkovej medzipamäte.</item>
+	        <item>READ_HISTORY_BOOKMARKS	Povolenie umožňuje aplikácii čítať históriu všetkých adries URL navštívených prehľadávačom a avšetky záložky prehľadávača.</item>
+	        <item>READ_LOGS	Povolenie umožňuje aplikácii čítať rôzne systémové súbory denníkov. Tým pádom môže získať všeobecné informácie o činnostiach zariadenia, ktoré by mohli obsahovať osobné informácie.</item>
+	        <item>READ_PROFILE	Povolenie umožňuje aplikácii čítať informácie v osobnom profile uložené v zariadení, ako je napríklad meno a kontaktné údaje. Znamená to, že Vás ostatné aplikácie môžu identifikovať a odoslať tieto informácie o vašom profile iným aplikáciam.</item>
+	        <item>READ_SMS	Povolenie umožňuje aplikácii čítať SMS správy uložené na zariadení alebo na karte SIM. Povolenie umožňuje aplikácii čítať tieto správy bez ohľadu na ich obsah alebo dôvernosť.</item>
+	        <item>REBOOT	Povolenie umožňuje aplikácii vynútiť reštartovanie zariadenia.</item>
+	        <item>RESTART_PACKAGES	Povolenie umožňuje aplikácii ukončiť procesy na pozadí ostatných aplikácií. Môže to zapríčiniť zastavenie ostatných aplikácií.</item>
+	        <item>SET_ANIMATION_SCALE	Povolenie umožňuje aplikácii kedykoľvek zmeniť rýchlosť animácií.</item>
+	        <item>SET_ORIENTATION	Povolenie umožňuje aplikácii kedykoľvek zmeniť otočenie obrazovky. Bežné aplikácie toto povolenie vo väčšine prípadov nepoužívajú.</item>
+	        <item>SET_POINTER_SPEED	Povolenie umožňuje aplikácii kedykoľvek zmeniť rýchlosť ukazovateľa myši alebo trackpadu. Bežné aplikácie by toto povolenie vôbec nemali používať.</item>
+	        <item>SET_TIME_ZONE	Povolenie umožňuje aplikácii zmeniť časové pásmo na zariadení.</item>
+	        <item>STATUS_BAR	Povolenie umožňuje aplikácii vypnúť stavový riadok, ako aj pridať alebo odobrať ikony systému.</item>
+	        <item>SYSTEM_ALERT_WINDOW	Povolenie umožňuje aplikácii vykresľovanie nad inými aplikáciami alebo súčasťami používateľského rozhrania. Táto funkcia môže zasahovať do rozhrania inej aplikácie alebo meniť zobrazovaný obsah v iných aplikáciách.</item>
+	        <item>UPDATE_DEVICE_STATS	Povolenie umožňuje aplikácii aktualizovať štatistické informácie zariadenia. Bežné aplikácie toto povolenie nepoužívajú.</item>
+	        <item>USE_CREDENTIALS	Povolenie umožňuje aplikácii požadovať overovacie tokeny.</item>
+	        <item>USE_SIP	Povolenie umožňuje aplikácii používať službu SIP na uskutočňovanie alebo prijímanie internetových hovorov.</item>
+	        <item>WRITE_CALENDAR	Povolenie umožňuje aplikácii pridávať, odstraňovať alebo meniť udalosti v kalendári, vrátane udalostí priateľov a spolupracovníkov. Prostredníctvom tohto povolenia môže aplikácia zapisovať správy, ktoré budú zdanlivo prichádzať od vlastníkov kalendára, alebo upravovať udalosti bez vedomia vlastníkov.</item>
+	        <item>WRITE_CALL_LOG	Povolenie umožňuje aplikácii upravovať denník hovorov v zariadení, vrátane údajov o prichádzajúcich a odchádzajúcich hovoroch. Škodlivé aplikácie to môžu zneužiť na vymazanie alebo modifikáciu denníka hovorov v zariadení.</item>
+	        <item>WRITE_GSERVICES	Povolenie umožňuje aplikácii upravovať zobrazenia služieb Google. Bežné aplikácie toto povolenie nepoužívajú.</item>
+	        <item>WRITE_PROFILE	Povolenie umožňuje aplikácii zmeniť alebo pridať do osobného profilu informácie uložené vo vašom zariadení, ako je vaše meno a iné kontaktné údaje. Aplikácia tak môže identifikovať a odoslať informácie o vašom profile ostatným aplikáciám.</item>
+	        <item>WRITE_SETTINGS	Povolenie umožňuje aplikácii upraviť údaje o nastavení systému. Škodlivé aplikácie to môže zneužiť na poškodenie konfigurácie systému.</item>
+	        <item>WRITE_SOCIAL_STREAM	Povolenie umožňuje aplikácii zobraziť sociálne aktualizácie od vašich priateľov. Toto povolenie umožňuje aplikácii vytvárať správy, ktoré zdanlivo prichádzajú od vašich priateľov. Toto povolenie však nie je možné vynucovať v prípade všetkých sociálnych sietí.</item>
+	        <item>WRITE_SYNC_SETTINGS	Povolenie umožňuje aplikácii upravovať nastavenia synchronizácie, napríklad, či je zapnutá synchronizácia kontaktov.</item>
+        </string-array>
+        
+        <string-array name="red_descriptions">
+        <!-- Red -->
+	        <item>ACCESS_SURFACE_FLINGER	Povolenie umožňuje aplikácii používať funkcie služby SurfaceFlinger na nízkej úrovni.</item>
+	        <item>ACCOUNT_MANAGER	Povolenie umožňuje aplikácii volať funkcie AccountAuthenticator.</item>
+	        <item>BIND_ACCESSIBILITY_SERVICE	Povolenie umožňuje aplikácii viazať sa na najvyššiu úroveň rozhrania služby zjednodušeného ovládania. Bežné aplikácie by toto povolenie vôbec nemali používať.</item>
+	        <item>BIND_DEVICE_ADMIN	Povolenie umožňuje aplikácii odosielať zámery správcovi zariadenia. Bežné aplikácie by toto povolenie vôbec nemali používať.</item>
+	        <item>BIND_INPUT_METHOD	Povolenie umožňuje aplikácii vytvárať väzbu na rozhranie najvyššej úrovne metódy vstupu. Vo väčšine prípadov by ju aplikácie nemali vôbec používať.</item>
+	        <item>BIND_REMOTEVIEWS	Povolenie umožňuje aplikácii viazať sa na najvyššiu úroveň rozhrania služby miniaplikácie. Bežné aplikácie by toto povolenie vôbec nemali používať.</item>
+	        <item>BIND_TEXT_SERVICE	Povolenie umožňuje aplikácii viazať sa na najvyššiu úroveň rozhrania textovej služby. Bežné aplikácie by toto povolenie vôbec nemali používať.</item>
+	        <item>BIND_VPN_SERVICE	Povolenie umožňuje aplikácii viazať sa na najvyššiu úroveň rozhrania služby VPN. Bežné aplikácie by toto povolenie vôbec nemali používať.</item>
+	        <item>BRICK	Povolenie umožňuje aplikácii natrvalo zakázať funkcie zariadenia. Jedná sa o veľmi nebezpečné povolenie.</item>
+	        <item>BROADCAST_PACKAGE_REMOVED	Povolenie umožňuje aplikácii vysielať oznámenia o odstránení balíkov aplikácií. Škodlivé aplikácie to môžu využiť na nútené odstránenie každej inej spustenej aplikácie.</item>
+	        <item>BROADCAST_SMS	Povolenie umožňuje aplikácii vysielať oznámenie o prijatí správy SMS. Škodlivé aplikácie to môžu zneužiť na na sfalšovanie prichádzajúcich správ SMS.</item>
+	        <item>BROADCAST_WAP_PUSH	Povolenie umožňuje aplikácii vysielať oznámenie o prijatí správy WAP PUSH. Škodlivé aplikácie to môžu zneužiť na sfalšovanie správy MMS alebo na tichú zmenu obsahu každej webovej stránky na škodlivé varianty.</item>
+	        <item>CALL_PHONE	Povolenie umožňuje aplikácii volať na telefónne čísla bez zásahu užívateľa. V dôsledku toho môžu byť účtované neočakávané poplatky alebo sa môžu uskutočniť neočakávané hovory. Povolenie nepovoľuje aplikácii volať na tiesňové čísla. Škodlivé aplikácie môžu spôsobiť výdavky uskutočňovaním hovorov bez potvrdenia užívateľa.</item>
+	        <item>CALL_PRIVILEGED	Povolenie umožňuje aplikácii volať na všetky telefónne čísla, vrátane čísiel tiesňového volania, bez zásahu užívateľa. Škodlivé aplikácie môžu spôsobiť nepotrebné a nelegálne telefonáty ľubovoľné čísla, vrátane čísiel tiesňového volania.</item>
+	        <item>CHANGE_COMPONENT_ENABLED_STATE	Povolenie umožňuje aplikácii zmeniť stav, či je súčasť inej aplikácie povolená alebo zakázaná. Škodlivé aplikácie môžu pomocou tohto nastavenia zakázať dôležité funkcie zariadenia, pričom súčasti aplikácií sa môžu dostať do nepoužiteľného, nekonzistentného alebo nestabilného stavu.</item>
+	        <item>CHANGE_WIFI_STATE	Povolenie umožňuje aplikácii pripojiť sa k prístupovým bodom siete Wi-Fi, odpojiť sa od nich a meniť konfiguráciu zariadení pre siete Wi-Fi.</item>
+	        <item>CLEAR_APP_USER_DATA	Povolenie umožňuje aplikácii vymazať používateľské údaje.</item>
+	        <item>DELETE_CACHE_FILES	Povolenie umožňuje aplikácii odstrániť súbory vyrovnávacej pamäte.</item>
+	        <item>DELETE_PACKAGES	Povolenie umožňuje aplikácii odstrániť balíky systému Android. Škodlivé aplikácie to môžu zneužiť na odstránenie dôležitých aplikácií.</item>
+	        <item>DEVICE_POWER	Povolenie umožňuje aplikácii zapnúť a vypnúť zariadenie.</item>
+	        <item>DIAGNOSTIC	Povolenie umožňuje aplikácii pristupovať ku všetkým zdrojom vlastnených diagnostickou skupinou alebo zapisovať do nich. Môže to ovplyvniť stabilitu a zabezpečenie systému. Toto povolenie sa môže používať LEN výrobcom alebo operátorom na diagnostiku hardvéru.</item>
+	        <item>FACTORY_TEST	Povolenie umožňuje aplikácii spustenie v režíme nízkoúrovňového testu výrobcu a povolí úplný prístup k hardvéru zariadenia.</item>
+	        <item>HARDWARE_TEST	Povolenie umožňuje aplikácii ovládať rôzne periférne zariadenia na testovanie hardvéru.</item>
+	        <item>INJECT_EVENTS	Povolenie umožňuje aplikácii doručiť vlastné udalosti vstupu (stlačenie tlačidiel, atď) ďalším aplikáciám. Škodlivé aplikácie môžu pomocou tohto nastavenia prevziať kontrolu nad telefónom.</item>
+	        <item>MASTER_CLEAR	Povolenie umožňuje aplikácii úplným vynulovaním systému obnoviť nastavenia od výrobcu, vymazať všetky údaje, konfigurácie a nainštalované aplikácie.</item>
+	        <item>PROCESS_OUTGOING_CALLS	Povolenie umožňuje aplikácii spracovávať odchádzajúce hovory a meniť vytáčané číslo. Ďalej aplikácii umožňuje sledovať a presmerovať odchádzajúce hovory alebo im zabrániť.</item>
+	        <item>READ_CALL_LOG	Povolenie umožňuje aplikácii čítať denník hovorov na zariadení, vrátane údajov o prichádzajúcich a odchádzajúcich hovoroch. Povolenie ďalej aplikácii umožňuje ukladať údaje o hovoroch. Škodlivé aplikácie môžu zdieľať údaje o hovoroch bez vedomia užívateľa.</item>
+	        <item>READ_CONTACTS	Povolenie umožňuje aplikácii čítať údaje o kontaktoch uložených v telefóne, vrátane informácií o frekvencii telefonátov, odoslaných e-mailov alebo iných foriem komunikácie s konkrétnymi osobami. Škodlivé aplikácie môžu zdieľať informácie o kontaktoch bez vedomia užívateľa.</item>
+	        <item>READ_INPUT_STATE	Povolenie umožňuje aplikácii sledovať a odchytávať, ktoré klávesy užívateľ stlačí, dokonca aj keď pracuje s inou aplikáciou. Bežné aplikácie by toto povolenie nemali nikdy používať.</item>
+	        <item>READ_SOCIAL_STREAM	Povolenie umožňuje aplikácii pristupovať k sociálnym aktualizáciám od vás a vašich priateľov a synchronizovať ich. Povolenie ďalej umožňuje aplikácii čítať komunikáciu medzi užívateľom a jeho priateľmi na sociálnych sieťach, a to bez ohľadu na jej dôvernosť.</item>
+	        <item>RECEIVE_MMS	Povolenie umožňuje aplikácii prijímať a spracovávať správy MMS. Znamená to, že aplikácia môže sledovať správy odoslané na zariadenie alebo ich odstrániť bez toho, aby sa užívateľovi zobrazili.</item>
+	        <item>RECEIVE_SMS	Povolenie umožňuje aplikácii prijímať a spracovávať správy SMS. Znamená to, že aplikácia môže sledovať správy odoslané na zariadenie alebo ich odstrániť bez toho, aby sa užívateľovi zobrazili.</item>
+	        <item>RECEIVE_WAP_PUSH	Povolenie umožňuje aplikácii prijímať a spracovávať správy WAP. Znamená to, že aplikácia môže sledovať správy odoslané na zariadenie alebo ich odstrániť bez toho, aby sa užívateľovi zobrazili.</item>
+	        <item>RECORD_AUDIO	Povolenie umožňuje aplikácii zaznamenávať zvuk pomocou mikrofónu zariadenia kedykoľvek bez užívateľovho vedomia.</item>
+	        <item>REORDER_TASKS	Povolenie umožňuje aplikácii presunúť úlohy do popredia alebo do pozadia. Aplikácia tak môže urobiť bez užívateľovho zásahu.</item>
+	        <item>SEND_RESPOND_VIA_MESSAGE	Povolenie umožňuje aplikácii poslať žiadosť iným aplikáciám na spracovanie akcie hlásenia o prichádzajúcom hovore.</item>
+	        <item>SEND_SMS	Povolenie umožňuje aplikácii odosielať správy SMS. Môže to mať za následok účtovanie neočakávaných poplatkov. Škodlivé aplikácie môžu spôsobiť výdavky odosielaním SMS správ bez užívateľovho vedomia.</item>
+	        <item>SET_ACTIVITY_WATCHER	Povolenie umožňuje aplikácii sledovať a ovládať spúšťanie činností systémom. Škodlivé aplikácie môžu úplne ovládnuť systém. Bežné aplikácie toto povolenie nepoužívajú. Povolenie sa využíva len na účely vývoja.</item>
+	        <item>SET_ALWAYS_FINISH	Povolenie umožňuje aplikácii ovládať, či sa ukončili činnosti po prechode do pozadia. Bežné aplikácie by toto povolenie nemali používať.</item>
+	        <item>SET_DEBUG_APP	Povolenie umožňuje aplikácii zapnúť ladenie inej aplikácie. Škodlivé aplikácie to môžu zneužiť na nútené odstránenie aplikácií.</item>
+	        <item>SET_PREFERRED_APPLICATIONS	Povolenie umožňuje aplikácii upraviť preferované aplikácie. Škodlivé aplikácie môžu v tichosti zmeniť spustené aplikácie a oklamať existujúce aplikácie, aby zhromažďovali súkromné údaje.</item>
+	        <item>SET_PROCESS_LIMIT	Povolenie umožňuje aplikácii ovládať maximálny počet spustených procesov. Bežné aplikácie by toto povolenie nemali používať.</item>
+	        <item>WRITE_APN_SETTINGS	Povolenie umožňuje aplikácii meniť nastavenia siete a zachytávať a kontrolovať sieťové prenosy.(Napríklad zmeniť adresu proxy a port ľubovoľného prístupového bodu APN). Škodlivé aplikácie môžu sledovať, presmerovať alebo upraviť sieťové pakety bez užívateľovho vedomia.</item>
+	        <item>WRITE_CONTACTS	Povolenie umožňuje aplikácii upraviť údaje o kontaktoch uložených v zariadení, vrátane informácií o frekvencii telefonátov, odoslaných e-mailov alebo iných foriem komunikácie s konkrétnymi osobami. Škodlivé aplikácie môžu upravovať ako aj odstraňovať informácie o kontaktoch bez vedomia užívateľa.</item>
+	        <item>WRITE_HISTORY_BOOKMARKS	Povolenie umožňuje aplikácii upravovať históriu prehliadača alebo záložky uložené v zariadení. Škodlivé aplikácie s týmto povolením môžu vymazať alebo upraviť údaje prehliadača.</item>
+	        <item>WRITE_SECURE_SETTINGS	Povolenie umožňuje aplikácii upravovať údaje zabezpečených nastavení systému. Bežné aplikácie by toto povolenie nemali vôbec používať.</item>
+	        <item>WRITE_SMS	Povolenie umožňuje aplikácii písať a upravovať správy SMS uložené v zariadení alebo na karte SIM. Škodlivé aplikácie môžu upravovať alebo odstrániť správy SMS bez užívateľovho vedomia.</item>
+    	</string-array>
+</resources>

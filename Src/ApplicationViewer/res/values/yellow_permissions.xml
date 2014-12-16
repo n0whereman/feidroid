@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="yellow_permissions">
+        <item>SUBSCRIBED_FEEDS_WRITE</item>
+		<item>UNINSTALL_SHORTCUT</item>
+		<item>BLUETOOTH</item>
+		<item>BROADCAST_STICKY</item>
+		<item>EXPAND_STATUS_BAR</item>
+		<item>GET_PACKAGE_SIZE</item>
+		<item>INTERNET</item>
+		<item>MANAGE_ACCOUNTS</item>
+		<item>MODIFY_AUDIO_SETTINGS</item>
+		<item>PERSISTENT_ACTIVITY</item>
+		<item>READ_PHONE_STATE</item>
+		<item>READ_SYNC_STATS</item>
+		<item>READ_USER_DICTIONARY</item>
+		<item>SET_TIME</item>
+		<item>SIGNAL_PERSISTENT_PROCESSES</item>
+		<item>WRITE_EXTERNAL_STORAGE</item>
+    </string-array>
+</resources>

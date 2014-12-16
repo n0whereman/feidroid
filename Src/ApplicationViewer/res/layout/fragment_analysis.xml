@@ -1,0 +1,80 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="pete.android.study.AnalysisActivity$PlaceholderFragment" >
+    
+    <!-- Score -->
+    <LinearLayout
+       android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_8">
+      
+			<TextView
+			    android:textStyle="bold"
+			    android:textSize="26sp"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_score"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:textSize="26sp"
+			    android:id="@+id/result_score"
+			    style="@style/mediumBlackText"/>
+	        
+    </LinearLayout>
+    
+    <!-- Progress Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_8">
+			 <ProgressBar
+			     android:id="@+id/progress_bar"
+		         android:layout_width="match_parent"
+		         android:layout_height="wrap_content"
+		         style="@android:style/Widget.ProgressBar.Horizontal"
+		         android:layout_marginRight="5dp"
+		         android:progressDrawable="@drawable/progressbar2"/>
+    </LinearLayout>
+    
+    <!-- List of suspicious Permissions -->
+    
+    <LinearLayout
+		    android:layout_width="match_parent"
+	       	android:layout_height="wrap_content">
+	
+			<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_unsafe_permissions"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+		    
+			<TextView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/suspicious_permissions"
+			    android:text="@string/label_no_permissions"
+			    style="@style/mediumBlackText"/>   	    
+	    </LinearLayout>   	    
+         
+         <!-- Permissions List with description -->
+
+    <ExpandableListView 
+	        android:layout_height="wrap_content"
+	        android:layout_width="match_parent"
+	        android:id="@+id/list_permisions"></ExpandableListView>
+  
+</LinearLayout>
