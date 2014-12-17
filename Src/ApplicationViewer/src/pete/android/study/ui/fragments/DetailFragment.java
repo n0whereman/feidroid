@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -91,7 +92,7 @@ public class DetailFragment extends Fragment{
 	
 	@InjectView(R.id.spinner_category)
 	Spinner mySpinner;
-		
+			
 	String choice;
 	
 	public static DetailFragment newInstance(Bundle bundle){
@@ -149,7 +150,7 @@ public class DetailFragment extends Fragment{
 				  else if(name.equals("File Manager") || name.equals("ProxyDroid") || name.equals("SuperSU")) app_id = 5;//Tools
 					   else app_id = -1;
 		
-		String result;
+		String result = "No category";
 		
 		if(app_id > 0)
 		{

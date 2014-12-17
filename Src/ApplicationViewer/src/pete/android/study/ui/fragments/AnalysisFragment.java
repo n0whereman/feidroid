@@ -2,6 +2,7 @@ package pete.android.study.ui.fragments;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -127,7 +128,10 @@ public class AnalysisFragment extends Fragment{
 		
 		//permissions
 		
-		Ctgr ctgr = Ctgr.valueOf(category);
+		//Ctgr ctgr = Ctgr.valueOf(category);
+		Random r = new Random();
+		int c = r.nextInt(Ctgr.values().length - 1);
+		Ctgr ctgr = Ctgr.values()[c];
 		
 		if(permissions != null)
 		{
