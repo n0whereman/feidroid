@@ -1,0 +1,15 @@
+INSERT INTO `APP_CATEGORY` (`TITLE`, `DESCRIPTION`) VALUES
+('Sports', NULL),
+('Health', NULL),
+('Games', NULL),
+('Travel', NULL),
+('Lifestyle', NULL),
+('Multimedia', NULL),
+('Entertainment', NULL),
+('Social', NULL),
+('Tools', NULL),
+('Communication', NULL),
+('Shopping', NULL),
+('Productivity', NULL),
+('Themes', NULL),
+('Finance', NULL);
