@@ -1,6 +1,6 @@
 package sk.stuba.fei.feidroid.entities;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,11 +29,11 @@ public class Application {
 
 	@ManyToMany
 	@JoinTable(name = "APPLICATION_APP_CATEGORY", joinColumns = { @JoinColumn(name = "APP_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "APP_CAT_ID", referencedColumnName = "ID") })
-	private Collection<ApplicationCategory> categories;
+	private List<ApplicationCategory> categories;
 
 	@ManyToMany
 	@JoinTable(name = "APPLICATION_PERMISSIONS", joinColumns = { @JoinColumn(name = "APP_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "PERMISSION_ID", referencedColumnName = "ID") })
-	private Collection<Permission> permissions;
+	private List<Permission> permissions;
 
 	public Long getId() {
 		return id;
@@ -67,11 +67,11 @@ public class Application {
 		this.version = version;
 	}
 
-	public Collection<ApplicationCategory> getCategories() {
+	public List<ApplicationCategory> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(Collection<ApplicationCategory> categories) {
+	public void setCategories(List<ApplicationCategory> categories) {
 		this.categories = categories;
 	}
 
@@ -79,11 +79,11 @@ public class Application {
 		categories.add(category);
 	}
 
-	public Collection<Permission> getPermissions() {
+	public List<Permission> getPermissions() {
 		return permissions;
 	}
 
-	public void setPermissions(Collection<Permission> permissions) {
+	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
 	}
 

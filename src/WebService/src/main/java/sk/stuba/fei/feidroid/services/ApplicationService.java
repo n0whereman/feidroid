@@ -13,6 +13,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import sk.stuba.fei.feidroid.analysis.AnalysisResult;
+import sk.stuba.fei.feidroid.analysis.ApplicationAnalyzer;
+import sk.stuba.fei.feidroid.analysis.simpleanalyzer.SimpleAnalysisResult;
+import sk.stuba.fei.feidroid.analysis.simpleanalyzer.SimpleApplicationAnalyzer;
 import sk.stuba.fei.feidroid.entities.Application;
 import sk.stuba.fei.feidroid.entities.ApplicationCategory;
 import sk.stuba.fei.feidroid.entities.Permission;
@@ -89,6 +93,11 @@ public class ApplicationService extends
 		return result;
 	}
 
+	public AnalysisResult analyzeApplication(ApplicationAnalyzer analyzer,
+	    Application app) {
+		return analyzer.analyze(app);
+	}
+
 	@GET
 	@Path("{id}/categories")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -157,5 +166,17 @@ public class ApplicationService extends
 		} else {
 			return Response.status(201).entity(convertEntityToResource(app)).build();
 		}
+	}
+
+	@GET
+	@Path("{id}/analyze")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response analyzeApplicationResource(@PathParam("id") Long id) {
+		Application app = findById(id);
+		SimpleApplicationAnalyzer analyzer = new SimpleApplicationAnalyzer();
+		SimpleAnalysisResult result = (SimpleAnalysisResult) analyzeApplication(
+		    analyzer, app);
+
+		return Response.ok(analyzer.convertResultToResource(result)).build();
 	}
 }

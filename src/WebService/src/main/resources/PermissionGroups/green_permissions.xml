@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <string-array name="green_permissions">
+         <item>ACCESS_NETWORK_STATE</item>
+        <item>ACCESS_WIFI_STATE</item>
+        <item>BATTERY_STATS</item>
+        <item>FLASHLIGHT</item>
+        <item>GET_ACCOUNTS</item>
+        <item>READ_EXTERNAL_STORAGE</item>
+        <item>READ_SYNC_SETTINGS</item>
+        <item>RECEIVE_BOOT_COMPLETED</item>
+        <item>SET_ALARM</item>
+        <item>SET_WALLPAPER</item>
+        <item>SET_WALLPAPER_HINTS</item>
+        <item>VIBRATE</item>
+        <item>TRANSMIT_IR</item>
+        <item>WAKE_LOCK</item>
+        <item>WRITE_USER_DICTIONARY</item>
+        <item>SUBSCRIBED_FEEDS_READ</item>
+    </string-array>
+</resources>
