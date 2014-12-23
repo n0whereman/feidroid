@@ -31,8 +31,6 @@ public class StringArrayParser extends DefaultHandler {
 	}
 
 	public List<String> parse(String filename) {
-		System.out.println(System.getProperty("user.dir"));
-
 		stringList = new ArrayList<String>();
 
 		try {

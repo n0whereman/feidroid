@@ -11,7 +11,7 @@ import sk.stuba.fei.feidroid.resources.SimpleAnalysisResultResource;
 
 public class SimpleApplicationAnalyzer implements
     ApplicationAnalyzer<SimpleAnalysisResult> {
-	public final String FILES_DIRECTORY = "PermissionGroups\\";
+	public final String FILES_DIRECTORY = "PermissionGroups/";
 	private StringArrayParser parser;
 	private ArrayList<String> suspiciousPermissions;
 
@@ -22,9 +22,12 @@ public class SimpleApplicationAnalyzer implements
 	@Override
 	public SimpleAnalysisResult analyze(Application application) {
 		suspiciousPermissions = new ArrayList<String>();
+
 		double categoryScore = calculateScoreFromCategory(application);
 		double colorScore = calculateScoreFromColor(application);
 		int permissionCount = application.getPermissions().size();
+
+		permissionCount = permissionCount == 0 ? 1 : permissionCount;
 
 		categoryScore = categoryScore / permissionCount / 5 * 100;
 		colorScore = colorScore / permissionCount / 5 * 100;
@@ -61,19 +64,29 @@ public class SimpleApplicationAnalyzer implements
 
 	private double calculateScoreFromCategory(Application application) {
 		double score = 0;
-		String appCategory = application.getCategories().get(0).getTitle();
-		Category category = Category.valueOf(appCategory);
-		List<String> categoryPermissions = parseDataFromXml(category.getFilename());
+		if (application.getCategories() == null
+		    || application.getCategories().size() == 0) {
+			return score;
+		}
 
-		if (categoryPermissions != null) {
-			for (Permission appPermission : application.getPermissions()) {
-				for (String catPermission : categoryPermissions) {
-					if (appPermission.getTitle().equals(catPermission)) {
-						score += category.getScore();
-						suspiciousPermissions.add(catPermission);
+		String appCategory = application.getCategories().get(0).getTitle();
+		try {
+			Category category = Category.valueOf(appCategory);
+			List<String> categoryPermissions = parseDataFromXml(category
+			    .getFilename());
+
+			if (categoryPermissions != null) {
+				for (Permission appPermission : application.getPermissions()) {
+					for (String catPermission : categoryPermissions) {
+						if (appPermission.getTitle().equals(catPermission)) {
+							score += category.getScore();
+							suspiciousPermissions.add(catPermission);
+						}
 					}
 				}
 			}
+		} catch (IllegalArgumentException e) {
+			score = 0;
 		}
 
 		return score;
