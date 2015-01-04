@@ -46,6 +46,7 @@ public class ApplicationService extends
 			resource.setId(entity.getId());
 			resource.setDescription(entity.getDescription());
 			resource.setVersion(entity.getVersion());
+			resource.setAppPackage(entity.getAppPackage());
 		}
 
 		return resource;
@@ -58,6 +59,7 @@ public class ApplicationService extends
 		app.setName(resource.getName());
 		app.setDescription(resource.getDescription());
 		app.setVersion(resource.getVersion());
+		app.setAppPackage(resource.getAppPackage());
 
 		return app;
 	}

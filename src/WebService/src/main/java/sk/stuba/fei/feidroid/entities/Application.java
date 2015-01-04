@@ -2,6 +2,7 @@ package sk.stuba.fei.feidroid.entities;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +27,9 @@ public class Application {
 	private String name;
 	private String description;
 	private String version;
+
+	@Column(name = "PACKAGE")
+	private String appPackage;
 
 	@ManyToMany
 	@JoinTable(name = "APPLICATION_APP_CATEGORY", joinColumns = { @JoinColumn(name = "APP_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "APP_CAT_ID", referencedColumnName = "ID") })
@@ -67,6 +71,14 @@ public class Application {
 		this.version = version;
 	}
 
+	public String getAppPackage() {
+		return appPackage;
+	}
+
+	public void setAppPackage(String appPackage) {
+		this.appPackage = appPackage;
+	}
+
 	public List<ApplicationCategory> getCategories() {
 		return categories;
 	}
@@ -94,6 +106,7 @@ public class Application {
 	@Override
 	public String toString() {
 		return "Application [id=" + id + ", name=" + name + ", description="
-		    + description + ", version=" + version + "]";
+		    + description + ", version=" + version + ", package=" + appPackage
+		    + "]";
 	}
 }

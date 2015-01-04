@@ -2,12 +2,15 @@ package sk.stuba.fei.feidroid.resources;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 @XmlRootElement(name = "application")
 public class ApplicationResource {
 	private Long id;
 	private String name;
 	private String description;
 	private String version;
+	private String appPackage;
 
 	public Long getId() {
 		return id;
@@ -41,9 +44,20 @@ public class ApplicationResource {
 		this.version = version;
 	}
 
+	@JsonProperty("package")
+	public String getAppPackage() {
+		return appPackage;
+	}
+
+	@JsonProperty("package")
+	public void setAppPackage(String appPackage) {
+		this.appPackage = appPackage;
+	}
+
 	@Override
 	public String toString() {
 		return "ApplicationResource [id=" + id + ", name=" + name
-		    + ", description=" + description + ", version=" + version + "]";
+		    + ", description=" + description + ", version=" + version
+		    + ", package=" + appPackage + "]";
 	}
 }
