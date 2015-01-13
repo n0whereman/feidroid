@@ -124,9 +124,7 @@ abstract public class BasicService<Entity, Resource> {
 	public Response findAllResource() {
 		List<Entity> result = findAll();
 
-		return Response.ok(
-		    collectionToJsonArray(convertListToResource(result)).toString())
-		    .build();
+		return Response.ok(convertListToResource(result)).build();
 	}
 
 	@GET

@@ -109,7 +109,7 @@ public class ApplicationService extends
 		Collection<ApplicationCategoryResource> col = appCategoryService
 		    .convertListToResource(result.getCategories());
 
-		return Response.ok(collectionToJsonArray(col).toString()).build();
+		return Response.ok(col).build();
 	}
 
 	@POST
@@ -137,7 +137,7 @@ public class ApplicationService extends
 		Collection<PermissionResource> col = permissionService
 		    .convertListToResource(result.getPermissions());
 
-		return Response.ok(collectionToJsonArray(col).toString()).build();
+		return Response.ok(col).build();
 	}
 
 	@POST
