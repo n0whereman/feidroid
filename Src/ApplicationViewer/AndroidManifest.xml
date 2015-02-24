@@ -33,6 +33,26 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pete.android.study.ui.activities.DetailActivity" />
         </activity>
+        
+        <service android:name="pete.android.study.ui.activities.ServiceUpdate" >
+        </service>
+        
+        <receiver android:name="pete.android.study.ui.recievers.OnBootReceiver">  
+   			 <intent-filter>  
+        		<action android:name="android.intent.action.BOOT_COMPLETED" />  
+    		 </intent-filter>  
+		</receiver>
+		
+		<receiver android:name="pete.android.study.ui.recievers.OnInstallReceiver">  
+   			 <intent-filter>
+        	 	<category android:name="android.intent.category.DEFAULT" />
+            	<action android:name="android.intent.action.PACKAGE_ADDED" />
+             	<action android:name="android.intent.action.PACKAGE_INSTALL" />
+             	<action android:name="android.intent.action.PACKAGE_REPLACED" />             	
+             	<data android:scheme="package" />
+        </intent-filter>  
+		</receiver>
+        
     </application>
 
 </manifest>
