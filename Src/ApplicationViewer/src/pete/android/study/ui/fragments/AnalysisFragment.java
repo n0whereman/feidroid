@@ -3,19 +3,32 @@ package pete.android.study.ui.fragments;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import pete.android.study.R;
 import pete.android.study.adapters.AppInfoAdapter;
 import pete.android.study.adapters.PermisionsAdapter;
+import pete.android.study.ui.activities.AnalysisDetailActivity;
+import pete.android.study.utils.RetrieveData;
 import pete.android.study.utils.Utilities;
 import android.Manifest.permission;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -61,9 +74,13 @@ public class AnalysisFragment extends Fragment{
 	
 	TextView mResultScore;
 	TextView mUnsafePerm;
+	
+	Button btnThreadLvl1, btnThreadLvl2, btnThreadLvl3, btnThreadLvl4, btnThreadLvl5;
 //	
 	private ProgressBar mProgress;
 	private int mProgressStatus;
+	private long app_id;
+	private float riskScore = 0.0f;
 //
 	ExpandableListView mListPermisions;
 	
@@ -85,6 +102,7 @@ public class AnalysisFragment extends Fragment{
 		// arguments
 		permissions = arg.getStringArray(PERM);
 		category = arg.getString(CATEGORY);
+		app_id = arg.getLong("APP_ID");
 		
 		// permissions by color from xml files
 		green_perm = getActivity().getResources().getStringArray(R.array.green_permissions);
@@ -116,15 +134,75 @@ public class AnalysisFragment extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_analysis, container, false);
+		View view = inflater.inflate(R.layout.fragment_analysis2, container, false);
 		
 		//ButterKnife.inject(this, view);
 		
 		//mcategory.setText(category);
 		
+		//initBtns
+		
+		btnThreadLvl1 = (Button) view.findViewById(R.id.btnThreadLvl1);
+		btnThreadLvl2 = (Button) view.findViewById(R.id.btnThreadLvl2);
+		btnThreadLvl3 = (Button) view.findViewById(R.id.btnThreadLvl3);
+		btnThreadLvl4 = (Button) view.findViewById(R.id.btnThreadLvl4);
+		btnThreadLvl5 = (Button) view.findViewById(R.id.btnThreadLvl5);
+		
+		ThreatButtonListenter listener = new ThreatButtonListenter();
+		btnThreadLvl1.setOnClickListener(listener);
+		btnThreadLvl1.setAlpha(0.2f);
+		btnThreadLvl2.setOnClickListener(listener);
+		btnThreadLvl2.setAlpha(0.2f);
+		btnThreadLvl3.setOnClickListener(listener);
+		btnThreadLvl3.setAlpha(0.2f);
+		btnThreadLvl4.setOnClickListener(listener);
+		btnThreadLvl4.setAlpha(0.2f);
+		btnThreadLvl5.setOnClickListener(listener);
+		btnThreadLvl5.setAlpha(0.2f);
+		//btnThreadLvl5.setBackgroundColor(Color.RED);
+		
+		//btnThreadLvl1.setAlpha(0.2f);
+		
 		float score1 = 0;
 		float score2 = 0;
 		float total_score = 0;
+		
+		String result;
+		try
+		{
+			//result = new RetrieveData().execute("http://thanos.feidroid.mobi:8080/FEIDroid-0.0.1-SNAPSHOT/api/application").get();
+			if(app_id == -1) app_id = 1;
+			result = new RetrieveData(getActivity()).execute("http://thanos.feidroid.mobi:8080/FEIDroid/api/application/" + app_id + "/analyze").get();
+			//TODO check for null			
+			JSONObject myJson = new JSONObject(result);
+			// use myJson as needed, for example 
+			result = myJson.optString("score");
+			
+			BigDecimal bd = new BigDecimal(result);
+		    bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+		    riskScore = bd.floatValue();
+		    
+		    //mResultScore = (TextView)view.findViewById(R.id.result_score);
+		    //mResultScore.setText(bd.toEngineeringString()+" %");
+			
+			//mProgress = (ProgressBar) view.findViewById(R.id.progress_bar);
+			//mProgress.setProgress((int)total_score);
+		    
+			return view;
+		}
+		catch(JSONException e1)
+		{
+			result = e1.getMessage();
+		}
+		catch(ExecutionException e2)
+		{
+			result = e2.getMessage();
+		}
+		catch(InterruptedException e3)
+		{
+			result = e3.getMessage();
+		}
+		
 		
 		//permissions
 		
@@ -134,8 +212,7 @@ public class AnalysisFragment extends Fragment{
 		Ctgr ctgr = Ctgr.values()[c];
 		
 		if(permissions != null)
-		{
-			
+		{			
 			int poc = permissions.length;
 			// vseobecne - score podla farebnych skupin
 			for(String p : permissions) 
@@ -199,8 +276,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 							
 				break;
 				
@@ -217,8 +294,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 							
 				break;
 				
@@ -235,8 +312,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			case Finance:
@@ -252,8 +329,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			case Health:
@@ -269,8 +346,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			case Lifestyle:
@@ -286,8 +363,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			case Multimedia:
@@ -303,8 +380,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			case Productivity:
@@ -320,8 +397,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			case Shopping:
@@ -337,8 +414,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			case Social:
@@ -354,8 +431,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			case Sports:
@@ -371,8 +448,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			case Themes:
@@ -388,8 +465,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			case Tools:
@@ -405,8 +482,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			case Travel:
@@ -422,8 +499,8 @@ public class AnalysisFragment extends Fragment{
 						}
 					}
 				}
-				mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
-				mUnsafePerm.setText(builder.toString());
+				//mUnsafePerm = (TextView)view.findViewById(R.id.suspicious_permissions);
+				//mUnsafePerm.setText(builder.toString());
 				break;
 				
 			default:
@@ -449,31 +526,63 @@ public class AnalysisFragment extends Fragment{
 														orange_perm,
 														red_perm);
 		
-			mListPermisions = (ExpandableListView)view.findViewById(R.id.list_permisions);
-			mResultScore = (TextView)view.findViewById(R.id.result_score);
+			//mListPermisions = (ExpandableListView)view.findViewById(R.id.list_permisions);
+			//mResultScore = (TextView)view.findViewById(R.id.result_score);
 		
-			mListPermisions.setAdapter(adapter);
+			//mListPermisions.setAdapter(adapter);
 		
-			//mResultScore.setText(Float.toString(score));
-			mResultScore.setText(bd.toEngineeringString()+" %");
+			////mResultScore.setText(Float.toString(score));
+			//mResultScore.setText(bd.toEngineeringString()+" %");
 		
-			mProgress = (ProgressBar) view.findViewById(R.id.progress_bar);
-			mProgress.setProgress((int)total_score);
+			//mProgress = (ProgressBar) view.findViewById(R.id.progress_bar);
+			//mProgress.setProgress((int)total_score);
 		}
 		else
 		{
 			total_score = 0;
 			BigDecimal bd = new BigDecimal(Float.toString(total_score));
 		    bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
-		    mResultScore = (TextView)view.findViewById(R.id.result_score);
-		    mResultScore.setText(bd.toEngineeringString()+" %");
+		    riskScore = bd.floatValue();
+		    //mResultScore = (TextView)view.findViewById(R.id.result_score);
+		    //mResultScore.setText(bd.toEngineeringString()+" %");
 			
-			mProgress = (ProgressBar) view.findViewById(R.id.progress_bar);
-			mProgress.setProgress((int)total_score);
+			//mProgress = (ProgressBar) view.findViewById(R.id.progress_bar);
+			//mProgress.setProgress((int)total_score);
 	
 		}
+		
+		int threadLvl = (int)(riskScore/20) + 1;
+		threadLvl = threadLvl == 0 ? 2 : threadLvl;
+	    switch(threadLvl)
+	    {
+		    case 1:
+		    	btnThreadLvl1.setAlpha(1.0f);
+		    	break;
+		    case 2:
+		    	btnThreadLvl2.setAlpha(1.0f);
+		    	break;
+		    case 3:
+		    	btnThreadLvl3.setAlpha(1.0f);
+		    	break;
+		    case 4:
+		    	btnThreadLvl4.setAlpha(1.0f);
+		    	break;
+		    case 5:
+		    	btnThreadLvl5.setAlpha(1.0f);
+		    	break;
+	    }
 		
 		return view;
 	}
 
+	private class ThreatButtonListenter implements OnClickListener
+	{
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(getActivity(), AnalysisDetailActivity.class);
+			intent.putExtra("riskScore", riskScore);
+			intent.putExtra("clickedBtnId", v.getId());
+			startActivity(intent);
+		}
+	}
 }

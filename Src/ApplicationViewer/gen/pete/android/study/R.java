@@ -63,46 +63,54 @@ public final class R {
         public static final int progressbar2=0x7f020002;
     }
     public static final class id {
-        public static final int AppAnalysis=0x7f0a0015;
-        public static final int action_settings=0x7f0a001d;
-        public static final int app_flags=0x7f0a0013;
-        public static final int app_icon=0x7f0a0006;
-        public static final int app_name=0x7f0a0007;
-        public static final int app_permissions=0x7f0a0012;
-        public static final int class_name=0x7f0a0009;
+        public static final int AppAnalysis=0x7f0a001b;
+        public static final int action_settings=0x7f0a0023;
+        public static final int app_categories=0x7f0a001a;
+        public static final int app_flags=0x7f0a0019;
+        public static final int app_icon=0x7f0a000c;
+        public static final int app_name=0x7f0a000d;
+        public static final int app_permissions=0x7f0a0018;
+        public static final int btnThreadLvl1=0x7f0a000b;
+        public static final int btnThreadLvl2=0x7f0a000a;
+        public static final int btnThreadLvl3=0x7f0a0009;
+        public static final int btnThreadLvl4=0x7f0a0008;
+        public static final int btnThreadLvl5=0x7f0a0007;
+        public static final int class_name=0x7f0a000f;
         public static final int container=0x7f0a0000;
-        public static final int data_dir=0x7f0a0011;
-        public static final int install_date=0x7f0a000e;
-        public static final int ivIcon=0x7f0a0016;
-        public static final int last_update=0x7f0a000f;
-        public static final int list_permisions=0x7f0a0005;
+        public static final int data_dir=0x7f0a0017;
+        public static final int install_date=0x7f0a0014;
+        public static final int ivIcon=0x7f0a001c;
+        public static final int last_update=0x7f0a0015;
+        public static final int list_permisions=0x7f0a0003;
         public static final int lvApps=0x7f0a0001;
-        public static final int package_name=0x7f0a0008;
-        public static final int permision_detail=0x7f0a001c;
-        public static final int permision_name=0x7f0a001b;
-        public static final int process_name=0x7f0a000a;
-        public static final int progress_bar=0x7f0a0003;
-        public static final int result_score=0x7f0a0002;
-        public static final int sdk_version=0x7f0a000d;
-        public static final int source_dir=0x7f0a0010;
-        public static final int spinner_category=0x7f0a0014;
-        public static final int suspicious_permissions=0x7f0a0004;
-        public static final int tvActionDetail=0x7f0a0019;
-        public static final int tvActionOpen=0x7f0a001a;
-        public static final int tvName=0x7f0a0017;
-        public static final int tvPack=0x7f0a0018;
-        public static final int version_code=0x7f0a000c;
-        public static final int version_name=0x7f0a000b;
+        public static final int package_name=0x7f0a000e;
+        public static final int permision_detail=0x7f0a0022;
+        public static final int permision_name=0x7f0a0021;
+        public static final int process_name=0x7f0a0010;
+        public static final int progress_bar=0x7f0a0005;
+        public static final int result_score=0x7f0a0004;
+        public static final int sdk_version=0x7f0a0013;
+        public static final int source_dir=0x7f0a0016;
+        public static final int suspicious_permissions=0x7f0a0006;
+        public static final int textView111=0x7f0a0002;
+        public static final int tvActionDetail=0x7f0a001f;
+        public static final int tvActionOpen=0x7f0a0020;
+        public static final int tvName=0x7f0a001d;
+        public static final int tvPack=0x7f0a001e;
+        public static final int version_code=0x7f0a0012;
+        public static final int version_name=0x7f0a0011;
     }
     public static final class layout {
         public static final int activity_analysis=0x7f030000;
         public static final int activity_detail=0x7f030001;
         public static final int activity_main=0x7f030002;
-        public static final int fragment_analysis=0x7f030003;
-        public static final int fragment_detail=0x7f030004;
-        public static final int list_item_app=0x7f030005;
-        public static final int list_item_parent_permision=0x7f030006;
-        public static final int list_item_permision=0x7f030007;
+        public static final int analysis_detail=0x7f030003;
+        public static final int fragment_analysis=0x7f030004;
+        public static final int fragment_analysis2=0x7f030005;
+        public static final int fragment_detail=0x7f030006;
+        public static final int list_item_app=0x7f030007;
+        public static final int list_item_parent_permision=0x7f030008;
+        public static final int list_item_permision=0x7f030009;
     }
     public static final class menu {
         public static final int analysis=0x7f090000;
@@ -135,6 +143,7 @@ public final class R {
         /**  Analysis activity 
          */
         public static final int label_list_of_permissions=0x7f07001a;
+        public static final int label_no_categories=0x7f070026;
         public static final int label_no_permissions=0x7f070018;
         /**  Detail activity 
          */
@@ -147,9 +156,15 @@ public final class R {
         public static final int label_unsafe_permissions=0x7f07001b;
         public static final int label_version_code=0x7f070010;
         public static final int label_version_name=0x7f07000f;
+        public static final int threadLvl1=0x7f070021;
+        public static final int threadLvl2=0x7f070022;
+        public static final int threadLvl3=0x7f070023;
+        public static final int threadLvl4=0x7f070024;
+        public static final int threadLvl5=0x7f070025;
         public static final int title_activity_analysis=0x7f07001f;
         public static final int title_activity_detail=0x7f070009;
         public static final int title_activity_launch=0x7f070005;
+        public static final int title_analysis_detail=0x7f070020;
     }
     public static final class style {
         public static final int mediumBlackText=0x7f080000;

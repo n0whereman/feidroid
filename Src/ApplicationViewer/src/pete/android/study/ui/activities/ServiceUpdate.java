@@ -4,10 +4,12 @@ package pete.android.study.ui.activities;
 import java.util.List;
 
 import pete.android.study.utils.PostData;
+import pete.android.study.utils.Utilities;
 
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -44,34 +46,55 @@ public class ServiceUpdate extends Service{
 		 List<PackageInfo> packs = getPackageManager().getInstalledPackages(0);
 		    for(int i=0;i<packs.size();i++) {
 		        PackageInfo p = packs.get(i);
+		        PostData sender = new PostData(getApplicationContext());
 		        
-		        if (p.applicationInfo.sourceDir.startsWith("/data/app/")) {
-		        	String appname = p.applicationInfo.loadLabel(getPackageManager()).toString();		        
-		        	//String pname = p.packageName;
-		        	String versionName = p.versionName;
-		        	//int versionCode = p.versionCode;
-		        	
-		        	new PostData().execute(appname,versionName);
+		        if (p.applicationInfo.sourceDir.startsWith("/data/app/")) 
+		        {
+		        	SendData(p, sender);
 		        }
 		    }
 	}
 	
 	public void postChanges(){
-		 List<PackageInfo> packs = getPackageManager().getInstalledPackages(0);
+		 List<PackageInfo> packs = getPackageManager().getInstalledPackages(PackageManager.GET_SIGNATURES | PackageManager.GET_ACTIVITIES);
 		    for(int i=0;i<packs.size();i++) {
 		        PackageInfo p = packs.get(i);
+		        PostData sender = new PostData(getApplicationContext());
 		        
 		        if (p.applicationInfo.sourceDir.startsWith("/data/app/")) {//only non-system apps
-		        	if(changedPackage.contains(p.packageName)){
-		        		String appname = p.applicationInfo.loadLabel(getPackageManager()).toString();		        
-		        		//String pname = p.packageName;
-		        		String versionName = p.versionName;
-		        		//int versionCode = p.versionCode;
-		    		Toast.makeText(getApplicationContext(), appname + " " + versionName, Toast.LENGTH_LONG).show();
-		        	new PostData().execute(appname,versionName);
+		        	if(changedPackage.contains(p.packageName))
+		        	{
+		        		SendData(p, sender);
 		        	}
 		        }
 		    }
+	}
+	
+	private void SendData(PackageInfo pckage, PostData sender)
+	{
+		try
+		{
+			String url = "https://thanos.feidroid.mobi:8443/FEIDroid/api/application";
+			String name = pckage.applicationInfo.loadLabel(getPackageManager()).toString();
+			String version = pckage.versionName;
+			String description;
+			try
+			{
+				description = pckage.applicationInfo.loadDescription(getPackageManager()).toString();
+			}
+			catch (Exception e)
+			{
+				description = "";
+			}
+			String packageName = pckage.packageName;
+			String sha1hash = Utilities.GetFingerprint(pckage);		
+			
+			sender.execute(url, name, packageName, version, sha1hash, description);
+		}
+		catch(Exception ex)
+		{
+			String s = ex.getMessage();			
+		}
 	}
 		
 }

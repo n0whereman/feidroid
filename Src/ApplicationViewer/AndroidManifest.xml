@@ -34,6 +34,12 @@
                 android:value="pete.android.study.ui.activities.DetailActivity" />
         </activity>
         
+        <activity
+        	android:name="pete.android.study.ui.activities.AnalysisDetailActivity"
+        	android:label="@string/title_analysis_detail" >
+        </activity>
+        
+        
         <service android:name="pete.android.study.ui.activities.ServiceUpdate" >
         </service>
         

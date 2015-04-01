@@ -1,5 +1,11 @@
 package pete.android.study.utils;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.List;
 
 import android.content.ActivityNotFoundException;
@@ -9,6 +15,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
+import android.content.pm.Signature;
 import android.widget.Toast;
 //import java.util.ArrayList;
 
@@ -27,7 +34,8 @@ public class Utilities {
 	            PackageManager.GET_SHARED_LIBRARY_FILES |   
 	            PackageManager.GET_UNINSTALLED_PACKAGES | 
 	            PackageManager.GET_PERMISSIONS |
-	            PackageManager.GET_PROVIDERS;
+	            PackageManager.GET_PROVIDERS |
+	            PackageManager.GET_SIGNATURES;
 
 		//List<ApplicationInfo> list = c.getPackageManager().getInstalledApplications(Flags);
 		List<PackageInfo> list = c.getPackageManager().getInstalledPackages(Flags);
@@ -84,6 +92,60 @@ public class Utilities {
 		}
 		// by default, fail to launch
 		return false;
+	}
+	
+	public static String GetFingerprint(PackageInfo packageInfo)
+	{
+        Signature[] signatures = packageInfo.signatures;
+        byte[] cert = signatures[0].toByteArray();
+
+        InputStream input = new ByteArrayInputStream(cert);
+
+        CertificateFactory cf = null;
+        try 
+        {
+        	cf = CertificateFactory.getInstance("X509");
+        } 
+        catch (CertificateException e) 
+        {
+        	e.printStackTrace();
+        	return e.getMessage();
+        }
+        X509Certificate c = null;
+        try 
+        {
+        	c = (X509Certificate) cf.generateCertificate(input);
+        } 
+        catch (CertificateException e) 
+        {
+        	e.printStackTrace();
+        	return e.getMessage();
+        }
+
+
+        try 
+        {        	
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            md.update(c.getEncoded());
+            
+            byte[] publicKey = md.digest();
+
+            StringBuffer hexString = new StringBuffer();
+            for (int i=0;i<publicKey.length;i++) {
+                String appendString = Integer.toHexString(0xFF & publicKey[i]);
+                if(appendString.length()==1)hexString.append("0");
+                hexString.append(appendString);
+                if(i < publicKey.length -1 )hexString.append(':');
+                }
+
+            return hexString.toString().toUpperCase();
+
+        } 
+        catch (Exception e1) 
+        {
+            e1.printStackTrace();
+            return e1.getMessage();
+        } 
 	}
 	
 }

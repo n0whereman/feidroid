@@ -56,11 +56,11 @@ public class DetailFragment$$ViewInjector {
     if (view == null) {
       throw new IllegalStateException("Required view with id '2131361812' for field 'mySpinner' was not found. If this view is optional add '@Optional' annotation.");
     }
-    target.mySpinner = (android.widget.Spinner) view;
-    view = finder.findById(source, 2131361801);
-    if (view == null) {
-      throw new IllegalStateException("Required view with id '2131361801' for field 'mClassName' was not found. If this view is optional add '@Optional' annotation.");
-    }
+//    target.mySpinner = (android.widget.Spinner) view;
+//    view = finder.findById(source, 2131361801);
+//    if (view == null) {
+//      throw new IllegalStateException("Required view with id '2131361801' for field 'mClassName' was not found. If this view is optional add '@Optional' annotation.");
+//    }
     target.mClassName = (android.widget.TextView) view;
     view = finder.findById(source, 2131361806);
     if (view == null) {
@@ -106,7 +106,7 @@ public class DetailFragment$$ViewInjector {
     target.mAppFlags = null;
     target.mAppPermissions = null;
     target.mVersionCode = null;
-    target.mySpinner = null;
+    //target.mySpinner = null;
     target.mClassName = null;
     target.mInstallDate = null;
     target.mVersionName = null;
