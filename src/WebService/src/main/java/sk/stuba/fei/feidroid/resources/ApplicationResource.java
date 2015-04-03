@@ -11,6 +11,7 @@ public class ApplicationResource {
 	private String description;
 	private String version;
 	private String appPackage;
+	private String fingerprint;
 
 	public Long getId() {
 		return id;
@@ -54,10 +55,17 @@ public class ApplicationResource {
 		this.appPackage = appPackage;
 	}
 
+	public String getFingerprint() {
+		return fingerprint;
+	}
+
+	public void setFingerprint(String fingerprint) {
+		this.fingerprint = fingerprint;
+	}
+
 	@Override
 	public String toString() {
-		return "ApplicationResource [id=" + id + ", name=" + name
-		    + ", description=" + description + ", version=" + version
-		    + ", package=" + appPackage + "]";
+		return "ApplicationResource [id=" + id + ", name=" + name + ", description=" + description + ", version=" + version + ", package=" + appPackage
+		    + ", fingerprint=" + fingerprint + "]";
 	}
 }

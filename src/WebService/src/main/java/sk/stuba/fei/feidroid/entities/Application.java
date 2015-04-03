@@ -12,10 +12,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
-@NamedQueries({
-    @NamedQuery(name = "Application.findAll", query = "SELECT a FROM Application a"),
+@NamedQueries({ @NamedQuery(name = "Application.findAll", query = "SELECT a FROM Application a"),
     @NamedQuery(name = "Application.findById", query = "SELECT a FROM Application a WHERE a.id = :idParam"),
     @NamedQuery(name = "Application.findByIds", query = "SELECT a FROM Application a WHERE a.id IN :idListParam"),
     @NamedQuery(name = "Application.findMatch", query = "SELECT a FROM Application a WHERE a.name = :nameParam AND a.version = :versionParam") })
@@ -27,6 +27,7 @@ public class Application {
 	private String name;
 	private String description;
 	private String version;
+	private String fingerprint;
 
 	@Column(name = "PACKAGE")
 	private String appPackage;
@@ -35,9 +36,8 @@ public class Application {
 	@JoinTable(name = "APPLICATION_APP_CATEGORY", joinColumns = { @JoinColumn(name = "APP_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "APP_CAT_ID", referencedColumnName = "ID") })
 	private List<ApplicationCategory> categories;
 
-	@ManyToMany
-	@JoinTable(name = "APPLICATION_PERMISSIONS", joinColumns = { @JoinColumn(name = "APP_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "PERMISSION_ID", referencedColumnName = "ID") })
-	private List<Permission> permissions;
+	@OneToMany(mappedBy = "application")
+	private List<PermissionUsage> permissions;
 
 	public Long getId() {
 		return id;
@@ -91,22 +91,29 @@ public class Application {
 		categories.add(category);
 	}
 
-	public List<Permission> getPermissions() {
+	public List<PermissionUsage> getPermissions() {
 		return permissions;
 	}
 
-	public void setPermissions(List<Permission> permissions) {
+	public void setPermissions(List<PermissionUsage> permissions) {
 		this.permissions = permissions;
 	}
 
-	public void addPermission(Permission permission) {
+	public void addPermission(PermissionUsage permission) {
 		permissions.add(permission);
+	}
+
+	public String getFingerprint() {
+		return fingerprint;
+	}
+
+	public void setFingerprint(String certificate) {
+		this.fingerprint = certificate;
 	}
 
 	@Override
 	public String toString() {
-		return "Application [id=" + id + ", name=" + name + ", description="
-		    + description + ", version=" + version + ", package=" + appPackage
-		    + "]";
+		return "Application [id=" + id + ", name=" + name + ", description=" + description + ", version=" + version + ", package=" + appPackage
+		    + ", fingerprint=" + fingerprint + "]";
 	}
 }

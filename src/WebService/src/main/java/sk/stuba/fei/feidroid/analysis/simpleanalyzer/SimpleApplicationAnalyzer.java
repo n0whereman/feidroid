@@ -5,12 +5,11 @@ import java.util.List;
 
 import sk.stuba.fei.feidroid.analysis.ApplicationAnalyzer;
 import sk.stuba.fei.feidroid.entities.Application;
-import sk.stuba.fei.feidroid.entities.Permission;
+import sk.stuba.fei.feidroid.entities.PermissionUsage;
 import sk.stuba.fei.feidroid.resources.AnalysisResultResource;
 import sk.stuba.fei.feidroid.resources.SimpleAnalysisResultResource;
 
-public class SimpleApplicationAnalyzer implements
-    ApplicationAnalyzer<SimpleAnalysisResult> {
+public class SimpleApplicationAnalyzer implements ApplicationAnalyzer<SimpleAnalysisResult> {
 	public final String FILES_DIRECTORY = "PermissionGroups/";
 	private StringArrayParser parser;
 	private ArrayList<String> suspiciousPermissions;
@@ -41,7 +40,7 @@ public class SimpleApplicationAnalyzer implements
 
 	private double calculateScoreFromColor(Application application) {
 		ArrayList<Category> colors = new ArrayList<Category>();
-		List<Permission> appPermissions = application.getPermissions();
+		List<PermissionUsage> appPermissions = application.getPermissions();
 		double score = 0;
 
 		colors.add(Category.Green);
@@ -52,8 +51,8 @@ public class SimpleApplicationAnalyzer implements
 		for (Category color : colors) {
 			List<String> colorPermissions = parseDataFromXml(color.getFilename());
 
-			for (Permission appPermission : appPermissions) {
-				if (colorPermissions.contains(appPermission.getTitle())) {
+			for (PermissionUsage appPermission : appPermissions) {
+				if (colorPermissions.contains(appPermission.getPermission().getTitle())) {
 					score += color.getScore();
 				}
 			}
@@ -64,21 +63,19 @@ public class SimpleApplicationAnalyzer implements
 
 	private double calculateScoreFromCategory(Application application) {
 		double score = 0;
-		if (application.getCategories() == null
-		    || application.getCategories().size() == 0) {
+		if (application.getCategories() == null || application.getCategories().size() == 0) {
 			return score;
 		}
 
 		String appCategory = application.getCategories().get(0).getTitle();
 		try {
 			Category category = Category.valueOf(appCategory);
-			List<String> categoryPermissions = parseDataFromXml(category
-			    .getFilename());
+			List<String> categoryPermissions = parseDataFromXml(category.getFilename());
 
 			if (categoryPermissions != null) {
-				for (Permission appPermission : application.getPermissions()) {
+				for (PermissionUsage appPermission : application.getPermissions()) {
 					for (String catPermission : categoryPermissions) {
-						if (appPermission.getTitle().equals(catPermission)) {
+						if (appPermission.getPermission().getTitle().equals(catPermission)) {
 							score += category.getScore();
 							suspiciousPermissions.add(catPermission);
 						}
@@ -97,15 +94,10 @@ public class SimpleApplicationAnalyzer implements
 	}
 
 	private enum Category {
-		Communication(2.4, "communications.xml"), Entertainment(5.5,
-		    "entertainment.xml"), Finance(3.25, "finance.xml"), Games(4.25,
-		    "games.xml"), Health(3.75, "health.xml"), Lifestyle(1.75,
-		    "lifestyle.xml"), Multimedia(2, "multimedia.xml"), Productivity(2.75,
-		    "productivity.xml"), Shopping(3.5, "shopping.xml"), Social(1.5,
-		    "social.xml"), Sports(3, "sports.xml"), Themes(4, "themes.xml"), Tools(
-		    1, "tools.xml"), Travel(3, "travel.xml"), Green(0.5,
-		    "green_permissions.xml"), Yellow(1, "yellow_permissions.xml"), Orange(
-		    2, "orange_permissions.xml"), Red(5, "red_permissions.xml");
+		Communication(2.4, "communications.xml"), Entertainment(5.5, "entertainment.xml"), Finance(3.25, "finance.xml"), Games(4.25, "games.xml"), Health(
+		    3.75, "health.xml"), Lifestyle(1.75, "lifestyle.xml"), Multimedia(2, "multimedia.xml"), Productivity(2.75, "productivity.xml"), Shopping(3.5,
+		    "shopping.xml"), Social(1.5, "social.xml"), Sports(3, "sports.xml"), Themes(4, "themes.xml"), Tools(1, "tools.xml"), Travel(3, "travel.xml"), Green(
+		    0.5, "green_permissions.xml"), Yellow(1, "yellow_permissions.xml"), Orange(2, "orange_permissions.xml"), Red(5, "red_permissions.xml");
 
 		private final double score;
 		private final String file;
@@ -125,8 +117,7 @@ public class SimpleApplicationAnalyzer implements
 	}
 
 	@Override
-	public AnalysisResultResource convertResultToResource(
-	    SimpleAnalysisResult result) {
+	public AnalysisResultResource convertResultToResource(SimpleAnalysisResult result) {
 		return new SimpleAnalysisResultResource(result);
 	}
 

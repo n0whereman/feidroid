@@ -7,6 +7,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -15,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONArray;
+
+import sk.stuba.fei.feidroid.services.criteria.Criteria;
 
 abstract public class BasicService<Entity, Resource> {
 	private static final String PERSISTENCE_UNIT_NAME = "feidroid";
@@ -28,9 +34,7 @@ abstract public class BasicService<Entity, Resource> {
 		EntityManager em = getEntityManager();
 		Entity result = null;
 
-		List<Entity> results = em
-		    .createNamedQuery(getNamedQuery("findById"), getEntityClass())
-		    .setParameter("idParam", id).getResultList();
+		List<Entity> results = em.createNamedQuery(getNamedQuery("findById"), getEntityClass()).setParameter("idParam", id).getResultList();
 
 		em.close();
 
@@ -43,8 +47,7 @@ abstract public class BasicService<Entity, Resource> {
 
 	public List<Entity> findAll() {
 		EntityManager em = getEntityManager();
-		List<Entity> result = em.createNamedQuery(getNamedQuery("findAll"),
-		    getEntityClass()).getResultList();
+		List<Entity> result = em.createNamedQuery(getNamedQuery("findAll"), getEntityClass()).getResultList();
 
 		em.close();
 
@@ -53,13 +56,28 @@ abstract public class BasicService<Entity, Resource> {
 
 	public List<Entity> findByIds(List<Integer> ids) {
 		EntityManager em = getEntityManager();
-		List<Entity> result = em
-		    .createNamedQuery(getNamedQuery("findByIds"), getEntityClass())
-		    .setParameter("idListParam", ids).getResultList();
+		List<Entity> result;
+		if (ids.size() > 0) {
+			result = em.createNamedQuery(getNamedQuery("findByIds"), getEntityClass()).setParameter("idListParam", ids).getResultList();
+		} else {
+			result = new ArrayList<Entity>();
+		}
 
 		em.close();
 
 		return result;
+	}
+
+	public List<Entity> findByCriteria(Criteria<Entity> criteria) {
+		EntityManager em = getEntityManager();
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+
+		CriteriaQuery<Entity> criteriaQuery = criteriaBuilder.createQuery(getEntityClass());
+		Root<Entity> root = criteriaQuery.from(getEntityClass());
+		Predicate predicate = criteria.toPredicate(root, criteriaBuilder);
+		criteriaQuery.where(predicate).orderBy(criteria.getOrderBy(root, criteriaBuilder));
+
+		return em.createQuery(criteriaQuery).getResultList();
 	}
 
 	public Entity persistEntity(Entity obj) {
@@ -82,6 +100,15 @@ abstract public class BasicService<Entity, Resource> {
 		return obj;
 	}
 
+	public void removeEntity(Entity obj) {
+		EntityManager em = getEntityManager();
+		em.getTransaction().begin();
+		Entity entity = em.merge(obj);
+		em.remove(entity);
+		em.getTransaction().commit();
+		em.close();
+	}
+
 	public Class<Entity> getEntityClass() {
 		return entityClass;
 	};
@@ -95,8 +122,7 @@ abstract public class BasicService<Entity, Resource> {
 	}
 
 	public EntityManager getEntityManager() {
-		EntityManagerFactory factory = Persistence
-		    .createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		return factory.createEntityManager();
 	}
 
