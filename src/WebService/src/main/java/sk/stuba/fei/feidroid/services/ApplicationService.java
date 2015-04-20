@@ -1,5 +1,6 @@
 package sk.stuba.fei.feidroid.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -43,6 +44,7 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 	private ApplicationCategoryService appCategoryService;
 	private PermissionService permissionService;
 	private PermissionUsageService permissionUsageService;
+	private final String APP_UNPACK_PATH = "/var/feidroid/apk_unpack.sh";
 
 	public ApplicationService() {
 		super(Application.class);
@@ -80,16 +82,33 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 		return app;
 	}
 
-	private Application createNewApplication(Application app) {
+	private Application createNewApplication(Application app, boolean downloadPackage) {
 		Application newApp = null;
 		if (!(app.getName() == null || app.getName().isEmpty()) && !(app.getVersion() == null || app.getVersion().isEmpty())) {
 			newApp = findMatchingApplication(app);
 			if (newApp == null) {
 				newApp = persistEntity(app);
+				if (downloadPackage) {
+					downloadPackage(newApp);
+				}
 			}
 		}
 
 		return newApp;
+	}
+
+	private void downloadPackage(Application app) {
+		String appPackage = app.getAppPackage();
+		if (appPackage != null && !appPackage.isEmpty()) {
+			appPackage = appPackage + ".apk";
+			ProcessBuilder pb = new ProcessBuilder(APP_UNPACK_PATH, appPackage);
+			pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+			try {
+				pb.start();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public Application findMatchingApplication(Application app) {
@@ -124,7 +143,7 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 		return apps.subList(0, limit);
 	}
 
-	public AnalysisResult analyzeApplication(ApplicationAnalyzer analyzer, Application app) {
+	public AnalysisResult analyzeApplication(ApplicationAnalyzer<?> analyzer, Application app) {
 		return analyzer.analyze(app);
 	}
 
@@ -250,7 +269,7 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createNewApplicationResource(ApplicationResource resource) {
 		Application app = convertResourceToEntity(resource);
-		app = createNewApplication(app);
+		app = createNewApplication(app, true);
 
 		if (app == null) {
 			return errorResponse();
@@ -297,6 +316,8 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 		for (Permission p : permissions) {
 			permissionUsageService.createPermissionUsage(app, p, false);
 		}
+
+		updateEntity(app);
 
 		return Response.status(201).entity(convertEntityToResource(app)).build();
 	}

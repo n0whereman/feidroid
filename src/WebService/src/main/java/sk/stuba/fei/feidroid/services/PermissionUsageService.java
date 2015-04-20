@@ -22,6 +22,7 @@ public class PermissionUsageService extends BasicService<PermissionUsage, Permis
 		usage.setIsUsed(isUsed);
 
 		persistEntity(usage);
+		app.addPermission(usage);
 		return usage;
 	}
 

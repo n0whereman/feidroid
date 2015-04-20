@@ -1,4 +1,4 @@
-package sk.stuba.fei.feidroid.resources;
+package sk.stuba.fei.feidroid.analysis;
 
 public class AnalysisResultResource {
 

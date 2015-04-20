@@ -48,7 +48,7 @@ public class ApplicationCriteria implements Criteria<Application> {
 	@Override
 	public List<Order> getOrderBy(Root<Application> root, CriteriaBuilder cb) {
 		List<Order> order = new ArrayList<Order>();
-		order.add(cb.asc(root.get(Application_.version)));
+		order.add(cb.desc(root.get(Application_.version)));
 		return order;
 	}
 

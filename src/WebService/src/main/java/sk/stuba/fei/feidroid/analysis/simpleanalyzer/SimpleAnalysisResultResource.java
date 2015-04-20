@@ -1,10 +1,10 @@
-package sk.stuba.fei.feidroid.resources;
+package sk.stuba.fei.feidroid.analysis.simpleanalyzer;
 
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import sk.stuba.fei.feidroid.analysis.simpleanalyzer.SimpleAnalysisResult;
+import sk.stuba.fei.feidroid.analysis.AnalysisResultResource;
 
 @XmlRootElement(name = "simpleAnalysisResult")
 public class SimpleAnalysisResultResource extends AnalysisResultResource {
