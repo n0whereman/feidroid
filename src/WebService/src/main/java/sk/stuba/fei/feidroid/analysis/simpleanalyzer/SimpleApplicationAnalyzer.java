@@ -3,11 +3,10 @@ package sk.stuba.fei.feidroid.analysis.simpleanalyzer;
 import java.util.ArrayList;
 import java.util.List;
 
+import sk.stuba.fei.feidroid.analysis.AnalysisResultResource;
 import sk.stuba.fei.feidroid.analysis.ApplicationAnalyzer;
 import sk.stuba.fei.feidroid.entities.Application;
 import sk.stuba.fei.feidroid.entities.PermissionUsage;
-import sk.stuba.fei.feidroid.resources.AnalysisResultResource;
-import sk.stuba.fei.feidroid.resources.SimpleAnalysisResultResource;
 
 public class SimpleApplicationAnalyzer implements ApplicationAnalyzer<SimpleAnalysisResult> {
 	public final String FILES_DIRECTORY = "PermissionGroups/";

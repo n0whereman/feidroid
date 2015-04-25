@@ -40,7 +40,11 @@ public class AnalysisHelper {
 	}
 
 	public static List<Long> parsePermissionKey(String key) {
-		String idStrings[] = key.split("-");
+		return parsePermissionKey(key, "-");
+	}
+
+	public static List<Long> parsePermissionKey(String key, String delimiter) {
+		String idStrings[] = key.split(delimiter);
 		List<Long> ids = new ArrayList<Long>();
 
 		for (String id : idStrings) {
