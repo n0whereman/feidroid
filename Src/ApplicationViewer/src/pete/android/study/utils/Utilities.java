@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ActivityNotFoundException;
@@ -146,6 +147,18 @@ public class Utilities {
             e1.printStackTrace();
             return e1.getMessage();
         } 
+	}
+	
+	public static List<String> ClearPermissionsNames(List<String> permNames)
+	{
+		List<String> cleared = new ArrayList<String>();
+		
+		for(String perm : permNames)
+		{
+			cleared.add(perm.replace("android.permission.", ""));
+		}
+		
+		return cleared;
 	}
 	
 }

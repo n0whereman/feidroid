@@ -1,0 +1,5 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/item1" android:title="Pridať kategóriu"></item>
+    <item android:id="@+id/item2" android:title="Odobrať kategóriu"></item>
+    <item android:id="@+id/item3" android:title="Pôvodné kategórie"></item>
+</menu>

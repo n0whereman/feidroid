@@ -303,12 +303,38 @@
 			    android:layout_marginRight="@dimen/padding_8"
 			    style="@style/mediumBlackText"/>
 	    	
-	    	<Spinner
+	    	<!--  <Spinner
 	    	    android:id="@+id/spinner_category"
 	    	    android:layout_width="fill_parent"
 	    	    android:layout_height="wrap_content"
 	    	    android:entries="@array/category_array"
-	    	    android:prompt="@string/label_Category" />
+	    	    android:prompt="@string/label_Category" /> -->
+	    	<TextView 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/app_categories"
+			    android:text="@string/label_no_categories"
+			    style="@style/mediumBlackText"/>  
+
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	         android:layout_width="match_parent"
+	       	 android:layout_height="wrap_content"
+	       	 android:gravity="center_horizontal">
+	    	
+	    	<TextView
+			    android:textStyle="bold"
+			   	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/label_sha1hash"
+			    android:layout_marginRight="@dimen/padding_8"
+			    style="@style/mediumBlackText"/>
+	    	<TextView 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:id="@+id/app_sha1hash"
+			    style="@style/mediumBlackText"/>  
 
 	    </LinearLayout>
 	    

@@ -73,7 +73,7 @@ public class PostData extends AsyncTask<String, Void, String> {
         	jo.put("name", params[1]);
         	jo.put("package", params[2]);
         	jo.put("version", params[3]);
-        	//jo.put("sha1hash", params[4]);
+        	jo.put("fingerprint", params[4]);
         	jo.put("description", params[5]);
         	
         	

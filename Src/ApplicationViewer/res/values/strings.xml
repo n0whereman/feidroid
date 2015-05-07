@@ -60,5 +60,13 @@
     </string-array>
 
     <string name="title_activity_analysis">App Analysis</string>
+    <string name="title_analysis_detail">Analysis detail</string>
+    <string name="threadLvl1">No thread</string>
+    <string name="threadLvl2">Minimum risk</string>
+    <string name="threadLvl3">Several vulnerabilities</string>
+    <string name="threadLvl4">Dangerous app</string>
+    <string name="threadLvl5">Security suicide</string>
+    <string name="label_no_categories">No category</string>
+    <string name="label_sha1hash">SHA1:</string>
 
 </resources>

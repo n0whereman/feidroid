@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="&#x0A;&#x09;&#x09;listAdapter.add( &quot;Ceres&quot; );  &#x0A;&#x09;&#x09;listAdapter.add( &quot;Pluto&quot; );  &#x0A;&#x09;&#x09;listAdapter.add( &quot;Haumea&quot; );  &#x0A;&#x09;&#x09;listAdapter.add( &quot;Makemake&quot; );  &#x0A;&#x09;&#x09;listAdapter.add( &quot;Eris&quot; );  " key="selection"/>
+		<list key="findhistory">
+			<item value="&#x0A;&#x09;&#x09;listAdapter.add( &quot;Ceres&quot; );  &#x0A;&#x09;&#x09;listAdapter.add( &quot;Pluto&quot; );  &#x0A;&#x09;&#x09;listAdapter.add( &quot;Haumea&quot; );  &#x0A;&#x09;&#x09;listAdapter.add( &quot;Makemake&quot; );  &#x0A;&#x09;&#x09;listAdapter.add( &quot;Eris&quot; );  "/>
+		</list>
+	</section>
+</section>

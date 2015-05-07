@@ -1,62 +1,34 @@
 package pete.android.study.ui.fragments;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import pete.android.study.R;
 import pete.android.study.ui.activities.AnalysisActivity;
-import pete.android.study.ui.activities.AnalysisDetailActivity;
-import pete.android.study.ui.activities.DetailActivity;
 import pete.android.study.utils.Utilities;
 import pete.android.study.utils.RetrieveData; 
 
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.PermissionInfo;
-import android.content.pm.Signature;
-import android.database.DataSetObserver;
-import android.drm.DrmStore.Action;
-import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.text.format.Time;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 /**
  * On this fragment displays the available information about the application
@@ -109,6 +81,7 @@ public class DetailFragment extends Fragment{
 	Spinner mySpinner;
 	
 	Button btnAnalysis;
+	TextView mAppSha1Hash;
 			
 	String choice;
 	
@@ -157,6 +130,7 @@ public class DetailFragment extends Fragment{
 			mDataDir = (TextView)view.findViewById(R.id.data_dir);
 			//mySpinner = (Spinner)view.findViewById(R.id.spinner_category);
 			mAppCategories = (TextView)view.findViewById(R.id.app_categories);
+			mAppSha1Hash = (TextView)view.findViewById(R.id.app_sha1hash);
 			btnAnalysis = (Button)view.findViewById(R.id.AppAnalysis);
 		}
 		catch (Exception ex)
@@ -183,20 +157,26 @@ public class DetailFragment extends Fragment{
 		mSourceDir.setText(mPackageInfo.applicationInfo.sourceDir);
 		mDataDir.setText(mPackageInfo.applicationInfo.dataDir);
 		
-		app_id = 1;
-		String name = mAppName.getText().toString();
+		mAppSha1Hash.setText(Utilities.GetFingerprint(mPackageInfo));
 		
-		if(name.equals("Facebook") || name.equals("Twitter") || name.equals("Messenger")) app_id = 2;//Social
-		else if(name.equals("VLC") || name.equals("Lime Theme")) app_id = 3;//Multimedia
-			 else if(name.equals("Throne Rush"))app_id = 4;//Games
-				  else if(name.equals("File Manager") || name.equals("ProxyDroid") || name.equals("SuperSU")) app_id = 5;//Tools
-					   else app_id = -1;
+		app_id = -1;
+//		String name = mAppName.getText().toString();
+//		
+//		if(name.equals("Facebook") || name.equals("Twitter") || name.equals("Messenger")) app_id = 2;//Social
+//		else if(name.equals("VLC") || name.equals("Lime Theme")) app_id = 3;//Multimedia
+//			 else if(name.equals("Throne Rush"))app_id = 4;//Games
+//				  else if(name.equals("File Manager") || name.equals("ProxyDroid") || name.equals("SuperSU")) app_id = 5;//Tools
+//					   else app_id = -1;
+//		
+//		app_id = 5;
 		
-		app_id = 5;
+		app_id = GetAppIdFromDatabase(mAppName.getText().toString());
 		
 //	    List<String> list = new ArrayList<String>();
 		StringBuilder categoryStringBuilder = new StringBuilder();
 		final String notAvaiable = "N/A";
+		final String noCategory = "No category";
+		
 		if(app_id > 0)
 		{
 			try
@@ -208,13 +188,20 @@ public class DetailFragment extends Fragment{
 				{
 					JSONArray appCategories = new JSONArray(result);
 					int categoryCount = appCategories.length();
-					JSONObject obj;
-					for(int i=0; i<categoryCount; i++)
+					if(categoryCount == 0)
 					{
-						obj = appCategories.getJSONObject(i);
-						//list.add(obj.optString("title"));
-						categoryStringBuilder.append(obj.optString("title"));
-						categoryStringBuilder.append(notAvaiable);
+						categoryStringBuilder.append(noCategory);
+					}
+					else
+					{
+						JSONObject obj;
+						for(int i=0; i<categoryCount; i++)
+						{
+							obj = appCategories.getJSONObject(i);
+							//list.add(obj.optString("title"));
+							categoryStringBuilder.append(obj.optString("title"));
+							categoryStringBuilder.append(notAvaiable);
+						}
 					}
 				}
 				else categoryStringBuilder.append(notAvaiable);
@@ -282,10 +269,32 @@ public class DetailFragment extends Fragment{
 
             @Override
             public void onClick(View v) {
+            	if(app_id == -1)
+            	{
+            		app_id = GetAppIdFromDatabase(mAppName.getText().toString());
+            		
+            		if(app_id == -1)
+            		{
+	            		new AlertDialog.Builder(v.getContext())
+	            	    .setTitle("Analysis not available")
+	            	    .setMessage("Unable to load analysis from FEIdroid database")
+	            	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	            	        public void onClick(DialogInterface dialog, int which) { 
+	            	            return;
+	            	        }
+	            	     })
+	            	    .setIcon(android.R.drawable.ic_dialog_alert)
+	            	    .show();
+	            		return;
+            		}            		
+            	}
+            	
             	Intent intent = new Intent(getActivity(), AnalysisActivity.class);
         		intent.putExtra(AnalysisFragment.PERM, mPackageInfo.requestedPermissions);
         		intent.putExtra(AnalysisFragment.CATEGORY, choice);
         		intent.putExtra("APP_ID", app_id);
+        		//intent.putExtra(DetailFragment.APP_INFO, mPackageInfo);
+        		//intent.putExtra("app_prems", (String[])perms.toArray());
         		
         		startActivity(intent);            
         	}
@@ -305,12 +314,12 @@ public class DetailFragment extends Fragment{
 	 */
 	@OnClick(R.id.AppAnalysis)
 	public void onAnalisisClick(){
-		Intent intent = new Intent(getActivity(), AnalysisActivity.class);
-		intent.putExtra(AnalysisFragment.PERM, mPackageInfo.requestedPermissions);
-		intent.putExtra(AnalysisFragment.CATEGORY, choice);
-		intent.putExtra("APP_ID", app_id);
-		
-		startActivity(intent);
+//		Intent intent = new Intent(getActivity(), AnalysisActivity.class);
+//		intent.putExtra(AnalysisFragment.PERM, mPackageInfo.requestedPermissions);
+//		intent.putExtra(AnalysisFragment.CATEGORY, choice);
+//		intent.putExtra("APP_ID", app_id);
+//		
+//		startActivity(intent);
 	}
 	/**
 	 * Function to get a date 
@@ -331,5 +340,24 @@ public class DetailFragment extends Fragment{
 		
 		return new String[]{ DateFormat.format("dd.MM.yyyy", new Date(installMillis)).toString(),
 							DateFormat.format("dd.MM.yyyy", new Date(updateMillis)).toString()};
+	}
+	
+	private int GetAppIdFromDatabase(String appName)
+	{
+		try
+		{
+			String result = new RetrieveData(getActivity()).execute("https://thanos.feidroid.mobi:8443/FEIDroid/api/application/find?name=" + appName).get();
+			JSONArray apps = new JSONArray(result);
+			if(apps.length() > 0)
+			{
+				JSONObject obj = apps.getJSONObject(0);
+				return Integer.parseInt(obj.optString("id"));
+			}
+		}
+		catch(Exception ex)
+		{
+		}
+		
+		return -1;
 	}
 }

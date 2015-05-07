@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    
+    <color name="perm_green">#069C00</color>
+    <color name="perm_yellow">#D9CA00</color>
+    <color name="perm_orange">#D45F00</color>
+    <color name="perm_red">#AB0000</color>
+    
+    <!-- Green -->
+	<color name="green_temp">#23A96E</color>
+	<color name="green_dark">#159204</color>
+	<color name="bright_green">#02D8B0</color>
+	<color name="button_green">#1A9B20</color>
+	
+	<!-- Yellow -->
+	<color name="yellow_temp">#16FC67</color>
+	<color name="yellow_dark">#F9EC00</color>
+	<color name="bright_yellow">#16FC67</color>
+	<color name="button_yellow">#FFF200</color>
+</resources>

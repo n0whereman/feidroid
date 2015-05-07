@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fadingEdge="horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="5"
+    tools:context="pete.android.study.AnalysisActivity$PlaceholderFragment" >
+
+    <Button
+        android:id="@+id/btnThreadLvl5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/threadLvl5"
+        android:background="@drawable/button_thread5"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:id="@+id/btnThreadLvl4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/threadLvl4"
+        android:background="@drawable/button_thread4"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:id="@+id/btnThreadLvl3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/threadLvl3"
+        android:background="@drawable/button_thread3"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:id="@+id/btnThreadLvl2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/threadLvl2"
+        android:background="@drawable/button_thread2"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:id="@+id/btnThreadLvl1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/threadLvl1"
+        android:background="@drawable/button_thread1"
+    	android:layout_margin="10dp" />
+
+</LinearLayout>

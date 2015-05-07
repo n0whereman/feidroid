@@ -2,12 +2,10 @@ package pete.android.study.ui.activities;
 
 import pete.android.study.R;
 import pete.android.study.adapters.PermisionsAdapter;
+import pete.android.study.ui.fragments.AnalysisFragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -15,22 +13,27 @@ import android.widget.TextView;
 
 public class AnalysisDetailActivity extends Activity {
     
+	public static final String APP_INFO = "app_info";
+	
 	private String[] green_perm;
 	private String[] yellow_perm;
 	private String[] orange_perm;
 	private String[] red_perm;
-	private String[] permissions;
+	private String[] permissions;	
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //set layout for the main screen
         setContentView(R.layout.analysis_detail);    
+		
+		// arguments
         Intent intent = getIntent();
         
         float score = intent.getFloatExtra("riskScore", -1.0f);
         int scoreLvl = (int)(score / 20) + 1;
         int btnId = intent.getIntExtra("clickedBtnId", -1);
+		permissions = intent.getStringArrayExtra(AnalysisFragment.PERM);
         TextView txt = (TextView)findViewById(R.id.textView111);
         
         // permissions by color from xml files
@@ -65,19 +68,15 @@ public class AnalysisDetailActivity extends Activity {
 	private void SetAppropiateContent(int scoreLvl, int btnLvl, Context context)
 	{
 		TextView txt = (TextView)findViewById(R.id.textView111);
+				
 		if(scoreLvl == btnLvl)
 		{
-			txt.setText("LVL" + btnLvl + " thread descritption\n List of presmissions:");		
-			try 
-			{
-				PackageManager pm = getPackageManager();
-				PackageInfo packageInfo = pm.getPackageInfo(getApplicationContext().getPackageName(), PackageManager.GET_PERMISSIONS);
-				//Get Permissions
-				permissions = packageInfo.requestedPermissions;
-			} 
-			catch (NameNotFoundException e) {
-			    e.printStackTrace();
-			} 			
+			txt.setText("LVL" + btnLvl + " thread descritption\n\nList of presmissions:");
+			
+			green_perm = context.getResources().getStringArray(R.array.green_permissions);
+			yellow_perm = context.getResources().getStringArray(R.array.yellow_permissions);
+			orange_perm = context.getResources().getStringArray(R.array.orange_permissions);
+			red_perm = context.getResources().getStringArray(R.array.red_permissions);
 
 			PermisionsAdapter adapter = new PermisionsAdapter(context,
 					permissions,
@@ -91,8 +90,8 @@ public class AnalysisDetailActivity extends Activity {
 			mListPermisions.setAdapter(adapter);
 		}
 		else
-		{	 			
-			txt.setText("LVL" + btnLvl + " thread descritption");		
+		{
+			txt.setText("LVL" + btnLvl + " thread descritption\n");
 		}
 	}
 }

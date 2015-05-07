@@ -1,0 +1,238 @@
+package com.example.invoketest;
+
+import java.lang.reflect.*;
+import java.util.Arrays;
+
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+
+
+public class MainActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        TextView tview = (TextView)findViewById(R.id.hello_world);
+        tview.setText("Danny");
+        /*
+     // Obtain the class object if we know the name of the class
+     		Class rental = RentCar.class;
+     		try {
+     			// get the absolute name of the class
+     			String rentalClassPackage = rental.getName();
+     			System.out.println("Class Name is: " + rentalClassPackage);
+
+     			// get the simple name of the class (without package info)
+     			String rentalClassNoPackage = rental.getSimpleName();
+     			System.out.println("Class Name without package is: "
+     					+ rentalClassNoPackage);
+
+     			// get the package name of the class
+     			Package rentalPackage = rental.getPackage();
+     			System.out.println("Package Name is: " + rentalPackage);
+
+     			// get all the constructors of the class
+     			Constructor[] constructors = rental.getConstructors();
+     			System.out.println("Constructors are: "
+     					+ Arrays.toString(constructors));
+
+     			// get constructor with specific argument
+     			Constructor constructor = rental.getConstructor(Integer.TYPE);
+
+     			// initializing an object of the RentCar class
+     			RentCar rent = (RentCar) constructor.newInstance(455);
+
+     			// get all methods of the class including declared methods of
+     			// superclasses
+     			// in that case, superclass of RentCar is the class java.lang.Object
+     			Method[] allmethods = rental.getMethods();
+     			System.out.println("Methods are: " + Arrays.toString(allmethods));
+     			for (Method method : allmethods) {
+     				System.out.println("method = " + method.getName());
+     			}
+
+     			// get all methods declared in the class
+     			// but excludes inherited methods.
+     			Method[] declaredMethods = rental.getDeclaredMethods();
+     			System.out.println("Declared Methods are: "
+     					+ Arrays.toString(declaredMethods));
+     			for (Method dmethod : declaredMethods) {
+     				System.out.println("method = " + dmethod.getName());
+     			}
+
+     			// get method with specific name and parameters
+     			Method oneMethod = rental.getMethod("computeRentalCost",
+     					new Class[] { Integer.TYPE });
+     			System.out.println("Method is: " + oneMethod);
+
+     			// call computeRentalCost method with parameter int
+     			oneMethod.invoke(rent, 4);
+
+     			// get all the parameters of computeRentalCost
+     			Class[] parameterTypes = oneMethod.getParameterTypes();
+     			System.out.println("Parameter types of computeRentalCost() are: "
+     					+ Arrays.toString(parameterTypes));
+
+     			// get the return type of computeRentalCost
+     			Class returnType = oneMethod.getReturnType();
+     			System.out.println("Return type is: " + returnType);
+
+     			// gets all the public member fields of the class RentCar
+     			Field[] fields = rental.getFields();
+
+     			System.out.println("Public Fields are: ");
+     			for (Field oneField : fields) {
+     				// get public field name
+     				Field field = rental.getField(oneField.getName());
+     				String fieldname = field.getName();
+     				System.out.println("Fieldname is: " + fieldname);
+
+     				// get public field type
+     				Object fieldType = field.getType();
+     				System.out.println("Type of field " + fieldname + " is: "
+     						+ fieldType);
+
+     				// get public field value
+     				Object value = field.get(rent);
+     				System.out.println("Value of field " + fieldname + " is: "
+     						+ value);
+
+     			}
+
+     			// How to access private member fields of the class
+
+     			// getDeclaredField() returns the private field
+     			Field privateField = RentCar.class.getDeclaredField("type");
+
+     			String name = privateField.getName();
+     			System.out.println("One private Fieldname is: " + name);
+     			// makes this private field instance accessible
+     			// for reflection use only, not normal code
+     			privateField.setAccessible(true);
+
+     			// get the value of this private field
+     			String fieldValue = (String) privateField.get(rent);
+     			System.out.println("fieldValue = " + fieldValue);
+
+     		} catch (NoSuchFieldException e) {
+     			e.printStackTrace();
+     		} catch (NoSuchMethodException e) {
+     			e.printStackTrace();
+     		} catch (IllegalArgumentException e) {
+     			e.printStackTrace();
+     		} catch (IllegalAccessException e) {
+     			e.printStackTrace();
+     		} catch (InstantiationException e) {
+     			e.printStackTrace();
+     		} catch (InvocationTargetException e) {
+     			e.printStackTrace();
+     		}
+        
+        */
+        
+        
+        
+        Class bt = android.bluetooth.BluetoothAdapter.class;
+        try
+        {
+        	String pckg = bt.getName();
+        	System.out.println("Class Name is: " + pckg);
+
+ 			// get the simple name of the class (without package info)
+ 			String btClassNoPackage = bt.getSimpleName();
+ 			System.out.println("Class Name without package is: "
+ 					+ btClassNoPackage);
+
+ 			// get the package name of the class
+ 			Package btPackage = bt.getPackage();
+ 			System.out.println("Package Name is: " + btPackage);
+
+ 			// get all the constructors of the class
+ 			Constructor[] constructors = bt.getConstructors();
+ 			System.out.println("Constructors are: "
+ 					+ Arrays.toString(constructors));
+ 			
+ 			Method[] decMethods = bt.getDeclaredMethods();
+ 			System.out.println("Declared Methods are: "
+ 					+ Arrays.toString(decMethods));
+ 			for (Method dmethod : decMethods) {
+ 				System.out.println("method = " + dmethod.getName());
+ 			}
+ 			
+ 		// get method with specific name and parameters
+ 			Method method1 = bt.getMethod("getName");
+ 			System.out.println("Method is: " + method1);
+
+ 			// call computeRentalCost method with parameter int
+ 			Object ret = method1.invoke(bt);
+ 			System.out.println("Method returned: " + ret.toString());
+        }
+        catch(Exception ex)
+        {
+        	tview.setTag(ex.getMessage());
+        }
+        
+        
+        
+        
+        
+        
+//        try
+//        {
+//        	//BluetoothAdapter ba = BluetoothAdapter.getDefaultAdapter();
+//        	//tview.setText(ba.getName());
+//        	
+//        	Class t = Class.forName("java.util.Random"); //Random r = new Random();
+//        	Class bt = Class.forName("android.bluetooth.BluetoothAdapter");
+//        	Object obj = t.newInstance();
+//        	
+//        	java.lang.reflect.Method method;
+//        	java.lang.reflect.Method method_bt;
+//        	
+//        	method = t.getMethod("nextInt");			//o = r.nextInt();
+//        	method_bt = bt.getMethod("getDefaultAdapter");
+//        	//method_getName = bt
+//        	Object o = method.invoke(obj);
+//        	Object o_bt = method_bt.invoke(bt); //bt ~ ba
+//        	
+//        	java.lang.reflect.Method method_getName;
+//        	method_getName = bt.getMethod("getName");
+//        	Object name = method_getName.invoke(o_bt);
+//        	        	
+//        	tview.setText(o.toString());
+//        	tview.setText(o_bt == null ? "NULL" : "something");
+//        	tview.setText(name.toString());
+//        }
+//        catch(Exception ex)
+//        {
+//        	tview.setText(ex.getMessage());
+//        }
+        
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}

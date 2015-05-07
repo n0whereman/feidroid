@@ -159,9 +159,6 @@ public class AnalysisFragment extends Fragment{
 		btnThreadLvl4.setAlpha(0.2f);
 		btnThreadLvl5.setOnClickListener(listener);
 		btnThreadLvl5.setAlpha(0.2f);
-		//btnThreadLvl5.setBackgroundColor(Color.RED);
-		
-		//btnThreadLvl1.setAlpha(0.2f);
 		
 		float score1 = 0;
 		float score2 = 0;
@@ -172,7 +169,7 @@ public class AnalysisFragment extends Fragment{
 		{
 			//result = new RetrieveData().execute("http://thanos.feidroid.mobi:8080/FEIDroid-0.0.1-SNAPSHOT/api/application").get();
 			if(app_id == -1) app_id = 1;
-			result = new RetrieveData(getActivity()).execute("http://thanos.feidroid.mobi:8080/FEIDroid/api/application/" + app_id + "/analyze").get();
+			result = new RetrieveData(getActivity()).execute("https://thanos.feidroid.mobi:8443/FEIDroid/api/application/" + app_id + "/analyze").get();
 			//TODO check for null			
 			JSONObject myJson = new JSONObject(result);
 			// use myJson as needed, for example 
@@ -187,6 +184,28 @@ public class AnalysisFragment extends Fragment{
 			
 			//mProgress = (ProgressBar) view.findViewById(R.id.progress_bar);
 			//mProgress.setProgress((int)total_score);
+		    
+		    int threadLvl = (int)(riskScore/20) + 1;
+			threadLvl = threadLvl == 0 ? 2 : threadLvl;
+		    
+		    switch(threadLvl)
+		    {
+			    case 1:
+			    	btnThreadLvl1.setAlpha(1.0f);
+			    	break;
+			    case 2:
+			    	btnThreadLvl2.setAlpha(1.0f);
+			    	break;
+			    case 3:
+			    	btnThreadLvl3.setAlpha(1.0f);
+			    	break;
+			    case 4:
+			    	btnThreadLvl4.setAlpha(1.0f);
+			    	break;
+			    case 5:
+			    	btnThreadLvl5.setAlpha(1.0f);
+			    	break;
+		    }
 		    
 			return view;
 		}
@@ -552,7 +571,7 @@ public class AnalysisFragment extends Fragment{
 		}
 		
 		int threadLvl = (int)(riskScore/20) + 1;
-		threadLvl = threadLvl == 0 ? 2 : threadLvl;
+		//threadLvl = threadLvl == 0 ? 2 : threadLvl;
 	    switch(threadLvl)
 	    {
 		    case 1:
@@ -582,6 +601,7 @@ public class AnalysisFragment extends Fragment{
 			Intent intent = new Intent(getActivity(), AnalysisDetailActivity.class);
 			intent.putExtra("riskScore", riskScore);
 			intent.putExtra("clickedBtnId", v.getId());
+			intent.putExtra(AnalysisFragment.PERM, permissions);
 			startActivity(intent);
 		}
 	}

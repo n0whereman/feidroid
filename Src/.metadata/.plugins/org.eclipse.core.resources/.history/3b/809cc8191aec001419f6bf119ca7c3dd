@@ -1,0 +1,72 @@
+package com.example.invoketest;
+
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+
+
+public class MainActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        TextView tview = (TextView)findViewById(R.id.hello_world);
+        tview.setText("Danny");
+//        try
+//        {
+//        	//BluetoothAdapter ba = BluetoothAdapter.getDefaultAdapter();
+//        	//tview.setText(ba.getName());
+//        	
+//        	Class t = Class.forName("java.util.Random"); //Random r = new Random();
+//        	Class bt = Class.forName("android.bluetooth.BluetoothAdapter");
+//        	Object obj = t.newInstance();
+//        	
+//        	java.lang.reflect.Method method;
+//        	java.lang.reflect.Method method_bt;
+//        	
+//        	method = t.getMethod("nextInt");			//o = r.nextInt();
+//        	method_bt = bt.getMethod("getDefaultAdapter");
+//        	//method_getName = bt
+//        	Object o = method.invoke(obj);
+//        	Object o_bt = method_bt.invoke(bt); //bt ~ ba
+//        	
+//        	java.lang.reflect.Method method_getName;
+//        	method_getName = bt.getMethod("getName");
+//        	Object name = method_getName.invoke(o_bt);
+//        	        	
+//        	tview.setText(o.toString());
+//        	tview.setText(o_bt == null ? "NULL" : "something");
+//        	tview.setText(name.toString());
+//        }
+//        catch(Exception ex)
+//        {
+//        	tview.setText(ex.getMessage());
+//        }
+        
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}

@@ -36,11 +36,41 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
+        public static final int amber_dark=0x7f05000e;
+        /**  Amber 
+         */
+        public static final int amber_temp=0x7f05000d;
         public static final int black=0x7f050000;
+        public static final int bright_amber=0x7f05000f;
+        public static final int bright_green=0x7f050007;
+        public static final int bright_orange=0x7f050013;
+        public static final int bright_red=0x7f050017;
+        public static final int bright_yellow=0x7f05000b;
+        public static final int button_amber=0x7f050010;
+        public static final int button_green=0x7f050008;
+        public static final int button_orange=0x7f050014;
+        public static final int button_red=0x7f050018;
+        public static final int button_yellow=0x7f05000c;
+        public static final int green_dark=0x7f050006;
+        /**  Green 
+         */
+        public static final int green_temp=0x7f050005;
+        public static final int orange_dark=0x7f050012;
+        /**  Orange 
+         */
+        public static final int orange_temp=0x7f050011;
         public static final int perm_green=0x7f050001;
         public static final int perm_orange=0x7f050003;
         public static final int perm_red=0x7f050004;
         public static final int perm_yellow=0x7f050002;
+        public static final int red_dark=0x7f050016;
+        /**  Red 
+         */
+        public static final int red_temp=0x7f050015;
+        public static final int yellow_dark=0x7f05000a;
+        /**  Yellow 
+         */
+        public static final int yellow_temp=0x7f050009;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -58,18 +88,24 @@ public final class R {
         public static final int padding_8=0x7f060002;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int icon=0x7f020001;
-        public static final int progressbar2=0x7f020002;
+        public static final int button_thread1=0x7f020000;
+        public static final int button_thread2=0x7f020001;
+        public static final int button_thread3=0x7f020002;
+        public static final int button_thread4=0x7f020003;
+        public static final int button_thread5=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int icon=0x7f020006;
+        public static final int progressbar2=0x7f020007;
     }
     public static final class id {
-        public static final int AppAnalysis=0x7f0a001b;
-        public static final int action_settings=0x7f0a0023;
+        public static final int AppAnalysis=0x7f0a001c;
+        public static final int action_settings=0x7f0a0024;
         public static final int app_categories=0x7f0a001a;
         public static final int app_flags=0x7f0a0019;
         public static final int app_icon=0x7f0a000c;
         public static final int app_name=0x7f0a000d;
         public static final int app_permissions=0x7f0a0018;
+        public static final int app_sha1hash=0x7f0a001b;
         public static final int btnThreadLvl1=0x7f0a000b;
         public static final int btnThreadLvl2=0x7f0a000a;
         public static final int btnThreadLvl3=0x7f0a0009;
@@ -79,13 +115,13 @@ public final class R {
         public static final int container=0x7f0a0000;
         public static final int data_dir=0x7f0a0017;
         public static final int install_date=0x7f0a0014;
-        public static final int ivIcon=0x7f0a001c;
+        public static final int ivIcon=0x7f0a001d;
         public static final int last_update=0x7f0a0015;
         public static final int list_permisions=0x7f0a0003;
         public static final int lvApps=0x7f0a0001;
         public static final int package_name=0x7f0a000e;
-        public static final int permision_detail=0x7f0a0022;
-        public static final int permision_name=0x7f0a0021;
+        public static final int permision_detail=0x7f0a0023;
+        public static final int permision_name=0x7f0a0022;
         public static final int process_name=0x7f0a0010;
         public static final int progress_bar=0x7f0a0005;
         public static final int result_score=0x7f0a0004;
@@ -93,10 +129,10 @@ public final class R {
         public static final int source_dir=0x7f0a0016;
         public static final int suspicious_permissions=0x7f0a0006;
         public static final int textView111=0x7f0a0002;
-        public static final int tvActionDetail=0x7f0a001f;
-        public static final int tvActionOpen=0x7f0a0020;
-        public static final int tvName=0x7f0a001d;
-        public static final int tvPack=0x7f0a001e;
+        public static final int tvActionDetail=0x7f0a0020;
+        public static final int tvActionOpen=0x7f0a0021;
+        public static final int tvName=0x7f0a001e;
+        public static final int tvPack=0x7f0a001f;
         public static final int version_code=0x7f0a0012;
         public static final int version_name=0x7f0a0011;
     }
@@ -152,6 +188,7 @@ public final class R {
         public static final int label_process_name=0x7f07000e;
         public static final int label_score=0x7f07001d;
         public static final int label_sdk_version=0x7f070011;
+        public static final int label_sha1hash=0x7f070027;
         public static final int label_source_directory=0x7f070014;
         public static final int label_unsafe_permissions=0x7f07001b;
         public static final int label_version_code=0x7f070010;
