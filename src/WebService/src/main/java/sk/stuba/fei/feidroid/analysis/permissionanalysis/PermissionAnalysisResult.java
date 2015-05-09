@@ -1,8 +1,8 @@
 package sk.stuba.fei.feidroid.analysis.permissionanalysis;
 
-import sk.stuba.fei.feidroid.analysis.AnalysisResult;
+import sk.stuba.fei.feidroid.analysis.analysisresult.AbstractAnalysisResult;
 
-public class PermissionAnalysisResult implements AnalysisResult {
+public class PermissionAnalysisResult extends AbstractAnalysisResult {
 	private Float score;
 
 	public Float getScore() {

@@ -2,9 +2,9 @@ package sk.stuba.fei.feidroid.analysis.simpleanalyzer;
 
 import java.util.List;
 
-import sk.stuba.fei.feidroid.analysis.AnalysisResult;
+import sk.stuba.fei.feidroid.analysis.analysisresult.AbstractAnalysisResult;
 
-public class SimpleAnalysisResult implements AnalysisResult {
+public class SimpleAnalysisResult extends AbstractAnalysisResult {
 	private double score;
 	private List<String> suspiciousPermissions;
 
@@ -28,4 +28,5 @@ public class SimpleAnalysisResult implements AnalysisResult {
 	public String toString() {
 		return "SimpleAnalysisResult [score=" + score + "]";
 	}
+
 }

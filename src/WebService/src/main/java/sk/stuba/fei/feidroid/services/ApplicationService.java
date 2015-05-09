@@ -3,11 +3,8 @@ package sk.stuba.fei.feidroid.services;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
@@ -22,12 +19,18 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import sk.stuba.fei.feidroid.analysis.AnalysisConfiguration;
-import sk.stuba.fei.feidroid.analysis.AnalysisHelper;
-import sk.stuba.fei.feidroid.analysis.AnalysisResult;
 import sk.stuba.fei.feidroid.analysis.ApplicationAnalyzer;
-import sk.stuba.fei.feidroid.analysis.simpleanalyzer.SimpleAnalysisResult;
+import sk.stuba.fei.feidroid.analysis.aggregatedanalyzer.AggregatedAnalysisResult;
+import sk.stuba.fei.feidroid.analysis.aggregatedanalyzer.AggregatedApplicationAnalyzer;
+import sk.stuba.fei.feidroid.analysis.analysisresult.AnalysisResult;
+import sk.stuba.fei.feidroid.analysis.permissionanalysis.PermissionAnalysisModule;
+import sk.stuba.fei.feidroid.analysis.permissionanalysis.PermissionAnalyzer;
+import sk.stuba.fei.feidroid.analysis.permissiondistribution.AnalysisConfiguration;
+import sk.stuba.fei.feidroid.analysis.permissiondistribution.PermissionDistributionAnalyzer;
+import sk.stuba.fei.feidroid.analysis.simpleanalyzer.SimpleAnalysisModule;
 import sk.stuba.fei.feidroid.analysis.simpleanalyzer.SimpleApplicationAnalyzer;
+import sk.stuba.fei.feidroid.appconfig.entities.AppConfig;
+import sk.stuba.fei.feidroid.appconfig.service.AppConfigService;
 import sk.stuba.fei.feidroid.entities.Application;
 import sk.stuba.fei.feidroid.entities.ApplicationCategory;
 import sk.stuba.fei.feidroid.entities.Permission;
@@ -44,6 +47,7 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 	private ApplicationCategoryService appCategoryService;
 	private PermissionService permissionService;
 	private PermissionUsageService permissionUsageService;
+	private AppConfigService appConfigService;
 	private final String APP_UNPACK_PATH = "/var/feidroid/apk_unpack.sh";
 
 	public ApplicationService() {
@@ -51,6 +55,7 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 		appCategoryService = new ApplicationCategoryService();
 		permissionService = new PermissionService();
 		permissionUsageService = new PermissionUsageService();
+		appConfigService = new AppConfigService();
 	}
 
 	@Override
@@ -147,51 +152,27 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 		return analyzer.analyze(app);
 	}
 
-	public List<Entry<String, Integer>> analyzePermissions(AnalysisConfiguration configuration) {
-		EntityManager em = getEntityManager();
-		List<Long> ids = em.createQuery("SELECT a.id FROM Application a", Long.class).getResultList();
+	public LinkedHashMap<String, Integer> analyzePermissions(AnalysisConfiguration configuration) {
+		PermissionDistributionAnalyzer analyzer = new PermissionDistributionAnalyzer(this, permissionService);
+		return analyzer.analyzePermissions(configuration);
+	}
 
-		HashMap<String, Integer> nTuplesMap = new HashMap<String, Integer>();
+	public AggregatedApplicationAnalyzer createAggregatedAnalyzer() {
+		AggregatedApplicationAnalyzer analyzer = new AggregatedApplicationAnalyzer();
 
-		for (Long id : ids) {
-			Application app = findById(id);
-			List<PermissionUsage> permissions = app.getPermissions();
-
-			List<String> nTuples = AnalysisHelper.constructNtuples(permissions, configuration.getTuples());
-
-			for (String ntuple : nTuples) {
-				Integer count = nTuplesMap.get(ntuple);
-				if (count == null) {
-					count = 1;
-				} else {
-					count++;
-				}
-
-				nTuplesMap.put(ntuple, count);
-			}
+		AppConfig config = appConfigService.getAppConfig("PERMISSION_ANALYSIS_MODULE_ENABLED");
+		if (config != null && AppConfig.CONFIG_VALUE_TRUE.equals(config.getValue())) {
+			String value = appConfigService.getAppConfig("PERMISSION_ANALYSIS_MODULE_WEIGHT").getValue();
+			analyzer.addModule(new PermissionAnalysisModule(new PermissionAnalyzer()), Float.valueOf(value));
 		}
 
-		Set<String> keys = nTuplesMap.keySet();
-
-		List<Entry<String, Integer>> orderedMap = new ArrayList<Entry<String, Integer>>();
-
-		for (Entry<String, Integer> entry : nTuplesMap.entrySet()) {
-			orderedMap.add(entry);
+		config = appConfigService.getAppConfig("SIMPLE_ANALYSIS_MODULE_ENABLED");
+		if (config != null && AppConfig.CONFIG_VALUE_TRUE.equals(config.getValue())) {
+			String value = appConfigService.getAppConfig("SIMPLE_ANALYSIS_MODULE_WEIGHT").getValue();
+			analyzer.addModule(new SimpleAnalysisModule(new SimpleApplicationAnalyzer()), Float.valueOf(value));
 		}
 
-		orderedMap.sort(new Comparator<Entry<String, Integer>>() {
-
-			@Override
-			public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
-				return o2.getValue().compareTo(o1.getValue());
-			}
-		});
-
-		if (configuration.getCount() > -1 && configuration.getCount() <= orderedMap.size()) {
-			return orderedMap.subList(0, configuration.getCount());
-		}
-
-		return orderedMap;
+		return analyzer;
 	}
 
 	@GET
@@ -292,8 +273,8 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response analyzeApplicationResource(@PathParam("id") Long id) {
 		Application app = findById(id);
-		SimpleApplicationAnalyzer analyzer = new SimpleApplicationAnalyzer();
-		SimpleAnalysisResult result = (SimpleAnalysisResult) analyzeApplication(analyzer, app);
+		AggregatedApplicationAnalyzer analyzer = createAggregatedAnalyzer();
+		AggregatedAnalysisResult result = (AggregatedAnalysisResult) analyzeApplication(analyzer, app);
 
 		return Response.ok(analyzer.convertResultToResource(result)).build();
 	}

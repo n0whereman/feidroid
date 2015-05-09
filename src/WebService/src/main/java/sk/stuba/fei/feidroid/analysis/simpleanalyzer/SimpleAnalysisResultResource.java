@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import sk.stuba.fei.feidroid.analysis.AnalysisResultResource;
+import sk.stuba.fei.feidroid.analysis.analysisresult.AnalysisResultResource;
 
 @XmlRootElement(name = "simpleAnalysisResult")
 public class SimpleAnalysisResultResource extends AnalysisResultResource {

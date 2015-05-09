@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import sk.stuba.fei.feidroid.analysis.AnalysisResult;
-import sk.stuba.fei.feidroid.analysis.AnalysisResultResource;
 import sk.stuba.fei.feidroid.analysis.ApplicationAnalyzer;
+import sk.stuba.fei.feidroid.analysis.analysisresult.AnalysisResult;
 import sk.stuba.fei.feidroid.analysis.module.AnalysisModule;
 import sk.stuba.fei.feidroid.entities.Application;
 
@@ -28,26 +27,37 @@ public class AggregatedApplicationAnalyzer implements ApplicationAnalyzer<Aggreg
 	@Override
 	public AggregatedAnalysisResult analyze(Application application) {
 		float aggregatedValue = 0;
+		AggregatedAnalysisResult aggregatedResult = new AggregatedAnalysisResult(0);
 
 		for (AnalysisModule<? extends AnalysisResult> module : modules) {
-			float normalized = getNormalizedModuleScore(module, application);
-			aggregatedValue += normalized * weights.get(module);
+
+			NormalizedAnalysisResult normalizedResult = getNormalizedModuleResult(module, application);
+			aggregatedValue += normalizedResult.getScore() * weights.get(module);
+			aggregatedResult.getDescriptions().add(normalizedResult.getDescription());
 		}
 
 		aggregatedValue /= getSumOfWeights();
+		aggregatedResult.setAggregatedScore(aggregatedValue);
 
-		return new AggregatedAnalysisResult(aggregatedValue);
+		return aggregatedResult;
 	}
 
 	@Override
-	public AnalysisResultResource convertResultToResource(AggregatedAnalysisResult result) {
-		// TODO Auto-generated method stub
-		return null;
+	public AggregatedAnalysisResultResource convertResultToResource(AggregatedAnalysisResult result) {
+		AggregatedAnalysisResultResource resource = new AggregatedAnalysisResultResource();
+		resource.setDescriptions(result.getDescriptions());
+		resource.setScore(result.getAggregatedScore());
+
+		return resource;
 	}
 
-	private <T extends AnalysisResult> float getNormalizedModuleScore(AnalysisModule<T> module, Application application) {
+	private <T extends AnalysisResult> NormalizedAnalysisResult getNormalizedModuleResult(AnalysisModule<T> module, Application application) {
+		NormalizedAnalysisResult normalizedResult = new NormalizedAnalysisResult();
 		T result = module.analyze(application);
-		return module.normalizeResult(result);
+		normalizedResult.setScore(module.normalizeResult(result));
+		normalizedResult.setDescription(result.getDescription());
+
+		return normalizedResult;
 	}
 
 	private float getSumOfWeights() {

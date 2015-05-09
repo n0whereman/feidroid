@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sk.stuba.fei.feidroid.analysis.AnalysisHelper;
-import sk.stuba.fei.feidroid.analysis.AnalysisResultResource;
 import sk.stuba.fei.feidroid.analysis.ApplicationAnalyzer;
+import sk.stuba.fei.feidroid.analysis.analysisresult.AnalysisResultResource;
 import sk.stuba.fei.feidroid.entities.Application;
 import sk.stuba.fei.feidroid.entities.PermissionAnalysis;
 import sk.stuba.fei.feidroid.entities.PermissionUsage;
@@ -42,6 +42,7 @@ public class PermissionAnalyzer implements ApplicationAnalyzer<PermissionAnalysi
 		}
 
 		analysisResult.setScore(score);
+		analysisResult.setDescription("Permission analysis result description");
 
 		return analysisResult;
 	}

@@ -3,8 +3,8 @@ package sk.stuba.fei.feidroid.analysis.simpleanalyzer;
 import java.util.ArrayList;
 import java.util.List;
 
-import sk.stuba.fei.feidroid.analysis.AnalysisResultResource;
 import sk.stuba.fei.feidroid.analysis.ApplicationAnalyzer;
+import sk.stuba.fei.feidroid.analysis.analysisresult.AnalysisResultResource;
 import sk.stuba.fei.feidroid.entities.Application;
 import sk.stuba.fei.feidroid.entities.PermissionUsage;
 
@@ -33,6 +33,7 @@ public class SimpleApplicationAnalyzer implements ApplicationAnalyzer<SimpleAnal
 		SimpleAnalysisResult result = new SimpleAnalysisResult();
 		result.setScore(categoryScore + colorScore);
 		result.setSuspiciousPermissions(suspiciousPermissions);
+		result.setDescription("Suspicious permissions: " + suspiciousPermissions.toString());
 
 		return result;
 	}

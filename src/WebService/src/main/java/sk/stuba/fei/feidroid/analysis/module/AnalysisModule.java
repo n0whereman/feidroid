@@ -1,11 +1,11 @@
 package sk.stuba.fei.feidroid.analysis.module;
 
-import sk.stuba.fei.feidroid.analysis.AnalysisResult;
 import sk.stuba.fei.feidroid.analysis.ApplicationAnalyzer;
+import sk.stuba.fei.feidroid.analysis.analysisresult.AnalysisResult;
 import sk.stuba.fei.feidroid.entities.Application;
 
 /**
- * Interface to handle analysis and normalization of the result The normalized
+ * Interface to handle analysis and normalization of the result. The normalized
  * result should return value from the interval <0, 1>
  * 
  * @author Pavol Dobrocka

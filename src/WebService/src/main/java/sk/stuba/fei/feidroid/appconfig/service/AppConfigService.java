@@ -1,5 +1,7 @@
 package sk.stuba.fei.feidroid.appconfig.service;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import sk.stuba.fei.feidroid.appconfig.entities.AppConfig;
@@ -14,9 +16,13 @@ public class AppConfigService extends BasicService<AppConfig, AppConfigResource>
 
 	public AppConfig getAppConfig(String key) {
 		EntityManager em = getEntityManager();
-		AppConfig result = em.createNamedQuery(getNamedQuery("findByKey"), getEntityClass()).setParameter("keyParam", key).getSingleResult();
+		List<AppConfig> result = em.createNamedQuery(getNamedQuery("findByKey"), getEntityClass()).setParameter("keyParam", key).getResultList();
 
-		return result;
+		if (result.size() == 0) {
+			return null;
+		}
+
+		return result.get(0);
 	}
 
 	@Override

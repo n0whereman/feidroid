@@ -1,7 +1,7 @@
 package sk.stuba.fei.feidroid.analysis.module;
 
-import sk.stuba.fei.feidroid.analysis.AnalysisResult;
 import sk.stuba.fei.feidroid.analysis.ApplicationAnalyzer;
+import sk.stuba.fei.feidroid.analysis.analysisresult.AnalysisResult;
 import sk.stuba.fei.feidroid.entities.Application;
 
 abstract public class AbstractAnalysisModule<T extends AnalysisResult> implements AnalysisModule<T> {

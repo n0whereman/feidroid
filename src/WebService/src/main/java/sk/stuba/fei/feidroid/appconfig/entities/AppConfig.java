@@ -16,6 +16,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "AppConfig.findByIds", query = "SELECT a FROM AppConfig a WHERE a.id IN :idListParam"),
     @NamedQuery(name = "AppConfig.findByKey", query = "SELECT a FROM AppConfig a WHERE a.keyName = :keyParam") })
 public class AppConfig {
+	public static final String CONFIG_VALUE_TRUE = "TRUE";
+	public static final String CONFIG_VALUE_FALSE = "FALSE";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

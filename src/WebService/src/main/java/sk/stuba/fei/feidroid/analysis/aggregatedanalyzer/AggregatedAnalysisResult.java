@@ -1,13 +1,18 @@
 package sk.stuba.fei.feidroid.analysis.aggregatedanalyzer;
 
-import sk.stuba.fei.feidroid.analysis.AnalysisResult;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AggregatedAnalysisResult implements AnalysisResult {
+import sk.stuba.fei.feidroid.analysis.analysisresult.AbstractAnalysisResult;
+
+public class AggregatedAnalysisResult extends AbstractAnalysisResult {
 	private float aggregatedScore;
+	private List<String> descriptions;
 
 	public AggregatedAnalysisResult(float aggregatedScore) {
 		super();
 		this.aggregatedScore = aggregatedScore;
+		descriptions = new ArrayList<String>();
 	}
 
 	public float getAggregatedScore() {
@@ -16,5 +21,13 @@ public class AggregatedAnalysisResult implements AnalysisResult {
 
 	public void setAggregatedScore(float aggregatedScore) {
 		this.aggregatedScore = aggregatedScore;
+	}
+
+	public List<String> getDescriptions() {
+		return descriptions;
+	}
+
+	public void setDescriptions(List<String> descriptions) {
+		this.descriptions = descriptions;
 	}
 }

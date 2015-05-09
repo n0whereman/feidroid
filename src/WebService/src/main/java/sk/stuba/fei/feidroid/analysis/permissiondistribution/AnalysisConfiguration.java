@@ -1,4 +1,7 @@
-package sk.stuba.fei.feidroid.analysis;
+package sk.stuba.fei.feidroid.analysis.permissiondistribution;
+
+import sk.stuba.fei.feidroid.entities.Application;
+import sk.stuba.fei.feidroid.services.criteria.Criteria;
 
 /**
  * AnalysisConfiguration class is used to set parameters of Permission analysis.
@@ -13,6 +16,7 @@ package sk.stuba.fei.feidroid.analysis;
 public class AnalysisConfiguration {
 	private int tuples;
 	private int count;
+	private Criteria<Application> criteria;
 
 	public AnalysisConfiguration(int nTuples, int count) {
 		super();
@@ -35,4 +39,12 @@ public class AnalysisConfiguration {
 	public void setCount(int count) {
 		this.count = count;
 	}
+
+	public Criteria<Application> getCriteria() {
+	  return criteria;
+  }
+
+	public void setCriteria(Criteria<Application> criteria) {
+	  this.criteria = criteria;
+  }
 }
