@@ -27,14 +27,17 @@ import sk.stuba.fei.feidroid.analysis.permissionanalysis.PermissionAnalysisModul
 import sk.stuba.fei.feidroid.analysis.permissionanalysis.PermissionAnalyzer;
 import sk.stuba.fei.feidroid.analysis.permissiondistribution.AnalysisConfiguration;
 import sk.stuba.fei.feidroid.analysis.permissiondistribution.PermissionDistributionAnalyzer;
-import sk.stuba.fei.feidroid.analysis.simpleanalyzer.SimpleAnalysisModule;
-import sk.stuba.fei.feidroid.analysis.simpleanalyzer.SimpleApplicationAnalyzer;
+import sk.stuba.fei.feidroid.analysis.permissionusageanalysis.PermissionUsageAnalysisModule;
+import sk.stuba.fei.feidroid.analysis.permissionusageanalysis.PermissionUsageAnalyzer;
+import sk.stuba.fei.feidroid.analysis.simpleanalysis.SimpleAnalysisModule;
+import sk.stuba.fei.feidroid.analysis.simpleanalysis.SimpleApplicationAnalyzer;
 import sk.stuba.fei.feidroid.appconfig.entities.AppConfig;
 import sk.stuba.fei.feidroid.appconfig.service.AppConfigService;
 import sk.stuba.fei.feidroid.entities.Application;
 import sk.stuba.fei.feidroid.entities.ApplicationCategory;
 import sk.stuba.fei.feidroid.entities.Permission;
 import sk.stuba.fei.feidroid.entities.PermissionUsage;
+import sk.stuba.fei.feidroid.entities.PermissionUsageRelation;
 import sk.stuba.fei.feidroid.resources.ApplicationCategoryResource;
 import sk.stuba.fei.feidroid.resources.ApplicationResource;
 import sk.stuba.fei.feidroid.resources.PermissionUsageResource;
@@ -172,6 +175,12 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 			analyzer.addModule(new SimpleAnalysisModule(new SimpleApplicationAnalyzer()), Float.valueOf(value));
 		}
 
+		config = appConfigService.getAppConfig("PERMISSION_USAGE_ANALYSIS_MODULE_ENABLED");
+		if (config != null && AppConfig.CONFIG_VALUE_TRUE.equals(config.getValue())) {
+			String value = appConfigService.getAppConfig("PERMISSION_USAGE_ANALYSIS_MODULE_WEIGHT").getValue();
+			analyzer.addModule(new PermissionUsageAnalysisModule(new PermissionUsageAnalyzer()), Float.valueOf(value));
+		}
+
 		return analyzer;
 	}
 
@@ -215,12 +224,12 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 	@Path("{id}/permissions")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response setPermissionsResource(@PathParam("id") Long id, List<Integer> permissionIds) {
+	public Response setPermissionsResource(@PathParam("id") Long id, List<String> permissionIds) {
 		Application app = findById(id);
-		List<Permission> permList = permissionService.findByIds(permissionIds);
+		List<Permission> permList = permissionService.findByNames(permissionIds);
 		List<PermissionUsage> usages = permissionUsageService.setPermissionUsages(app, permList);
 		Collection<PermissionUsageResource> col = permissionUsageService.convertListToResource(usages);
-
+		updateEntity(app);
 		return Response.ok(col).build();
 	}
 
@@ -287,6 +296,7 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 		Application app = convertResourceToEntity(resource);
 		app.setName(UUID.randomUUID().toString());
 		app = persistEntity(app);
+		RelationService relationService = new RelationService();
 
 		List<Permission> permissions = permissionService.findByNames(resource.getUsedPermissions());
 		for (Permission p : permissions) {
@@ -298,8 +308,31 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 			permissionUsageService.createPermissionUsage(app, p, false);
 		}
 
-		updateEntity(app);
+		app = updateEntity(app);
+
+		PermissionUsageRelation relation = new PermissionUsageRelation();
+		relation.setOriginator(resource.getRelatedTo());
+		relation.setRelatedTo(app.getId());
+		relationService.persistEntity(relation);
 
 		return Response.status(201).entity(convertEntityToResource(app)).build();
+	}
+
+	private class RelationService extends BasicService<PermissionUsageRelation, Integer> {
+
+		public RelationService() {
+			super(PermissionUsageRelation.class);
+		}
+
+		@Override
+		public Integer convertEntityToResource(PermissionUsageRelation object) {
+			return null;
+		}
+
+		@Override
+		protected PermissionUsageRelation convertResourceToEntity(Integer resource) {
+			return null;
+		}
+
 	}
 }

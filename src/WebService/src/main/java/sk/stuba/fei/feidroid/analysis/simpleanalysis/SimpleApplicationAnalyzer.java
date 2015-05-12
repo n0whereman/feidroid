@@ -1,4 +1,4 @@
-package sk.stuba.fei.feidroid.analysis.simpleanalyzer;
+package sk.stuba.fei.feidroid.analysis.simpleanalysis;
 
 import java.util.ArrayList;
 import java.util.List;

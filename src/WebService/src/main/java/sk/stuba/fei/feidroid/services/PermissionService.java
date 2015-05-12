@@ -45,12 +45,4 @@ public class PermissionService extends BasicService<Permission, PermissionResour
 		return null;
 	}
 
-	/*
-	 * @Path("findByNames")
-	 * 
-	 * @GET
-	 * 
-	 * @Consumes(MediaType.APPLICATION_JSON) public Response
-	 * findPermissionsByNamesResource(List<String> names) { return null; }
-	 */
 }

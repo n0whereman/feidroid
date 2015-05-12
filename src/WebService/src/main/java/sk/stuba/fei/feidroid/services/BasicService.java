@@ -22,6 +22,16 @@ import org.json.JSONArray;
 
 import sk.stuba.fei.feidroid.services.criteria.Criteria;
 
+/**
+ * Basic generic service, which operates on the given entity and resource.
+ * 
+ * @author Pavol Dobrocka
+ *
+ * @param <Entity>
+ *          JPA entity on which the service operates
+ * @param <Resource>
+ *          Resource that is used to transfer the entity data
+ */
 abstract public class BasicService<Entity, Resource> {
 	private static final String PERSISTENCE_UNIT_NAME = "feidroid";
 	private final Class<Entity> entityClass;
@@ -30,6 +40,13 @@ abstract public class BasicService<Entity, Resource> {
 		entityClass = entity;
 	}
 
+	/**
+	 * Method to find the record in database with the given id
+	 * 
+	 * @param id
+	 *          of the record in database
+	 * @return Entity with the given id
+	 */
 	public Entity findById(Long id) {
 		EntityManager em = getEntityManager();
 		Entity result = null;
@@ -45,6 +62,11 @@ abstract public class BasicService<Entity, Resource> {
 		return result;
 	}
 
+	/**
+	 * Returns all records of the entity type from database
+	 * 
+	 * @return All records from database
+	 */
 	public List<Entity> findAll() {
 		EntityManager em = getEntityManager();
 		List<Entity> result = em.createNamedQuery(getNamedQuery("findAll"), getEntityClass()).getResultList();
@@ -54,6 +76,12 @@ abstract public class BasicService<Entity, Resource> {
 		return result;
 	}
 
+	/**
+	 * Method to find all records with the ids provided in the list
+	 * 
+	 * @param ids
+	 * @return all records with the ids provided in the list
+	 */
 	public List<Entity> findByIds(List<Integer> ids) {
 		EntityManager em = getEntityManager();
 		List<Entity> result;
@@ -68,6 +96,14 @@ abstract public class BasicService<Entity, Resource> {
 		return result;
 	}
 
+	/**
+	 * Method to find all records that match given criteria
+	 * 
+	 * @see Criteria
+	 * 
+	 * @param criteria
+	 * @return all records that match given criteria
+	 */
 	public List<Entity> findByCriteria(Criteria<Entity> criteria) {
 		EntityManager em = getEntityManager();
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
@@ -80,6 +116,12 @@ abstract public class BasicService<Entity, Resource> {
 		return em.createQuery(criteriaQuery).getResultList();
 	}
 
+	/**
+	 * Method to persist the record if its not already in database
+	 * 
+	 * @param obj
+	 * @return Persisted object with id
+	 */
 	public Entity persistEntity(Entity obj) {
 		EntityManager em = getEntityManager();
 		em.getTransaction().begin();
@@ -90,6 +132,13 @@ abstract public class BasicService<Entity, Resource> {
 		return obj;
 	}
 
+	/**
+	 * Method to save (overwrite) the record in database. Record with the same id
+	 * must already be present in database
+	 * 
+	 * @param obj
+	 * @return Saved object
+	 */
 	public Entity updateEntity(Entity obj) {
 		EntityManager em = getEntityManager();
 		em.getTransaction().begin();
@@ -100,6 +149,11 @@ abstract public class BasicService<Entity, Resource> {
 		return obj;
 	}
 
+	/**
+	 * Removes the record from database
+	 * 
+	 * @param obj
+	 */
 	public void removeEntity(Entity obj) {
 		EntityManager em = getEntityManager();
 		em.getTransaction().begin();

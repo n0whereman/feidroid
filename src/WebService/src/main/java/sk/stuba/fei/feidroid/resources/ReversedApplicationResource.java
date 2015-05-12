@@ -11,6 +11,7 @@ public class ReversedApplicationResource extends ApplicationResource {
 	private List<String> permissions;
 	private List<String> usedPermissions;
 	private List<String> notUsedPermissions;
+	private Long relatedTo;
 
 	public List<String> getPermissions() {
 		return permissions;
@@ -48,6 +49,14 @@ public class ReversedApplicationResource extends ApplicationResource {
 	@JsonProperty("SHA1")
 	public void setFingerprint(String fingerprint) {
 		super.setFingerprint(fingerprint);
+	}
+
+	public Long getRelatedTo() {
+		return relatedTo;
+	}
+
+	public void setRelatedTo(Long relatedTo) {
+		this.relatedTo = relatedTo;
 	}
 
 	@Override
