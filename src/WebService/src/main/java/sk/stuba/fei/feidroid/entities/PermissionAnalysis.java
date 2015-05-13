@@ -11,7 +11,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PERMISSION_ANALYSIS")
-@NamedQueries({ @NamedQuery(name = PermissionAnalysis.GET_BY_GROUP_QUERY_NAME, query = "SELECT p FROM PermissionAnalysis p WHERE p.groupId IN :listParam") })
+@NamedQueries({
+    @NamedQuery(name = PermissionAnalysis.GET_BY_GROUP_QUERY_NAME, query = "SELECT p FROM PermissionAnalysis p WHERE p.groupId IN :listParam"),
+    @NamedQuery(name = PermissionAnalysis.SUM_GROUP_SCORE, query = "SELECT SUM(p.score) FROM PermissionAnalysis p WHERE p.groupId IN :listParam") })
 public class PermissionAnalysis {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +24,7 @@ public class PermissionAnalysis {
 	private Long groupId;
 
 	public static final String GET_BY_GROUP_QUERY_NAME = "PermissionAnalysis.getByGroup";
+	public static final String SUM_GROUP_SCORE = "PermissionAnalysis.sumGroupScore";
 
 	public Long getId() {
 		return id;

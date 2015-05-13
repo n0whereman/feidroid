@@ -3,10 +3,18 @@ package sk.stuba.fei.feidroid.analysis;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
 
 import org.eclipse.persistence.indirection.IndirectList;
 
+import sk.stuba.fei.feidroid.entities.Permission;
+import sk.stuba.fei.feidroid.entities.PermissionAnalysis;
 import sk.stuba.fei.feidroid.entities.PermissionUsage;
 
 public class AnalysisHelper {
@@ -52,6 +60,64 @@ public class AnalysisHelper {
 		}
 
 		return ids;
+	}
+
+	public static LinkedHashMap<String, Float> calculateScoreForPermissionDistributions(LinkedHashMap<String, Integer> permissionDistribution,
+	    int total, int distributionSize) {
+		LinkedHashMap<String, Float> scoreMap = new LinkedHashMap<String, Float>();
+		Set<String> keys = permissionDistribution.keySet();
+		Integer count = 0;
+		for (String key : keys) {
+			count = permissionDistribution.get(key);
+			if (total == 1) {
+				scoreMap.put(key, Float.valueOf(0));
+			} else {
+				float score = (float) (Math.log(count) / Math.log(total) * (Math.log(distributionSize) + 1));
+				scoreMap.put(key, Float.valueOf(score));
+			}
+		}
+
+		return scoreMap;
+	}
+
+	public static void persistPermissionDistributionScore(EntityManager entityManager, Map<String, Long> permissionIds,
+	    LinkedHashMap<String, Float> scoreMap, Long groupId) {
+		Set<String> keys = scoreMap.keySet();
+
+		entityManager.getTransaction().begin();
+
+		for (String key : keys) {
+			String permissions[] = key.split(", ");
+			String serializedPermissions = "";
+
+			for (String permission : permissions) {
+				Long id = permissionIds.get(permission);
+				String idString = (id != null) ? id.toString() : "0";
+				serializedPermissions += "".equals(serializedPermissions) ? idString : ", " + idString;
+			}
+
+			PermissionAnalysis analysisRecord = new PermissionAnalysis();
+			analysisRecord.setGroupId(groupId);
+			analysisRecord.setPermissions(serializedPermissions);
+			analysisRecord.setScore(scoreMap.get(key));
+
+			entityManager.persist(analysisRecord);
+
+		}
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+
+	}
+
+	public static Map<String, Long> createPermissionMap(List<Permission> permissions) {
+		Map<String, Long> map = new HashMap<String, Long>();
+
+		for (Permission perm : permissions) {
+			map.put(perm.getTitle(), perm.getId());
+		}
+
+		return map;
 	}
 
 	private static void constructList(List<String> destination, List<PermissionUsage> permissions, int fullN, int index, int n, int p) {

@@ -47,6 +47,15 @@ public class PermissionAnalyzer implements ApplicationAnalyzer<PermissionAnalysi
 		return analysisResult;
 	}
 
+	public Double countMaxScore() {
+		List<Double> result = applicationService.getEntityManager().createNamedQuery(PermissionAnalysis.SUM_GROUP_SCORE, Double.class)
+		    .setParameter("listParam", groupIds).getResultList();
+
+		Double score = result != null ? Double.valueOf(result.get(0)) : Double.valueOf(0);
+
+		return score;
+	}
+
 	@Override
 	public AnalysisResultResource convertResultToResource(PermissionAnalysisResult result) {
 		// TODO Auto-generated method stub
