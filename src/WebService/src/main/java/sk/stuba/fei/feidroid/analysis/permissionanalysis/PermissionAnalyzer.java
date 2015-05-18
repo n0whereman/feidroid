@@ -66,6 +66,23 @@ public class PermissionAnalyzer implements ApplicationAnalyzer<PermissionAnalysi
 		return groupIds;
 	}
 
+	/**
+	 * Sets group ids for analysis.
+	 * 
+	 * @param groups
+	 *          CSV of group ids
+	 */
+	public void setGroups(String groups) {
+		String ids[] = groups.split(",");
+		List<Long> groupIds = new ArrayList<Long>();
+
+		for (String id : ids) {
+			groupIds.add(Long.valueOf(id.trim()));
+		}
+
+		this.groupIds = groupIds;
+	}
+
 	private List<Long> extractApplicationPermissions(Application application) {
 		List<Long> permissions = new ArrayList<Long>();
 		List<PermissionUsage> usages = application.getPermissions();

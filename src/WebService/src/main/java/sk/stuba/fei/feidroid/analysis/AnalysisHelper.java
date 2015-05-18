@@ -56,7 +56,7 @@ public class AnalysisHelper {
 		List<Long> ids = new ArrayList<Long>();
 
 		for (String id : idStrings) {
-			ids.add(Long.valueOf(id));
+			ids.add(Long.valueOf(id.trim()));
 		}
 
 		return ids;

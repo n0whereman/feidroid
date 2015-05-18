@@ -25,26 +25,33 @@ public class PermissionUsageAnalyzer implements ApplicationAnalyzer<PermissionUs
 		}
 
 		Application relatedApplication = applicationService.findById(relatedTo);
-		List<PermissionUsage> permUsages = relatedApplication.getPermissions();
-		List<Permission> unusedPermissions = new ArrayList<Permission>();
-		String description = "";
-
-		for (PermissionUsage usage : permUsages) {
-			if (!usage.getIsUsed()) {
-				unusedPermissions.add(usage.getPermission());
-
-				if (!"".equals(description)) {
-					description.concat(", ");
-				}
-
-				description.concat(usage.getPermission().getTitle());
-			}
-		}
-
 		PermissionUsageAnalysisResult result = new PermissionUsageAnalysisResult();
-		result.setPermissionCount(permUsages.size());
-		result.setUnusedPermissions(unusedPermissions);
-		result.setDescription(description);
+
+		if (relatedApplication != null) {
+			List<PermissionUsage> permUsages = relatedApplication.getPermissions();
+			List<Permission> unusedPermissions = new ArrayList<Permission>();
+			String description = "";
+
+			for (PermissionUsage usage : permUsages) {
+				if (!usage.getIsUsed()) {
+					unusedPermissions.add(usage.getPermission());
+
+					if (!"".equals(description)) {
+						description.concat(", ");
+					}
+
+					description.concat(usage.getPermission().getTitle());
+				}
+			}
+
+			result.setPermissionCount(permUsages.size());
+			result.setUnusedPermissions(unusedPermissions);
+			result.setDescription(description);
+		} else {
+			result.setPermissionCount(0);
+			result.setUnusedPermissions(new ArrayList<Permission>());
+			result.setDescription("");
+		}
 
 		return result;
 	}

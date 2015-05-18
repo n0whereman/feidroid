@@ -166,7 +166,10 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 		AppConfig config = appConfigService.getAppConfig("PERMISSION_ANALYSIS_MODULE_ENABLED");
 		if (config != null && AppConfig.CONFIG_VALUE_TRUE.equals(config.getValue())) {
 			String value = appConfigService.getAppConfig("PERMISSION_ANALYSIS_MODULE_WEIGHT").getValue();
-			analyzer.addModule(new PermissionAnalysisModule(new PermissionAnalyzer()), Float.valueOf(value));
+			String groups = appConfigService.getAppConfig("PERMISSION_ANALYSIS_MODULE_GROUPS").getValue();
+			PermissionAnalyzer permAnalyzer = new PermissionAnalyzer();
+			permAnalyzer.setGroups(groups);
+			analyzer.addModule(new PermissionAnalysisModule(permAnalyzer), Float.valueOf(value));
 		}
 
 		config = appConfigService.getAppConfig("SIMPLE_ANALYSIS_MODULE_ENABLED");

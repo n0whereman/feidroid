@@ -9,6 +9,7 @@
     <class>sk.stuba.fei.feidroid.entities.PermissionUsage</class>
     <class>sk.stuba.fei.feidroid.entities.PermissionAnalysis</class>
     <class>sk.stuba.fei.feidroid.appconfig.entities.AppConfig</class>
+    <class>sk.stuba.fei.feidroid.entities.PermissionUsageRelation</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
       <property name="javax.persistence.jdbc.url"
