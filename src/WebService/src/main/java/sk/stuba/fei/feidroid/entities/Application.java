@@ -32,6 +32,9 @@ public class Application {
 	@Column(name = "PACKAGE")
 	private String appPackage;
 
+	@Column(name = "UNSAFE_METHODS")
+	private Boolean unsafeMethods;
+
 	@ManyToMany
 	@JoinTable(name = "APPLICATION_APP_CATEGORY", joinColumns = { @JoinColumn(name = "APP_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "APP_CAT_ID", referencedColumnName = "ID") })
 	private List<ApplicationCategory> categories;
@@ -109,6 +112,14 @@ public class Application {
 
 	public void setFingerprint(String certificate) {
 		this.fingerprint = certificate;
+	}
+
+	public Boolean getUnsafeMethods() {
+		return unsafeMethods;
+	}
+
+	public void setUnsafeMethods(Boolean unsafeMethods) {
+		this.unsafeMethods = unsafeMethods;
 	}
 
 	@Override

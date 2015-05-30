@@ -13,8 +13,8 @@ import javax.persistence.EntityManager;
 
 import org.eclipse.persistence.indirection.IndirectList;
 
+import sk.stuba.fei.feidroid.analysis.permissionanalysis.entities.PermissionAnalysis;
 import sk.stuba.fei.feidroid.entities.Permission;
-import sk.stuba.fei.feidroid.entities.PermissionAnalysis;
 import sk.stuba.fei.feidroid.entities.PermissionUsage;
 
 public class AnalysisHelper {

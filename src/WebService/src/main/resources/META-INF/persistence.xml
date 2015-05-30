@@ -7,7 +7,7 @@
     <class>sk.stuba.fei.feidroid.entities.ApplicationCategory</class>
     <class>sk.stuba.fei.feidroid.entities.Permission</class>
     <class>sk.stuba.fei.feidroid.entities.PermissionUsage</class>
-    <class>sk.stuba.fei.feidroid.entities.PermissionAnalysis</class>
+    <class>sk.stuba.fei.feidroid.analysis.permissionanalysis.entities.PermissionAnalysis</class>
     <class>sk.stuba.fei.feidroid.appconfig.entities.AppConfig</class>
     <class>sk.stuba.fei.feidroid.entities.PermissionUsageRelation</class>
     <properties>

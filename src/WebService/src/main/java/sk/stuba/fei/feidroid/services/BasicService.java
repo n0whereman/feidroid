@@ -180,8 +180,24 @@ abstract public class BasicService<Entity, Resource> {
 		return factory.createEntityManager();
 	}
 
+	/**
+	 * Abstract method which needs to be implemented in order to convert the
+	 * Entity to a Resource object The implementation of this method is not
+	 * mandatory, it is needed only when the communication through HTTP is
+	 * required
+	 * 
+	 * @param object
+	 * @return implementation of resource object representing the entity object
+	 */
 	abstract public Resource convertEntityToResource(Entity object);
 
+	/**
+	 * Method to convert list of entities to a list of resource objects using the
+	 * convertEntityToResource method
+	 * 
+	 * @param objList
+	 * @return list of resources
+	 */
 	public List<Resource> convertListToResource(Collection<Entity> objList) {
 		List<Resource> result = new ArrayList<Resource>();
 		for (Entity obj : objList) {
@@ -191,6 +207,14 @@ abstract public class BasicService<Entity, Resource> {
 		return result;
 	}
 
+	/**
+	 * Inverse method to convertEntityToResource method It should be implemented
+	 * that
+	 * entity.equals(convertResourceToEntity(convertEntityToResource(entity)))
+	 * 
+	 * @param resource
+	 * @return Entity object constructed from resource
+	 */
 	abstract protected Entity convertResourceToEntity(Resource resource);
 
 	protected JSONArray collectionToJsonArray(Collection<?> list) {
@@ -199,6 +223,11 @@ abstract public class BasicService<Entity, Resource> {
 
 	/* Resource methods */
 
+	/**
+	 * HTTP method to get all records of the service entity
+	 * 
+	 * @return list of all entities of the service entity class
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAllResource() {
@@ -207,6 +236,12 @@ abstract public class BasicService<Entity, Resource> {
 		return Response.ok(convertListToResource(result)).build();
 	}
 
+	/**
+	 * HTTP method to get the record with the given id
+	 * 
+	 * @param id
+	 * @return entity with the given id
+	 */
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)

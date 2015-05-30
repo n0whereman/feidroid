@@ -10,8 +10,6 @@ public class PermissionAnalysisModule extends AbstractAnalysisModule<PermissionA
 
 	@Override
 	public float normalizeResult(PermissionAnalysisResult result) {
-		// TODO: Count permission group max score and divide the result with it
-		// ((PermissionAnalyzer)getAnalyzer())getGroupIds()
 		return (float) (result.getScore() / ((PermissionAnalyzer) getAnalyzer()).countMaxScore());
 	}
 }

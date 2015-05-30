@@ -12,6 +12,7 @@ import sk.stuba.fei.feidroid.entities.Application;
 public class AggregatedApplicationAnalyzer implements ApplicationAnalyzer<AggregatedAnalysisResult> {
 	private List<AnalysisModule<? extends AnalysisResult>> modules;
 	private HashMap<AnalysisModule<?>, Float> weights;
+	private static final float CORRECTION = 1.3f;
 
 	public AggregatedApplicationAnalyzer() {
 		super();
@@ -37,6 +38,8 @@ public class AggregatedApplicationAnalyzer implements ApplicationAnalyzer<Aggreg
 		}
 
 		aggregatedValue /= getSumOfWeights();
+		aggregatedValue = (float) (Math.exp(CORRECTION * aggregatedValue) - 1);
+		aggregatedValue = aggregatedValue > 1 ? 1 : aggregatedValue;
 		aggregatedResult.setAggregatedScore(aggregatedValue);
 
 		return aggregatedResult;

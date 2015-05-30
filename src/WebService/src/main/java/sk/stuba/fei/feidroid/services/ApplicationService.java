@@ -23,6 +23,8 @@ import sk.stuba.fei.feidroid.analysis.ApplicationAnalyzer;
 import sk.stuba.fei.feidroid.analysis.aggregatedanalyzer.AggregatedAnalysisResult;
 import sk.stuba.fei.feidroid.analysis.aggregatedanalyzer.AggregatedApplicationAnalyzer;
 import sk.stuba.fei.feidroid.analysis.analysisresult.AnalysisResult;
+import sk.stuba.fei.feidroid.analysis.methodanalysis.MethodAnalysisModule;
+import sk.stuba.fei.feidroid.analysis.methodanalysis.MethodAnalyzer;
 import sk.stuba.fei.feidroid.analysis.permissionanalysis.PermissionAnalysisModule;
 import sk.stuba.fei.feidroid.analysis.permissionanalysis.PermissionAnalyzer;
 import sk.stuba.fei.feidroid.analysis.permissiondistribution.AnalysisConfiguration;
@@ -72,6 +74,7 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 			resource.setVersion(entity.getVersion());
 			resource.setAppPackage(entity.getAppPackage());
 			resource.setFingerprint(entity.getFingerprint());
+			resource.setUnsafeMethods(entity.getUnsafeMethods());
 		}
 
 		return resource;
@@ -86,6 +89,7 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 		app.setVersion(resource.getVersion());
 		app.setAppPackage(resource.getAppPackage());
 		app.setFingerprint(resource.getFingerprint());
+		app.setUnsafeMethods(resource.getUnsafeMethods());
 
 		return app;
 	}
@@ -109,7 +113,7 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 		String appPackage = app.getAppPackage();
 		if (appPackage != null && !appPackage.isEmpty()) {
 			appPackage = appPackage + ".apk";
-			ProcessBuilder pb = new ProcessBuilder(APP_UNPACK_PATH, appPackage);
+			ProcessBuilder pb = new ProcessBuilder(APP_UNPACK_PATH, appPackage, app.getId().toString());
 			pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 			try {
 				pb.start();
@@ -182,6 +186,12 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 		if (config != null && AppConfig.CONFIG_VALUE_TRUE.equals(config.getValue())) {
 			String value = appConfigService.getAppConfig("PERMISSION_USAGE_ANALYSIS_MODULE_WEIGHT").getValue();
 			analyzer.addModule(new PermissionUsageAnalysisModule(new PermissionUsageAnalyzer()), Float.valueOf(value));
+		}
+
+		config = appConfigService.getAppConfig("METHOD_ANALYSIS_MODULE_ENABLED");
+		if (config != null && AppConfig.CONFIG_VALUE_TRUE.equals(config.getValue())) {
+			String value = appConfigService.getAppConfig("METHOD_ANALYSIS_MODULE_WEIGHT").getValue();
+			analyzer.addModule(new MethodAnalysisModule(new MethodAnalyzer()), Float.valueOf(value));
 		}
 
 		return analyzer;
