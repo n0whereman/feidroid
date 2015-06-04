@@ -323,11 +323,12 @@ public class ApplicationService extends BasicService<Application, ApplicationRes
 
 		app = updateEntity(app);
 
-		PermissionUsageRelation relation = new PermissionUsageRelation();
-		relation.setOriginator(resource.getRelatedTo());
-		relation.setRelatedTo(app.getId());
-		relationService.persistEntity(relation);
-
+		if (resource.getRelatedTo() != null) {
+			PermissionUsageRelation relation = new PermissionUsageRelation();
+			relation.setOriginator(resource.getRelatedTo());
+			relation.setRelatedTo(app.getId());
+			relationService.persistEntity(relation);
+		}
 		return Response.status(201).entity(convertEntityToResource(app)).build();
 	}
 
