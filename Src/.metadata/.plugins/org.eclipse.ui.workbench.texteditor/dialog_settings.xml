@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="r" key="selection"/>
-		<item value="false" key="casesensitive"/>
+		<item value="PERM" key="selection"/>
+		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="PERM"/>
 			<item value="R"/>
 			<item value="orange"/>
 			<item value="amber"/>
@@ -15,7 +16,6 @@
 			<item value="green_dark"/>
 			<item value="postData"/>
 			<item value="URL url = new URL(&quot;http://thanos.feidroid.mobi:8080/FEIDroid-0.0.1-SNAPSHOT/api/application&quot;);"/>
-			<item value="HttpParams httpParameters = new BasicHttpParams();"/>
 		</list>
 		<list key="replacehistory">
 			<item value="red"/>

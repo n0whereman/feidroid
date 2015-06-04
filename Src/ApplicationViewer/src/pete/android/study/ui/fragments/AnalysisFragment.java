@@ -177,7 +177,7 @@ public class AnalysisFragment extends Fragment{
 			
 			BigDecimal bd = new BigDecimal(result);
 		    bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
-		    riskScore = bd.floatValue();
+		    riskScore = bd.floatValue() * 100;
 		    
 		    //mResultScore = (TextView)view.findViewById(R.id.result_score);
 		    //mResultScore.setText(bd.toEngineeringString()+" %");
@@ -185,8 +185,9 @@ public class AnalysisFragment extends Fragment{
 			//mProgress = (ProgressBar) view.findViewById(R.id.progress_bar);
 			//mProgress.setProgress((int)total_score);
 		    
-		    int threadLvl = (int)(riskScore/20) + 1;
+		    int threadLvl = (int)(riskScore/20 + 1);
 			threadLvl = threadLvl == 0 ? 2 : threadLvl;
+		    if (threadLvl > 5) threadLvl = 5;
 		    
 		    switch(threadLvl)
 		    {
@@ -601,6 +602,7 @@ public class AnalysisFragment extends Fragment{
 			Intent intent = new Intent(getActivity(), AnalysisDetailActivity.class);
 			intent.putExtra("riskScore", riskScore);
 			intent.putExtra("clickedBtnId", v.getId());
+			intent.putExtra("appId", app_id);
 			intent.putExtra(AnalysisFragment.PERM, permissions);
 			startActivity(intent);
 		}

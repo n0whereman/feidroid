@@ -9,6 +9,10 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -161,4 +165,22 @@ public class Utilities {
 		return cleared;
 	}
 	
+	public static int GetAppIdFromDatabase(Context context, String appName)
+	{
+		try
+		{
+			String result = new RetrieveData(context).execute("https://thanos.feidroid.mobi:8443/FEIDroid/api/application/find?name=" + appName).get();
+			JSONArray apps = new JSONArray(result);
+			if(apps.length() > 0)
+			{
+				JSONObject obj = apps.getJSONObject(0);
+				return Integer.parseInt(obj.optString("id"));
+			}
+		}
+		catch(Exception ex)
+		{
+		}
+		
+		return -1;
+	}
 }

@@ -17,6 +17,14 @@ public class ServiceUpdate extends Service{
 	
 	public static String POST_WHAT = "";
 	public static String changedPackage = "";
+	
+	int flags = PackageManager.GET_META_DATA | 
+            PackageManager.GET_SHARED_LIBRARY_FILES |   
+            PackageManager.GET_UNINSTALLED_PACKAGES | 
+            PackageManager.GET_PERMISSIONS |
+            PackageManager.GET_PROVIDERS |
+            PackageManager.GET_SIGNATURES | 
+            PackageManager.GET_ACTIVITIES;
 
 	@Override
 	public IBinder onBind(Intent intent) {		
@@ -42,32 +50,34 @@ public class ServiceUpdate extends Service{
 		super.onDestroy();
 	}
 	
-	public void postAllApps(){
-		 List<PackageInfo> packs = getPackageManager().getInstalledPackages(0);
-		    for(int i=0;i<packs.size();i++) {
-		        PackageInfo p = packs.get(i);
-		        PostData sender = new PostData(getApplicationContext());
-		        
-		        if (p.applicationInfo.sourceDir.startsWith("/data/app/")) 
-		        {
-		        	SendData(p, sender);
-		        }
-		    }
+	public void postAllApps(){		
+		 List<PackageInfo> packs = getPackageManager().getInstalledPackages(flags);
+	     PostData sender = new PostData(getApplicationContext());
+		 for(int i=0;i<packs.size();i++) {
+		     PackageInfo p = packs.get(i);
+		     
+		     if (p.applicationInfo.sourceDir.startsWith("/data/app/")) 
+		     {
+		    	sender.setPckgInfo(p);
+		      	SendData(p, sender);
+		     }
+		 }
 	}
 	
 	public void postChanges(){
-		 List<PackageInfo> packs = getPackageManager().getInstalledPackages(PackageManager.GET_SIGNATURES | PackageManager.GET_ACTIVITIES);
-		    for(int i=0;i<packs.size();i++) {
-		        PackageInfo p = packs.get(i);
-		        PostData sender = new PostData(getApplicationContext());
-		        
-		        if (p.applicationInfo.sourceDir.startsWith("/data/app/")) {//only non-system apps
-		        	if(changedPackage.contains(p.packageName))
-		        	{
-		        		SendData(p, sender);
-		        	}
-		        }
-		    }
+		 List<PackageInfo> packs = getPackageManager().getInstalledPackages(flags);
+	     PostData sender = new PostData(getApplicationContext());
+		 for(int i=0;i<packs.size();i++) {
+		     PackageInfo p = packs.get(i);
+		     
+		     if (p.applicationInfo.sourceDir.startsWith("/data/app/")) {//only non-system apps
+		     	if(changedPackage.contains(p.packageName))
+		     	{
+		     		sender.setPckgInfo(p);
+		       		SendData(p, sender);
+		       	}
+		     }
+		 }
 	}
 	
 	private void SendData(PackageInfo pckage, PostData sender)
@@ -90,6 +100,17 @@ public class ServiceUpdate extends Service{
 			String sha1hash = Utilities.GetFingerprint(pckage);		
 			
 			sender.execute(url, name, packageName, version, sha1hash, description);
+			
+       		
+    		int appId = Utilities.GetAppIdFromDatabase(this, name);
+    		
+    		if(appId == -1) return;
+    		
+    		url = "https://thanos.feidroid.mobi:8443/FEIDroid/api/application/" + appId + "/permissions";
+    		sender = new PostData(sender);
+    		sender.execute(url, "$send_permissions");
+
+    		int s = appId + 2;
 		}
 		catch(Exception ex)
 		{

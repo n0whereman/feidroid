@@ -170,7 +170,7 @@ public class DetailFragment extends Fragment{
 //		
 //		app_id = 5;
 		
-		app_id = GetAppIdFromDatabase(mAppName.getText().toString());
+		app_id = Utilities.GetAppIdFromDatabase(getActivity().getApplicationContext(), mAppName.getText().toString());
 		
 //	    List<String> list = new ArrayList<String>();
 		StringBuilder categoryStringBuilder = new StringBuilder();
@@ -271,7 +271,7 @@ public class DetailFragment extends Fragment{
             public void onClick(View v) {
             	if(app_id == -1)
             	{
-            		app_id = GetAppIdFromDatabase(mAppName.getText().toString());
+            		app_id = Utilities.GetAppIdFromDatabase(getActivity().getApplicationContext(), mAppName.getText().toString());
             		
             		if(app_id == -1)
             		{
@@ -340,24 +340,5 @@ public class DetailFragment extends Fragment{
 		
 		return new String[]{ DateFormat.format("dd.MM.yyyy", new Date(installMillis)).toString(),
 							DateFormat.format("dd.MM.yyyy", new Date(updateMillis)).toString()};
-	}
-	
-	private int GetAppIdFromDatabase(String appName)
-	{
-		try
-		{
-			String result = new RetrieveData(getActivity()).execute("https://thanos.feidroid.mobi:8443/FEIDroid/api/application/find?name=" + appName).get();
-			JSONArray apps = new JSONArray(result);
-			if(apps.length() > 0)
-			{
-				JSONObject obj = apps.getJSONObject(0);
-				return Integer.parseInt(obj.optString("id"));
-			}
-		}
-		catch(Exception ex)
-		{
-		}
-		
-		return -1;
-	}
+	}	
 }

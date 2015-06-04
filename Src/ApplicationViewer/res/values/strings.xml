@@ -61,7 +61,7 @@
 
     <string name="title_activity_analysis">App Analysis</string>
     <string name="title_analysis_detail">Analysis detail</string>
-    <string name="threadLvl1">No thread</string>
+    <string name="threadLvl1">No threat</string>
     <string name="threadLvl2">Minimum risk</string>
     <string name="threadLvl3">Several vulnerabilities</string>
     <string name="threadLvl4">Dangerous app</string>

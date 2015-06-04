@@ -19,14 +19,17 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.os.AsyncTask;
 
 public class PostData extends AsyncTask<String, Void, String> {
 
 	Context activityContext;
+	PackageInfo pckgInfo;
 	
 	public PostData(){		
 	}
@@ -35,10 +38,31 @@ public class PostData extends AsyncTask<String, Void, String> {
 		activityContext = context;
 	}
 	
+	public PostData(PostData obj)
+	{
+		this.activityContext = obj.activityContext;
+		this.pckgInfo = obj.pckgInfo;
+	}
+	
+	public void setPckgInfo(PackageInfo info)
+	{
+		this.pckgInfo = info;
+	}
+	
     @Override
     protected String doInBackground(String... params) {    	
     	try
 		{
+    		if(params[1] == "$send_permissions")
+    		{    			
+    			//
+    			//post permissions
+    			//
+    			SendPermissions(params[0]);	//url
+    			
+    			return "DONE";
+    		}
+    		
 			CertificateFactory cf = CertificateFactory.getInstance("X.509");
 			InputStream caInput = new BufferedInputStream(activityContext.getAssets().open("ssl.crt"));
 			
@@ -65,6 +89,7 @@ public class PostData extends AsyncTask<String, Void, String> {
 	
 			URL url = new URL(params[0]);
 			
+			//post app info
 			HttpsURLConnection urlConnection =
 			    (HttpsURLConnection)url.openConnection();
 			urlConnection.setSSLSocketFactory(context.getSocketFactory());
@@ -105,6 +130,7 @@ public class PostData extends AsyncTask<String, Void, String> {
 			}
 			String response = urlConnection.getResponseMessage();
 			int responseCode = urlConnection.getResponseCode();
+			urlConnection.disconnect();
 			
 			return "DONE";
 		}
@@ -163,6 +189,93 @@ public class PostData extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+    }
+    
+    private boolean SendPermissions(String url_s)    
+    {	
+    	try
+		{
+    		JSONArray perm_array = new JSONArray();
+			if(pckgInfo.requestedPermissions != null) 
+			{
+				for(String p : pckgInfo.requestedPermissions) 
+				{					
+					if(p.startsWith("android")) 
+					{
+						p = p.substring(p.lastIndexOf(".") + 1);
+						perm_array.put(p);
+					}
+				}
+			}
+			else return false;
+
+        	String input = perm_array.toString();
+    		
+			CertificateFactory cf = CertificateFactory.getInstance("X.509");
+			InputStream caInput = new BufferedInputStream(activityContext.getAssets().open("ssl.crt"));
+			
+			Certificate ca;
+			try {
+			    ca = cf.generateCertificate(caInput);
+			} finally {
+			    caInput.close();
+			}
+	
+			// Create a KeyStore containing our trusted CAs
+			String keyStoreType = KeyStore.getDefaultType();
+			KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+			keyStore.load(null, null);
+			keyStore.setCertificateEntry("ca", ca);
+	
+			// Create a TrustManager that trusts the CAs in our KeyStore
+			String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+			TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+			tmf.init(keyStore);
+	
+			SSLContext context = SSLContext.getInstance("SSL");
+			context.init(null, tmf.getTrustManagers(), null);
+	
+			URL url = new URL(url_s);
+			
+			//post app info
+			HttpsURLConnection urlConnection =
+			    (HttpsURLConnection)url.openConnection();
+			urlConnection.setSSLSocketFactory(context.getSocketFactory());
+						
+			urlConnection.setDoOutput( true );
+			urlConnection.setDoInput ( true );
+			urlConnection.setInstanceFollowRedirects( false );
+			urlConnection.setRequestMethod( "POST" );
+			urlConnection.setRequestProperty( "Content-Type", "application/json"); 
+			urlConnection.setRequestProperty( "charset", "utf-8");
+			int dataLength = input.getBytes().length;
+			urlConnection.setRequestProperty( "Content-Length", Integer.toString(dataLength));
+			urlConnection.setUseCaches( false );
+			DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
+			
+			try
+			{ 				 						
+			   wr.write( input.getBytes(Charset.forName( "UTF-8" )));
+			   wr.flush();
+			}
+			catch(Exception ex)
+			{
+				return false;
+			}
+			finally
+			{
+				wr.close();
+			}
+			String response = urlConnection.getResponseMessage();
+			int responseCode = urlConnection.getResponseCode();
+			urlConnection.disconnect();
+			
+			return true;
+		}
+		catch(Exception e)
+		{
+	    	return false;
+		}    	
     }
 
 }

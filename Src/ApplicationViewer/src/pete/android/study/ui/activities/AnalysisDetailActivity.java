@@ -1,8 +1,12 @@
 package pete.android.study.ui.activities;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import pete.android.study.R;
 import pete.android.study.adapters.PermisionsAdapter;
 import pete.android.study.ui.fragments.AnalysisFragment;
+import pete.android.study.utils.RetrieveData;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +25,8 @@ public class AnalysisDetailActivity extends Activity {
 	private String[] red_perm;
 	private String[] permissions;	
 	
+	private int appId;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +38,10 @@ public class AnalysisDetailActivity extends Activity {
         
         float score = intent.getFloatExtra("riskScore", -1.0f);
         int scoreLvl = (int)(score / 20) + 1;
+        if(scoreLvl > 5) scoreLvl = 5;
+        
         int btnId = intent.getIntExtra("clickedBtnId", -1);
+        appId = intent.getIntExtra("appId", 1);
 		permissions = intent.getStringArrayExtra(AnalysisFragment.PERM);
         TextView txt = (TextView)findViewById(R.id.textView111);
         
@@ -68,10 +77,34 @@ public class AnalysisDetailActivity extends Activity {
 	private void SetAppropiateContent(int scoreLvl, int btnLvl, Context context)
 	{
 		TextView txt = (TextView)findViewById(R.id.textView111);
+		String result = "", r = "";
+		try
+		{
+			result = new RetrieveData(context).execute("https://thanos.feidroid.mobi:8443/FEIDroid/api/application/" + appId + "/analyze").get();
+			//TODO check for null			
+			JSONObject myJson = new JSONObject(result);
+			// use myJson as needed, for example 
+			result = myJson.optString("descriptions");
+
+			JSONArray a = new JSONArray(result);
+			r = a.get(0).toString();
+		}
+		catch(Exception e)
+		{
+			int x = 3;
+		}
 				
 		if(scoreLvl == btnLvl)
 		{
-			txt.setText("LVL" + btnLvl + " thread descritption\n\nList of presmissions:");
+			if(result == "" || r == "")
+			{
+				txt.setText("LVL" + btnLvl + " threat descritption\n\nList of presmissions:");
+			}
+			else
+			{
+				//r = "High similarity to a malware";
+				txt.setText(r + "\n\nList of presmissions:");
+			}
 			
 			green_perm = context.getResources().getStringArray(R.array.green_permissions);
 			yellow_perm = context.getResources().getStringArray(R.array.yellow_permissions);
@@ -91,7 +124,7 @@ public class AnalysisDetailActivity extends Activity {
 		}
 		else
 		{
-			txt.setText("LVL" + btnLvl + " thread descritption\n");
+			txt.setText("LVL" + btnLvl + " threat descritption\n");
 		}
 	}
 }
