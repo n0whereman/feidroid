@@ -1,4 +1,4 @@
-package sk.stuba.fei.feidroid.entities;
+package sk.stuba.fei.feidroid.analysis.permissionanalysis.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

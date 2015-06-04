@@ -12,6 +12,7 @@ public class ApplicationResource {
 	private String version;
 	private String appPackage;
 	private String fingerprint;
+	private Boolean unsafeMethods;
 
 	public Long getId() {
 		return id;
@@ -61,6 +62,14 @@ public class ApplicationResource {
 
 	public void setFingerprint(String fingerprint) {
 		this.fingerprint = fingerprint;
+	}
+
+	public Boolean getUnsafeMethods() {
+		return unsafeMethods;
+	}
+
+	public void setUnsafeMethods(Boolean unsafeMethods) {
+		this.unsafeMethods = unsafeMethods;
 	}
 
 	@Override

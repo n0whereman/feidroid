@@ -62,6 +62,6 @@ public class ReversedApplicationResource extends ApplicationResource {
 	@Override
 	public String toString() {
 		return "ReversedApplicationResource [id=" + getId() + ", name=" + getName() + ", description=" + getDescription() + ", version=" + getVersion()
-		    + ", package=" + getAppPackage() + "SHA1=" + getFingerprint() + "]";
+		    + ", package=" + getAppPackage() + "SHA1=" + getFingerprint() + "relatedTo=" + getRelatedTo() + "]";
 	}
 }

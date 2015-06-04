@@ -10,7 +10,7 @@ public class SimpleAnalysisModule extends AbstractAnalysisModule<SimpleAnalysisR
 
 	@Override
 	public float normalizeResult(SimpleAnalysisResult result) {
-		return 0.5f;
+		return (float) (result.getScore() / SimpleApplicationAnalyzer.MAX_SCORE);
 	}
 
 }

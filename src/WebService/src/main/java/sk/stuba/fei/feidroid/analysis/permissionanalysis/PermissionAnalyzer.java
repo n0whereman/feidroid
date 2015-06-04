@@ -6,8 +6,8 @@ import java.util.List;
 import sk.stuba.fei.feidroid.analysis.AnalysisHelper;
 import sk.stuba.fei.feidroid.analysis.ApplicationAnalyzer;
 import sk.stuba.fei.feidroid.analysis.analysisresult.AnalysisResultResource;
+import sk.stuba.fei.feidroid.analysis.permissionanalysis.entities.PermissionAnalysis;
 import sk.stuba.fei.feidroid.entities.Application;
-import sk.stuba.fei.feidroid.entities.PermissionAnalysis;
 import sk.stuba.fei.feidroid.entities.PermissionUsage;
 import sk.stuba.fei.feidroid.services.ApplicationService;
 
@@ -41,8 +41,23 @@ public class PermissionAnalyzer implements ApplicationAnalyzer<PermissionAnalysi
 			}
 		}
 
+		float normalized = (float) (score / countMaxScore());
+		String description = "";
+
+		if (normalized >= 0.8f) {
+			description = "Very high similarity to a malware";
+		} else if (normalized >= 0.6f) {
+			description = "High similarity to a malware ";
+		} else if (normalized >= 0.4f) {
+			description = "Medium similarity to a malware ";
+		} else if (normalized >= 0.2f) {
+			description = "Small similarity to a malware ";
+		} else {
+			description = "Negligible similarity to a malware ";
+		}
+
 		analysisResult.setScore(score);
-		analysisResult.setDescription("Permission analysis result description");
+		analysisResult.setDescription(description);
 
 		return analysisResult;
 	}
@@ -58,7 +73,6 @@ public class PermissionAnalyzer implements ApplicationAnalyzer<PermissionAnalysi
 
 	@Override
 	public AnalysisResultResource convertResultToResource(PermissionAnalysisResult result) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

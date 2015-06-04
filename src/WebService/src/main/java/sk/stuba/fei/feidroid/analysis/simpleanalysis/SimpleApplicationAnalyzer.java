@@ -10,6 +10,7 @@ import sk.stuba.fei.feidroid.entities.PermissionUsage;
 
 public class SimpleApplicationAnalyzer implements ApplicationAnalyzer<SimpleAnalysisResult> {
 	public final String FILES_DIRECTORY = "PermissionGroups/";
+	public final static Double MAX_SCORE = 100d;
 	private StringArrayParser parser;
 	private ArrayList<String> suspiciousPermissions;
 
